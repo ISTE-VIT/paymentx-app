@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tertiary"
+    tools:context=".ui.auth.GoogleAuthActivity">
+
+    <!-- Top Image -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="420dp"
+        android:src="@drawable/vectorlogin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Title Text -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtFirst"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="PaymentX"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:textColor="@color/secondary"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp" />
+
+    <!-- Subtitle Text 1 -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Experience effortless transactions with us."
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/txtFirst"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        android:textColor="@color/secondary"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="24dp" />
+
+    <!-- Subtitle Text 2 -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Just Tap Your ID to Pay!"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/secondary"
+        android:layout_marginHorizontal="24dp" />
+
+    <!-- Login Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Sign in with your student mail"
+        android:textColor="@color/tertiary"
+        android:textSize="15sp"
+        android:backgroundTint="@color/secondary"
+        app:strokeColor="#050505"
+        app:strokeWidth="2dp"
+        app:layout_constraintTop_toBottomOf="@id/textView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cornerRadius="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="48dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
