@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
 import com.iste.paymentx.ui.auth.GoogleAuthActivity
+import com.iste.paymentx.ui.auth.ScanId
 
 class HomeActivity : AppCompatActivity() {
 
@@ -57,6 +58,11 @@ class HomeActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Log.e("HomeActivity", "Exception during logout: ", e)
             }
+        }
+
+        findViewById<Button>(R.id.checkBut).setOnClickListener(){
+            val intent = Intent(this,ScanId::class.java)
+            startActivity(intent)
         }
     }
 }

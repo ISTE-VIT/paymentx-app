@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PaymentX</string>
+    <string name="details">Experience effortless transactions with us.</string>
+    <string name="details_ano">Just Tap Your ID to Pay!</string>
+    <string name="btn_text">Sign in with your student mail</string>
 </resources>
