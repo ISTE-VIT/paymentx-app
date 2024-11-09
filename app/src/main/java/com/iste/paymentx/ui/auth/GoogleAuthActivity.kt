@@ -3,7 +3,6 @@ package com.iste.paymentx.ui.auth
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
@@ -31,9 +30,7 @@ class GoogleAuthActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private val viewModel: AuthViewModel by viewModels { ViewModelFactory(AuthRepository(FirebaseAuth.getInstance())) }
     private lateinit var viewPager: ViewPager2
-    private val images = listOf(R.drawable.store, R.drawable.store1, R.drawable.store2) // Add your images here
-    private lateinit var handler: Handler
-    private lateinit var runnable: Runnable
+    private val images = listOf(R.drawable.store, R.drawable.store1, R.drawable.store2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +48,6 @@ class GoogleAuthActivity : AppCompatActivity() {
         setContentView(R.layout.activity_google_auth)
         setupViewPager()
         setupGoogleSignIn()
-        setupAutoScroll()
 
         // Observe the user's login status for new sign-ins
         viewModel.user.observe(this) { user ->
@@ -68,32 +64,22 @@ class GoogleAuthActivity : AppCompatActivity() {
         val adapter = ImageSliderAdapter(images)
         viewPager.adapter = adapter
 
-        TabLayoutMediator(findViewById(R.id.dots_indicator), viewPager) { tab: TabLayout.Tab, position: Int ->
-            // Optionally set tab titles here
-        }.attach()
-    }
-
-    private fun setupAutoScroll() {
-        handler = Handler()
-        runnable = Runnable {
-            if (viewPager.currentItem == images.size - 1) {
-                viewPager.setCurrentItem(0, true)
-            } else {
-                viewPager.setCurrentItem(viewPager.currentItem + 1, true)
+        // Reduce page transition sensitivity
+        viewPager.apply {
+            offscreenPageLimit = 1
+            setPageTransformer { page, position ->
+                page.alpha = 1 - kotlin.math.abs(position)
             }
-            handler.postDelayed(runnable, 3000) // Change image every 3 seconds
         }
-        handler.postDelayed(runnable, 3000)
-    }
 
-    override fun onPause() {
-        super.onPause()
-        handler.removeCallbacks(runnable)
-    }
+        // TabLayout configuration
+        val tabLayout = findViewById<TabLayout>(R.id.dots_indicator)
+        tabLayout.apply {
+            tabGravity = TabLayout.GRAVITY_CENTER
+            setSelectedTabIndicator(null)
+        }
 
-    override fun onResume() {
-        super.onResume()
-        handler.postDelayed(runnable, 3000)
+        TabLayoutMediator(tabLayout, viewPager) { tab, _ -> }.attach()
     }
 
     private fun setupGoogleSignIn() {
