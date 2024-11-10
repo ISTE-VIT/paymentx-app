@@ -24,6 +24,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.ui.main.HomeActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import android.view.ViewGroup
 
 class GoogleAuthActivity : AppCompatActivity() {
 
@@ -80,6 +81,14 @@ class GoogleAuthActivity : AppCompatActivity() {
         }
 
         TabLayoutMediator(tabLayout, viewPager) { tab, _ -> }.attach()
+
+        // Add this code to increase dot spacing
+        for (i in 0 until tabLayout.tabCount) {
+            val tab = (tabLayout.getChildAt(0) as ViewGroup).getChildAt(i)
+            val params = tab.layoutParams as ViewGroup.MarginLayoutParams
+            params.setMargins(8, 0, 8, 0)  // Adjust the 24dp value to increase/decrease spacing
+            tab.requestLayout()
+        }
     }
 
     private fun setupGoogleSignIn() {

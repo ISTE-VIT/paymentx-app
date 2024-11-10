@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <shape android:shape="oval">
-            <size android:width="6dp" android:height="6dp"/>
-            <solid android:color="@color/secondary"/>
+        <shape android:shape="rectangle">
+            <size android:width="4dp" android:height="4dp"/>
+            <corners android:radius="2dp"/>
+            <solid android:color="@color/dots_default"/>
+            <stroke
+                android:width="2dp"
+                android:color="@color/dots_selected"/>
         </shape>
     </item>
 </layer-list>

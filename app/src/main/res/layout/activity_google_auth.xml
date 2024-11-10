@@ -36,6 +36,8 @@
         app:tabPaddingEnd="4dp"
         app:tabPaddingTop="3dp"
         app:tabPaddingBottom="3dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         app:tabMinWidth="12dp"
         app:tabMaxWidth="12dp"/>
 
