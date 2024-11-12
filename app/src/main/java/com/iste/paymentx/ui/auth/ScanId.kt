@@ -10,6 +10,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.nfc.NfcAdapter
 import android.nfc.Tag
+import android.nfc.tech.NfcF
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
@@ -50,9 +51,10 @@ class ScanId : AppCompatActivity() {
         // Configure PendingIntent for foreground dispatch
         pendingIntent = PendingIntent.getActivity(
             this, 0,
-            Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+            Intent(this, this::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+
 
         // Set up the intent filter to detect ALL NFC tags
         intentFilter = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED).apply {
@@ -101,30 +103,31 @@ class ScanId : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Enable foreground dispatch to prioritize this app for NFC scanning
-        try {
-            nfcAdapter.enableForegroundDispatch(this, pendingIntent, arrayOf(intentFilter), null)
-        } catch (e: Exception) {
-            Log.e("NFC", "Error enabling NFC dispatch: ${e.message}")
-            Toast.makeText(this, "Error enabling NFC", Toast.LENGTH_SHORT).show()
-        }
+        val intent = Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE)
+        val filters = arrayOf(
+            IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED),
+            IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED),
+            IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED)
+        )
+        val techListsArray = arrayOf(arrayOf(NfcF::class.java.name))
+
+        // Enable foreground dispatch
+        nfcAdapter.enableForegroundDispatch(this, pendingIntent, filters, techListsArray)
     }
+
 
     override fun onPause() {
         super.onPause()
-        // Disable foreground dispatch when the app is not in focus
-        try {
-            nfcAdapter.disableForegroundDispatch(this)
-        } catch (e: Exception) {
-            Log.e("NFC", "Error disabling NFC dispatch: ${e.message}")
-        }
+        val nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        nfcAdapter?.disableForegroundDispatch(this)
     }
+
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         Log.d("NFC", "New Intent Received: ${intent.action}")
 
-        // Handle any NFC intent
         if (intent.action == NfcAdapter.ACTION_TAG_DISCOVERED ||
             intent.action == NfcAdapter.ACTION_TECH_DISCOVERED ||
             intent.action == NfcAdapter.ACTION_NDEF_DISCOVERED) {
@@ -141,11 +144,13 @@ class ScanId : AppCompatActivity() {
         }
     }
 
+
     private fun displayUid(tag: Tag) {
         try {
             // Extract and format the UID from the Tag object
             val uidBytes = tag.id
             val uid = uidBytes.joinToString(":") { String.format("%02X", it) }
+            Log.d("NFC", "Attempting to open Display activity with UID: $uid")
 
             // Play a beep sound
             playBeepSound()
@@ -159,12 +164,10 @@ class ScanId : AppCompatActivity() {
             // Show a toast for debugging
             Toast.makeText(this, "Card detected: $uid", Toast.LENGTH_SHORT).show()
 
-            // Create an intent to start DisplayUidActivity
-            val displayIntent = Intent(this, DisplayUidActivity::class.java)
+            // Create an intent to start DisplayUidActivity and pass the CARD_UID
+            val displayIntent = Intent(this, Display::class.java)
             displayIntent.putExtra("CARD_UID", uid)
-            displayIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(displayIntent)
-
         } catch (e: Exception) {
             Log.e("NFC", "Error processing NFC tag: ${e.message}")
             Toast.makeText(this, "Error reading NFC tag", Toast.LENGTH_SHORT).show()

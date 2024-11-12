@@ -59,9 +59,8 @@ class HomeActivity : AppCompatActivity() {
                 Log.e("HomeActivity", "Exception during logout: ", e)
             }
         }
-
-        findViewById<Button>(R.id.checkBut).setOnClickListener(){
-            val intent = Intent(this,ScanId::class.java)
+        findViewById<Button>(R.id.checkBut).setOnClickListener() {
+            val intent = Intent(this, ScanId::class.java)
             startActivity(intent)
         }
     }
