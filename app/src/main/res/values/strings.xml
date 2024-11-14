@@ -8,4 +8,6 @@
     <string name="Colon">:</string>
     <string name="Submit">SUBMIT</string>
     <string name="SignOut">Sign Out</string>
+    <string name="Confirm">CONFIRM</string>
+    <string name="nfc">NFC</string>
 </resources>
