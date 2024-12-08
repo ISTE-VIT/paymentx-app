@@ -19,37 +19,62 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PaymentX"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ui.auth.PinVerifyPage"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.WithdrawCompleted"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.TopUpCompleted"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.Withdraw"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.TopUp"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.MainScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.ConfirmPIN"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.CreateTransPIN"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.OtpVerification"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.Phonenumber"
+            android:exported="false" />
         <activity
             android:name=".ui.auth.Display"
             android:exported="true" />
-
         <activity
             android:name=".ui.auth.ScanId"
             android:exported="true"> <!-- Set to true to allow NFC intents -->
 
-
-
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <!-- Meta-data specifying supported NFC technologies -->
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
-                android:resource="@xml/nfc_tech_filter"/>
-
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
-
         <activity
             android:name=".ui.main.HomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.auth.GoogleAuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
