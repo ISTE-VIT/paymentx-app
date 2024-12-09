@@ -14,6 +14,7 @@ import android.nfc.tech.NfcF
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -28,6 +29,7 @@ class ScanId : AppCompatActivity() {
     private lateinit var or_text: TextView
     private lateinit var vibrator: Vibrator
     private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var submitButton: Button
     private var audioFocusRequest: AudioFocusRequest? = null
     private var audioManager: AudioManager? = null
 
@@ -38,6 +40,12 @@ class ScanId : AppCompatActivity() {
 
         // Initialize TextView
         or_text = findViewById(R.id.or_text)
+        
+        submitButton = findViewById(R.id.submit_button)
+        submitButton.setOnClickListener(){
+            val intent = Intent(this, Display::class.java)
+            startActivity(intent)
+        }
 
         // Initialize NFC adapter
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
