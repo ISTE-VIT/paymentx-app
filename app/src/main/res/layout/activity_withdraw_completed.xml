@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#66F56B"
-    tools:context=".ui.auth.WithdrawCompleted">
+    tools:context=".ui.main.WithdrawCompleted">
 
     <ImageView
         android:id="@+id/imageView"

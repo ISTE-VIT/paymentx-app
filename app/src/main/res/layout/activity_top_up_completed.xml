@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#66F56B"
-    tools:context=".ui.auth.TopUpCompleted">
+    tools:context=".ui.main.TopUpCompleted">
 
     <ImageView
         android:id="@+id/imageView"

@@ -1,4 +1,4 @@
-package com.iste.paymentx.ui.auth
+package com.iste.paymentx.ui.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,21 +8,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.iste.paymentx.R
 
-class TopUpCompleted : AppCompatActivity() {
+class WithdrawCompleted : AppCompatActivity() {
 
-    private lateinit var topUpAmountTextView: TextView
+    private lateinit var withdrawnAmountTextView: TextView
     private lateinit var backArrowImageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_top_up_completed)
+        setContentView(R.layout.activity_withdraw_completed)
 
-        topUpAmountTextView = findViewById(R.id.textView2)
+        withdrawnAmountTextView = findViewById(R.id.textView2)
         backArrowImageView = findViewById(R.id.imageView3)
 
-        val topUpAmount = intent.getIntExtra("EXTRA_AMOUNT", 0)
-        topUpAmountTextView.text = "₹$topUpAmount"
+        val withdrawnAmount = intent.getIntExtra("EXTRA_AMOUNT", 0)
+        withdrawnAmountTextView.text = "₹$withdrawnAmount"
 
         backArrowImageView.setOnClickListener {
             val intent = Intent(this, MainScreen::class.java)

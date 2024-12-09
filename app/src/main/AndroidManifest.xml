@@ -20,22 +20,28 @@
         android:theme="@style/Theme.PaymentX"
         tools:targetApi="31">
         <activity
+            android:name=".ui.main.ProfilePage"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.TickAnimation"
+            android:exported="false" />
+        <activity
             android:name=".ui.auth.PinVerifyPage"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.WithdrawCompleted"
+            android:name=".ui.main.WithdrawCompleted"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.TopUpCompleted"
+            android:name=".ui.main.TopUpCompleted"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.Withdraw"
+            android:name=".ui.main.Withdraw"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.TopUp"
+            android:name=".ui.main.TopUp"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.MainScreen"
+            android:name=".ui.main.MainScreen"
             android:exported="false" />
         <activity
             android:name=".ui.auth.ConfirmPIN"

@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.iste.paymentx.R
+import com.iste.paymentx.ui.main.TopUpCompleted
+import com.iste.paymentx.ui.main.WithdrawCompleted
 
 class PinVerifyPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +22,7 @@ class PinVerifyPage : AppCompatActivity() {
         val sharedPref = getSharedPreferences("PaymentX", MODE_PRIVATE)
         val storedPin = sharedPref.getString("transactionPin", null)
 
+        // PIN input fields
         val pinInputs = listOf(
             findViewById<EditText>(R.id.input1),
             findViewById<EditText>(R.id.input2),
@@ -29,8 +32,10 @@ class PinVerifyPage : AppCompatActivity() {
             findViewById<EditText>(R.id.input6)
         )
 
+        // Verify button
         val btnVerify = findViewById<Button>(R.id.btnVerify)
 
+        // Auto-focus and navigation between PIN input fields
         pinInputs.forEachIndexed { index, editText ->
             editText.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
@@ -44,26 +49,38 @@ class PinVerifyPage : AppCompatActivity() {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
         }
-
+        // Verify button click listener
         btnVerify.setOnClickListener {
             val enteredPin = pinInputs.joinToString("") { it.text.toString() }
 
             if (enteredPin.length == 6) {
                 if (enteredPin == storedPin) {
-                    val amount = intent.getIntExtra("EXTRA_AMOUNT", 0)
-
-                    if (amount > 0) {
-                        // Check if it's from Withdraw or TopUp
-                        val callingActivity = intent.getStringExtra("CALLING_ACTIVITY")
-                        val intent = if (callingActivity == "Withdraw") {
-                            Intent(this, WithdrawCompleted::class.java)
-                        } else {
-                            Intent(this, TopUpCompleted::class.java)
-                        }
-
-                        intent.putExtra("EXTRA_AMOUNT", amount)
-                        startActivity(intent)
+                    val callingActivity = intent.getStringExtra("CALLING_ACTIVITY")
+                    if (callingActivity == "ViewBalance") {
+                        setResult(RESULT_OK) // Send success result to MainScreen
                         finish()
+                    } else {
+                        val amount = intent.getDoubleExtra("EXTRA_AMOUNT", 0.0).toInt()
+
+                        if (amount > 0) {
+                            // Determine the destination based on the calling activity
+                            val destinationIntent = if (callingActivity == "Withdraw") {
+                                Intent(this, WithdrawCompleted::class.java).apply {
+                                    putExtra("EXTRA_AMOUNT", amount)
+                                }
+                            } else if (callingActivity == "TopUp") {
+                                Intent(this, TopUpCompleted::class.java).apply {
+                                    putExtra("EXTRA_AMOUNT", amount)
+                                }
+                            } else {
+                                Toast.makeText(this, "Invalid operation", Toast.LENGTH_SHORT).show()
+                                return@setOnClickListener
+                            }
+                            startActivity(destinationIntent)
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Invalid amount", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 } else {
                     Toast.makeText(this, "PINs do not match. Try again.", Toast.LENGTH_SHORT).show()
