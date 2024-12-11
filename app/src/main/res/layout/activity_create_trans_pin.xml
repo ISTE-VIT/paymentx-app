@@ -124,16 +124,19 @@
         android:id="@+id/btnVerify"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="40dp"
         android:backgroundTint="@color/black"
-        android:textSize="16sp"
         android:text="VERIFY"
         android:textColor="@color/white"
+        android:textSize="16sp"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_group"
+        app:layout_constraintVertical_bias="0.697" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

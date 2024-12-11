@@ -16,6 +16,7 @@ class MainScreen : AppCompatActivity() {
     private lateinit var btnViewBalance: Button
     private lateinit var btnTopUp: ImageView
     private lateinit var btnWithdraw: ImageView
+    private lateinit var btnTransact: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

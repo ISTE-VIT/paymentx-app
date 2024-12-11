@@ -2,14 +2,18 @@ package com.iste.paymentx.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.iste.paymentx.R
+import com.iste.paymentx.ui.main.TickMarkAnimation
 import com.iste.paymentx.ui.main.TopUpCompleted
 import com.iste.paymentx.ui.main.WithdrawCompleted
 
@@ -32,24 +36,33 @@ class PinVerifyPage : AppCompatActivity() {
             findViewById<EditText>(R.id.input6)
         )
 
-        // Verify button
-        val btnVerify = findViewById<Button>(R.id.btnVerify)
-
-        // Auto-focus and navigation between PIN input fields
         pinInputs.forEachIndexed { index, editText ->
             editText.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    if (s?.length == 1 && index < pinInputs.size - 1) {
-                        pinInputs[index + 1].requestFocus()
-                    } else if (s.isNullOrEmpty() && index > 0) {
-                        pinInputs[index - 1].requestFocus()
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (s?.length == 1) {
+                        // Move to the next EditText
+                        if (index < pinInputs.size - 1) {
+                            pinInputs[index + 1].requestFocus()
+                        }
                     }
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable?) {}
             })
+
+            editText.setOnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
+                    // Clear current EditText and move to the previous one
+                    if (editText.text.isEmpty() && index > 0) {
+                        pinInputs[index - 1].requestFocus()
+                        pinInputs[index - 1].text.clear()
+                    }
+                }
+                false
+            }
         }
-        // Verify button click listener
+
+        val btnVerify = findViewById<Button>(R.id.btnVerify)
         btnVerify.setOnClickListener {
             val enteredPin = pinInputs.joinToString("") { it.text.toString() }
 
@@ -63,21 +76,27 @@ class PinVerifyPage : AppCompatActivity() {
                         val amount = intent.getDoubleExtra("EXTRA_AMOUNT", 0.0).toInt()
 
                         if (amount > 0) {
+                            // Start tick mark animation
+                            val tickIntent = Intent(this, TickMarkAnimation::class.java)
+                            startActivity(tickIntent)
+
                             // Determine the destination based on the calling activity
-                            val destinationIntent = if (callingActivity == "Withdraw") {
-                                Intent(this, WithdrawCompleted::class.java).apply {
-                                    putExtra("EXTRA_AMOUNT", amount)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                val destinationIntent = if (callingActivity == "Withdraw") {
+                                    Intent(this, WithdrawCompleted::class.java).apply {
+                                        putExtra("EXTRA_AMOUNT", amount)
+                                    }
+                                } else if (callingActivity == "TopUp") {
+                                    Intent(this, TopUpCompleted::class.java).apply {
+                                        putExtra("EXTRA_AMOUNT", amount)
+                                    }
+                                } else {
+                                    Toast.makeText(this, "Invalid operation", Toast.LENGTH_SHORT).show()
+                                    return@postDelayed
                                 }
-                            } else if (callingActivity == "TopUp") {
-                                Intent(this, TopUpCompleted::class.java).apply {
-                                    putExtra("EXTRA_AMOUNT", amount)
-                                }
-                            } else {
-                                Toast.makeText(this, "Invalid operation", Toast.LENGTH_SHORT).show()
-                                return@setOnClickListener
-                            }
-                            startActivity(destinationIntent)
-                            finish()
+                                startActivity(destinationIntent)
+                                finish()
+                            }, 2000) // 2 seconds delay for tick animation
                         } else {
                             Toast.makeText(this, "Invalid amount", Toast.LENGTH_SHORT).show()
                         }

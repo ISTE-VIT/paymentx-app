@@ -2,6 +2,8 @@ package com.iste.paymentx.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -9,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.iste.paymentx.R
+import com.iste.paymentx.ui.main.TickMarkAnimation
 
 class Display : AppCompatActivity() {
 
@@ -39,9 +42,16 @@ class Display : AppCompatActivity() {
 
             // Set OnClickListener for the Confirm button
             confirmButton.setOnClickListener {
-                // Start the Phonenumber activity
-                val intent = Intent(this, Phonenumber::class.java)
-                startActivity(intent)
+                // Start the TickMarkAnimation activity
+                val tickIntent = Intent(this, TickMarkAnimation::class.java)
+                startActivity(tickIntent)
+
+                // Add a delay before starting the Phonenumber activity
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val phoneIntent = Intent(this, Phonenumber::class.java)
+                    startActivity(phoneIntent)
+                    finish() // Optional: finish this activity
+                }, 2000) // 2 seconds delay
             }
 
         } catch (e: Exception) {

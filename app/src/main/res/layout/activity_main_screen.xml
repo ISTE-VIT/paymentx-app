@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.main.MainScreen">
+<!--    android:fitsSystemWindows="true">-->
 
     <ImageView
         android:id="@+id/imageView"
@@ -176,9 +177,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/card"
-        android:layout_width="400dp"
-        android:layout_height="75dp"
-        android:background="@color/white"
+        android:layout_width="412dp"
+        android:layout_height="80dp"
+        android:background="#E9EDF1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
@@ -211,14 +212,13 @@
             android:id="@+id/btnProfile"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/black"
             android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/black"
             android:src="@drawable/profile"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnHome"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
