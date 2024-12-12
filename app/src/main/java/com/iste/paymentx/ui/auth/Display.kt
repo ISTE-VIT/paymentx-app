@@ -42,16 +42,8 @@ class Display : AppCompatActivity() {
 
             // Set OnClickListener for the Confirm button
             confirmButton.setOnClickListener {
-                // Start the TickMarkAnimation activity
-                val tickIntent = Intent(this, TickMarkAnimation::class.java)
-                startActivity(tickIntent)
-
-                // Add a delay before starting the Phonenumber activity
-                Handler(Looper.getMainLooper()).postDelayed({
-                    val phoneIntent = Intent(this, Phonenumber::class.java)
-                    startActivity(phoneIntent)
-                    finish() // Optional: finish this activity
-                }, 2000) // 2 seconds delay
+                val phoneIntent = Intent(this, Phonenumber::class.java)
+                startActivity(phoneIntent)
             }
 
         } catch (e: Exception) {

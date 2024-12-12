@@ -8,4 +8,5 @@
     <color name="grey">#808080</color>
     <color name="dots_default">#D0D3D8</color>
     <color name="dots_selected">#0B0A0A</color>
+    <color name="navigation_bar_color">#E9EDF1</color>
 </resources>

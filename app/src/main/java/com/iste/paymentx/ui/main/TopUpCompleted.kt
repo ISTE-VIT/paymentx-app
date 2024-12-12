@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.iste.paymentx.R
 
@@ -25,9 +26,21 @@ class TopUpCompleted : AppCompatActivity() {
         topUpAmountTextView.text = "₹$topUpAmount"
 
         backArrowImageView.setOnClickListener {
-            val intent = Intent(this, MainScreen::class.java)
-            startActivity(intent)
-            finish()
+            navigateToMainScreen()
         }
+
+        // Handle system back button
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigateToMainScreen()
+            }
+        })
+    }
+
+    private fun navigateToMainScreen() {
+        val intent = Intent(this, MainScreen::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 }
