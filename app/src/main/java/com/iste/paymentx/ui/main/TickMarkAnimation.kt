@@ -1,5 +1,6 @@
 package com.iste.paymentx.ui.main
 
+import android.content.pm.ActivityInfo
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +17,7 @@ class TickMarkAnimation : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_tick_mark_animation)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Initialize MediaPlayer with a success sound
         // Note: Replace R.raw.success_sound with an actual sound file you have in your raw folder

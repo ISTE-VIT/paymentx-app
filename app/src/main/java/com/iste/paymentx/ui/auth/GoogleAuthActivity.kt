@@ -2,6 +2,7 @@ package com.iste.paymentx.ui.auth
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -36,6 +37,7 @@ class GoogleAuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Check if already signed in before setting content view
         if (viewModel.isUserLoggedIn()) {

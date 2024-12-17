@@ -21,48 +21,55 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.main.TickMarkAnimation"
-            android:exported="false" />
-        <activity
-            android:name=".ui.main.ProfilePage"
-            android:exported="false" />
-        <activity
-            android:name=".ui.main.TickAnimation"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.auth.PinVerifyPage"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.main.WithdrawCompleted"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.main.TopUpCompleted"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.main.Withdraw"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.main.TopUp"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.main.MainScreen"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.auth.ConfirmPIN"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.auth.CreateTransPIN"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.auth.OtpVerification"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.auth.Phonenumber"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.auth.Display"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".ui.auth.ScanId"
+            android:screenOrientation="portrait"
             android:exported="true"> <!-- Set to true to allow NFC intents -->
 
             <intent-filter>
@@ -77,9 +84,11 @@
         </activity>
         <activity
             android:name=".ui.main.HomeActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.auth.GoogleAuthActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

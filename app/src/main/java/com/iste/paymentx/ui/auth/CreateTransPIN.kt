@@ -1,6 +1,7 @@
 package com.iste.paymentx.ui.auth
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +18,7 @@ class CreateTransPIN : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_create_trans_pin)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val pinInputs = listOf(
             findViewById<EditText>(R.id.uid_input1),

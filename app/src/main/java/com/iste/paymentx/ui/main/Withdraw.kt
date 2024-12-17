@@ -1,6 +1,7 @@
 package com.iste.paymentx.ui.main
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -23,6 +24,7 @@ class Withdraw : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_withdraw)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         amountEditText = findViewById(R.id.amountEditText)
         button1 = findViewById(R.id.button1)

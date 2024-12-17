@@ -1,6 +1,7 @@
 package com.iste.paymentx.ui.main
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,6 +19,7 @@ class WithdrawCompleted : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_withdraw_completed)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         withdrawnAmountTextView = findViewById(R.id.textView2)
         backArrowImageView = findViewById(R.id.imageView3)

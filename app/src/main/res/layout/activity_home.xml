@@ -61,7 +61,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="24dp" />
 
-    <!-- Login Button -->
+    <!-- SignOut Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/logout_button"
         android:layout_width="0dp"

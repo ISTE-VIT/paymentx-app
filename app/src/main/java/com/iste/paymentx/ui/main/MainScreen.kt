@@ -1,6 +1,7 @@
 package com.iste.paymentx.ui.main
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -24,6 +25,7 @@ class MainScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main_screen)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Set navigation bar color programmatically for additional compatibility
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

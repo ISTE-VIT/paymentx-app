@@ -1,6 +1,7 @@
 package com.iste.paymentx.ui.auth
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -22,6 +23,7 @@ class PinVerifyPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_pin_verify_page)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val sharedPref = getSharedPreferences("PaymentX", MODE_PRIVATE)
         val storedPin = sharedPref.getString("transactionPin", null)

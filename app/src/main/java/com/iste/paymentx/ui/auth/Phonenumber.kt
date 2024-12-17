@@ -1,6 +1,7 @@
 package com.iste.paymentx.ui.auth
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
@@ -12,6 +13,7 @@ class Phonenumber : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_phonenumber)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Find the Confirm button by its ID
         val confirmButton = findViewById<Button>(R.id.confirmButton)
