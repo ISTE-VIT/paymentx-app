@@ -13,7 +13,7 @@ class AuthRepository(private val auth: FirebaseAuth) {
                 if (task.isSuccessful) {
                     val firebaseUser = auth.currentUser
                     firebaseUser?.let {
-                        onSuccess(User(it.email, it.displayName, it.uid))
+                        onSuccess(User(it.email, it.displayName, it.uid,false))
                     }
                 } else {
                     onFailure(task.exception ?: Exception("Authentication failed"))
