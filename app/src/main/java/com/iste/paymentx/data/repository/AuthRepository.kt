@@ -20,6 +20,6 @@ class AuthRepository(private val auth: FirebaseAuth) {
                 }
             }
     }
-
+    
     fun isUserLoggedIn() = auth.currentUser != null
 }

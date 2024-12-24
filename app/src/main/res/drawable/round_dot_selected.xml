@@ -7,7 +7,7 @@
             <solid android:color="@color/dots_default"/>
             <stroke
                 android:width="2dp"
-                android:color="@color/dots_selected"/>
+                android:color="#35515F"/>
         </shape>
     </item>
 </layer-list>

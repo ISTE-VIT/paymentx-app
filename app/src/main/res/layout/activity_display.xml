@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#F5F8EC"
     tools:context=".ui.auth.Display">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nfc"
-        android:textColor="@color/black"
+        android:textColor="#2F2F2F"
         android:textSize="22sp"
         android:layout_marginTop="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,10 +25,10 @@
 
     <Button
         android:id="@+id/Confirm_button"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="56dp"
         android:layout_marginTop="100dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="#1D5F3E"
         android:text="@string/Confirm"
         android:textSize="16sp"
         android:textColor="@color/white"
@@ -36,5 +36,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/display_UID"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="409dp"
+        android:layout_height="54dp"
+        app:cardBackgroundColor="#C5D9C9"
+        app:layout_constraintBottom_toTopOf="@+id/display_UID"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
