@@ -16,7 +16,13 @@ interface UserApi {
     @PATCH("/api/users/attach-id")
     suspend fun attachId(
         @Header("Authorization") authToken: String,
-        @Body idCardUid: String
+        @Body idCardUID: AttachIdRequest
+    ): Response<response>
+
+    @PATCH("/api/users/attach-phone")
+    suspend fun attachPhone(
+        @Header("Authorization") authToken: String,
+        @Body phoneNumber: AttachPhoneRequest
     ): Response<response>
 }
 
