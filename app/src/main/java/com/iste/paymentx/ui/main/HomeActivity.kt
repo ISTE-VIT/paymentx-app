@@ -72,6 +72,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+
         val userName = intent.getStringExtra("USER_NAME")
         val userEmail = intent.getStringExtra("USER_EMAIL")
         val userId = intent.getStringExtra("USER_ID")

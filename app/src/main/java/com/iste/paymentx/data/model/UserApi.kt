@@ -24,5 +24,11 @@ interface UserApi {
         @Header("Authorization") authToken: String,
         @Body phoneNumber: AttachPhoneRequest
     ): Response<response>
+
+    @PATCH("/api/users/create-pin")
+    suspend fun createPin(
+        @Header("Authorization") authToken: String,
+        @Body pin: CreatePinRequest
+    ): Response<response>
 }
 

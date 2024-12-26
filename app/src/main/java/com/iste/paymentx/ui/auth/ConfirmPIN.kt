@@ -5,21 +5,32 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
+import com.iste.paymentx.data.model.CreatePinRequest
+import com.iste.paymentx.data.model.RetrofitInstance
 import com.iste.paymentx.ui.main.MainScreen
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import retrofit2.HttpException
+import java.io.IOException
 
 class ConfirmPIN : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_confirm_pin)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        auth = FirebaseAuth.getInstance()
 
         // Retrieve the PIN passed from CreateTransPIN
         val transactionPin = intent.getStringExtra("transactionPin")
@@ -72,9 +83,8 @@ class ConfirmPIN : AppCompatActivity() {
             if (enteredPin.length == 6) {
                 if (enteredPin == transactionPin) {
                     // Redirect to MainScreen
-                    val intent = Intent(this, MainScreen::class.java)
-                    startActivity(intent)
-                    finish() // Optional: Close this activity
+                    createPin(enteredPin)
+                     // Optional: Close this activity
                 } else {
                     // Show error if PINs do not match
                     Toast.makeText(this, "PINs do not match. Try again.", Toast.LENGTH_SHORT).show()
@@ -88,5 +98,44 @@ class ConfirmPIN : AppCompatActivity() {
         val editor = sharedPref.edit()
         editor.putString("transactionPin", transactionPin)  // Save PIN
         editor.apply()
+    }
+
+    private suspend fun getFirebaseIdToken(): String? {
+        return try {
+            val user = auth.currentUser
+            user?.getIdToken(false)?.await()?.token
+        } catch (e: Exception) {
+            Log.e("HomeActivity", "Error getting Firebase ID token", e)
+            null
+        }
+    }
+
+    private suspend fun createPinHelper(authToken: String,pin: String) {
+        try {
+            val request = CreatePinRequest(pin)
+            val response = RetrofitInstance.api.createPin(authToken,request)
+            if (response.isSuccessful && response.body() != null) {
+                val intent = Intent(this, MainScreen::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: IOException) {
+            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            Log.e("HomeActivity", "HttpException, unexpected response", e)
+        }
+    }
+
+    private fun createPin(pin: String) {
+        lifecycleScope.launch {
+            val token = getFirebaseIdToken()
+            if (token != null) {
+                createPinHelper("Bearer $token",pin)
+            } else {
+                Log.e("HomeActivity", "Failed to get Firebase ID token")
+            }
+        }
     }
 }
