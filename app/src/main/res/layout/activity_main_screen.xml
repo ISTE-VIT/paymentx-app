@@ -224,7 +224,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/header"
         android:layout_width="409dp"
-        android:layout_height="54dp"
+        android:layout_height="20dp"
         app:cardBackgroundColor="#C5D9C9"
         app:layout_constraintBottom_toTopOf="@+id/appname"
         app:layout_constraintStart_toStartOf="parent"

@@ -8,46 +8,35 @@
     android:background="#F5F8EC"
     tools:context=".ui.main.HomeActivity">
 
-    <!-- Top Image -->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="420dp"
-        android:src="@drawable/vectorlogin"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Title Text -->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/user_name_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="196dp"
         android:textAlignment="center"
+        android:textColor="#2F2F2F"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="#2F2F2F"
         android:typeface="serif"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Subtitle Text 1 -->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/user_email_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/user_name_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="#2F2F2F"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="12dp"
         android:textAlignment="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="24dp" />
+        android:textColor="#2F2F2F"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_name_text" />
 
-    <!-- Subtitle Text 2 -->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/user_id_text"
         android:layout_width="0dp"
@@ -62,38 +51,60 @@
         android:layout_marginHorizontal="24dp" />
 
     <!-- SignOut Button -->
-    <com.google.android.material.button.MaterialButton
+    <ImageView
         android:id="@+id/logout_button"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/SignOut"
-        android:textColor="@color/tertiary"
-        android:textSize="15sp"
-        android:backgroundTint="#1D5F3E"
-        app:strokeColor="#050505"
-        app:strokeWidth="2dp"
-        app:layout_constraintTop_toBottomOf="@id/user_id_text"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/user_name_text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.29"
+        app:srcCompat="@drawable/signout" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/checkMerchant"
+        android:layout_width="300dp"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="48dp"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="#1D5F3E"
+        android:text="Are you a Merchant?"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:cornerRadius="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="48dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_id_text"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/checkBut"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Scan"
-        android:textColor="@color/tertiary"
-        android:textSize="15sp"
+        android:layout_width="300dp"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="48dp"
+        android:layout_marginTop="68dp"
         android:backgroundTint="#1D5F3E"
-        app:strokeColor="#050505"
-        app:strokeWidth="2dp"
-        app:layout_constraintTop_toBottomOf="@id/logout_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Are you an User?"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:cornerRadius="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="48dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkMerchant" />
+
+    <TextView
+        android:id="@+id/or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:textColor="#35515F"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/checkBut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/checkMerchant"
+        app:layout_constraintVertical_bias="0.791" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

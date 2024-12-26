@@ -7,6 +7,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -24,6 +25,7 @@ import com.iste.paymentx.data.model.RetrofitInstance
 import com.iste.paymentx.data.model.User
 import com.iste.paymentx.ui.auth.GoogleAuthActivity
 import com.iste.paymentx.ui.auth.ScanId
+import com.iste.paymentx.ui.merchant.MerchantPhoneNumberVerification
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
@@ -43,7 +45,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        // Hide content initially
         hideContent()
         setupBiometricAuthentication()
         startBiometricAuthentication()
@@ -52,12 +53,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun hideContent() {
-        findViewById<View>(R.id.imageView).visibility = View.GONE
-        findViewById<View>(R.id.user_name_text).visibility = View.GONE
-        findViewById<View>(R.id.user_email_text).visibility = View.GONE
-        findViewById<View>(R.id.user_id_text).visibility = View.GONE
-        findViewById<View>(R.id.logout_button).visibility = View.GONE
-        findViewById<View>(R.id.checkBut).visibility = View.GONE
+        findViewById<TextView>(R.id.user_name_text).visibility = View.GONE
+        findViewById<TextView>(R.id.user_email_text).visibility = View.GONE
+        findViewById<TextView>(R.id.user_id_text).visibility = View.GONE
+        findViewById<ImageView>(R.id.logout_button).visibility = View.GONE
+        findViewById<Button>(R.id.checkBut).visibility = View.GONE
+        findViewById<Button>(R.id.checkMerchant).visibility = View.GONE
+        findViewById<TextView>(R.id.or).visibility = View.GONE
     }
 
     private fun setupAuth() {
@@ -72,7 +74,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-
         val userName = intent.getStringExtra("USER_NAME")
         val userEmail = intent.getStringExtra("USER_EMAIL")
         val userId = intent.getStringExtra("USER_ID")
@@ -85,13 +86,25 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupButtons(userId: String?, userName: String?, userEmail: String?) {
-        findViewById<Button>(R.id.logout_button).setOnClickListener {
+        findViewById<ImageView>(R.id.logout_button).setOnClickListener {
             handleLogout()
         }
 
         findViewById<Button>(R.id.checkBut).setOnClickListener {
             if (userId != null) {
                 login(email = userEmail, displayName = userName, uid = userId, isMerchant = false)
+            }
+        }
+
+        findViewById<Button>(R.id.checkMerchant).setOnClickListener {
+            if (userId != null) {
+                val intent = Intent(this, MerchantPhoneNumberVerification::class.java).apply {
+                    putExtra("USER_EMAIL", userEmail)
+                    putExtra("USER_NAME", userName)
+                    putExtra("USER_ID", userId)
+                    putExtra("IS_MERCHANT", true)
+                }
+                startActivity(intent)
             }
         }
     }
@@ -104,7 +117,6 @@ class HomeActivity : AppCompatActivity() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     val cryptoObject = result.cryptoObject
-                    // You can use the cryptoObject for additional security measures
                     showContent()
                 }
 
@@ -128,7 +140,7 @@ class HomeActivity : AppCompatActivity() {
             .setSubtitle("Use your biometric credential or face to access the app")
             .setAllowedAuthenticators(
                 BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                        BiometricManager.Authenticators.BIOMETRIC_WEAK or  // Added for face unlock
+                        BiometricManager.Authenticators.BIOMETRIC_WEAK or
                         BiometricManager.Authenticators.DEVICE_CREDENTIAL
             )
             .build()
@@ -146,7 +158,7 @@ class HomeActivity : AppCompatActivity() {
                     "This device doesn't support biometric authentication",
                     Toast.LENGTH_LONG
                 ).show()
-                showContent() // Fallback to show content
+                showContent()
             }
             else -> {
                 Toast.makeText(
@@ -159,7 +171,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun startBiometricAuthentication() {
-//        setContentView(R.layout.activity_biometric)
         if (checkBiometricAvailability()) {
             biometricPrompt.authenticate(promptInfo)
         }
@@ -170,7 +181,7 @@ class HomeActivity : AppCompatActivity() {
 
         return when (biometricManager.canAuthenticate(
             BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                    BiometricManager.Authenticators.BIOMETRIC_WEAK or  // Added for face unlock
+                    BiometricManager.Authenticators.BIOMETRIC_WEAK or
                     BiometricManager.Authenticators.DEVICE_CREDENTIAL
         )) {
             BiometricManager.BIOMETRIC_SUCCESS -> true
@@ -200,7 +211,7 @@ class HomeActivity : AppCompatActivity() {
             putExtra(
                 Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
                 BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                        BiometricManager.Authenticators.BIOMETRIC_WEAK or  // Added for face unlock
+                        BiometricManager.Authenticators.BIOMETRIC_WEAK or
                         BiometricManager.Authenticators.DEVICE_CREDENTIAL
             )
         }
@@ -220,12 +231,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showContent() {
-        findViewById<View>(R.id.imageView).visibility = View.VISIBLE
-        findViewById<View>(R.id.user_name_text).visibility = View.VISIBLE
-        findViewById<View>(R.id.user_email_text).visibility = View.VISIBLE
-        findViewById<View>(R.id.user_id_text).visibility = View.VISIBLE
-        findViewById<View>(R.id.logout_button).visibility = View.VISIBLE
-        findViewById<View>(R.id.checkBut).visibility = View.VISIBLE
+        findViewById<TextView>(R.id.user_name_text).visibility = View.VISIBLE
+        findViewById<TextView>(R.id.user_email_text).visibility = View.VISIBLE
+        findViewById<TextView>(R.id.user_id_text).visibility = View.VISIBLE
+        findViewById<ImageView>(R.id.logout_button).visibility = View.VISIBLE
+        findViewById<Button>(R.id.checkBut).visibility = View.VISIBLE
+        findViewById<Button>(R.id.checkMerchant).visibility = View.VISIBLE
+        findViewById<TextView>(R.id.or).visibility = View.VISIBLE
     }
 
     private suspend fun getFirebaseIdToken(): String? {
@@ -254,7 +266,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun login(email: String?, displayName: String?, uid: String, isMerchant: Boolean) {
         lifecycleScope.launch {
-            val user = User(email = email, displayName = displayName, uid = uid, isMerchant = false)
+            val user = User(email = email, displayName = displayName, uid = uid, isMerchant = isMerchant)
             getFirebaseIdToken()?.let { token ->
                 loginHelper("Bearer $token", user)
             } ?: Log.e("HomeActivity", "Failed to get Firebase ID token")
@@ -263,7 +275,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (findViewById<View>(R.id.imageView).visibility != View.VISIBLE) {
+        if (findViewById<TextView>(R.id.user_name_text).visibility != View.VISIBLE) {
             startBiometricAuthentication()
         }
     }
