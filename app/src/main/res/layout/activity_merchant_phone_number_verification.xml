@@ -5,18 +5,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#F5F8EC"
     tools:context=".ui.merchant.MerchantPhoneNumberVerification">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardheader"
+        android:layout_width="409dp"
+        android:layout_height="90dp"
+        app:cardBackgroundColor="#C5D9C9"
+        app:layout_constraintBottom_toTopOf="@+id/merchtextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="26dp"
+            android:layout_marginBottom="8dp"
+            android:text="Phone Number Verification"
+            android:textColor="#1D5F3E"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/merchtextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Verify Your Phone Number"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="#2F2F2F"
         app:layout_constraintBottom_toTopOf="@+id/merchphoneNumberCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -32,36 +54,53 @@
         android:layout_marginEnd="68dp"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="32dp"
+        android:foreground="@drawable/card_border"
         app:cardCornerRadius="10dp"
-        android:backgroundTint="#F3F3F3"
+        android:backgroundTint="#C5D9C9"
         app:cardElevation="4dp"
         app:layout_constraintStart_toEndOf="@+id/merchcountryCode"
         app:layout_constraintTop_toBottomOf="@+id/merchtextView">
 
-        <EditText
-            android:id="@+id/merchphoneNumberEditText"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="47dp"
             android:layout_height="match_parent"
-            android:backgroundTint="@android:color/transparent"
-            android:ems="10"
-            android:hint="9832106845"
-            android:inputType="phone"
-            android:padding="16dp"
+            android:gravity="center"
+            android:text="+91"
             android:textColor="@color/black"
-            android:textColorHint="#565454"
-            android:maxLength="10"/>
+            android:textSize="17sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="153dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="47dp"
+            android:backgroundTint="#F5F8EC">
+
+            <EditText
+                android:id="@+id/merchphoneNumberEditText"
+                android:layout_width="153dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="@android:color/transparent"
+                android:ems="10"
+                android:hint="9832106845"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:padding="14dp"
+                android:textColor="@color/black"
+                android:textColorHint="#565454" />
+        </androidx.cardview.widget.CardView>
 
     </androidx.cardview.widget.CardView>
 
     <!-- CardView around phone number input -->
     <androidx.cardview.widget.CardView
         android:id="@+id/merchcountryCode"
-        android:layout_width="92dp"
+        android:layout_width="88dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="68dp"
-        android:backgroundTint="#F3F3F3"
+        android:backgroundTint="#C5D9C9"
+        android:foreground="@drawable/card_border"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +125,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="A verification code will be sent to this number."
-        android:textColor="@color/black"
+        android:textColor="#2F2F2F"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -95,10 +134,10 @@
 
     <Button
         android:id="@+id/merchconfirmButton"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="56dp"
         android:layout_marginTop="36dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="#1D5F3E"
         android:text="@string/Confirm"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -107,6 +146,5 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/merchtextView2" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

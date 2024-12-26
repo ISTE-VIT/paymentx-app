@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
 import com.iste.paymentx.data.model.CreatePinRequest
 import com.iste.paymentx.data.model.RetrofitInstance
+import com.iste.paymentx.ui.main.AccountCreatedSuccessfully
 import com.iste.paymentx.ui.main.MainScreen
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -25,6 +27,8 @@ import java.io.IOException
 
 class ConfirmPIN : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var backarrow: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -34,6 +38,13 @@ class ConfirmPIN : AppCompatActivity() {
 
         // Retrieve the PIN passed from CreateTransPIN
         val transactionPin = intent.getStringExtra("transactionPin")
+        val backarrow = findViewById<ImageView>(R.id.back)
+
+        backarrow.setOnClickListener {
+            val intent = Intent(this,CreateTransPIN::class.java)
+            startActivity(intent)
+        }
+
         if (transactionPin == null) {
             Toast.makeText(this, "Transaction PIN not received!", Toast.LENGTH_SHORT).show()
             finish() // Exit if no PIN is passed
@@ -75,7 +86,7 @@ class ConfirmPIN : AppCompatActivity() {
             }
         }
 
-        val btnVerify = findViewById<Button>(R.id.btnVerify)
+        val btnVerify = findViewById<Button>(R.id.btnConfirm)
         btnVerify.setOnClickListener {
             // Gather input PIN
             val enteredPin = pinInputs.joinToString("") { it.text.toString() }

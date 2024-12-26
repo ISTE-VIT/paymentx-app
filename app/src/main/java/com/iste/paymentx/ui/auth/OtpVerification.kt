@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,8 @@ import java.io.IOException
 class OtpVerification : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var backarrow: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -34,6 +37,7 @@ class OtpVerification : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         val phoneNumber = intent.getStringExtra("phoneNumber")
+        val backarrow = findViewById<ImageView>(R.id.back)
 
         val inputs = listOf(
             findViewById<EditText>(R.id.uid_input1),
@@ -43,6 +47,11 @@ class OtpVerification : AppCompatActivity() {
             findViewById<EditText>(R.id.uid_input5)
         )
         setUpOtpInputs(inputs)
+
+        backarrow.setOnClickListener {
+            val intent = Intent(this,Phonenumber::class.java)
+            startActivity(intent)
+        }
 
         val btnVerify = findViewById<Button>(R.id.btnVerify)
         btnVerify.setOnClickListener {
