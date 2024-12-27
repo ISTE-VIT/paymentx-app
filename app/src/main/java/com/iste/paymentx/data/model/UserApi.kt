@@ -40,5 +40,16 @@ interface UserApi {
     suspend fun checkUser(
         @Header("Authorization") authToken: String
     ): Response<response>
+
+    @POST("/api/users/verify-pin")
+    suspend fun verifyPin(
+        @Header("Authorization") authToken: String,
+        @Body pin: CreatePinRequest
+    ): Response<response>
+
+    @GET("/api/wallets/")
+    suspend fun getWallet(
+        @Header("Authorization") authToken: String
+    ): Response<response>
 }
 

@@ -5,15 +5,28 @@ import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
 import com.iste.paymentx.R
+import com.iste.paymentx.data.model.AttachIdRequest
+import com.iste.paymentx.data.model.RetrofitInstance
+import com.iste.paymentx.ui.auth.Phonenumber
 import com.iste.paymentx.ui.auth.PinVerifyPage
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import retrofit2.HttpException
+import retrofit2.Response
+import java.io.IOException
 
 class MainScreen : AppCompatActivity() {
     private lateinit var balanceTextView: TextView
@@ -21,10 +34,12 @@ class MainScreen : AppCompatActivity() {
     private lateinit var btnTopUp: ImageView
     private lateinit var btnWithdraw: ImageView
     private lateinit var btnTransact: ImageView
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_main_screen)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -43,6 +58,7 @@ class MainScreen : AppCompatActivity() {
 
         // Set click listener for balance visibility
         btnViewBalance.setOnClickListener {
+            btnViewBalance.visibility = View.GONE
             val intent = Intent(this, PinVerifyPage::class.java)
             intent.putExtra("CALLING_ACTIVITY", "ViewBalance")
             startActivityForResult(intent, 100) // Start for result to check PIN verification
@@ -64,16 +80,62 @@ class MainScreen : AppCompatActivity() {
     // Handle the result from PinVerifyPage
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        btnViewBalance.visibility = View.VISIBLE
         if (requestCode == 100 && resultCode == RESULT_OK) {
             showBalance() // Show the balance if PIN was verified
         }
     }
 
     private fun showBalance() {
-        // Hide the button
         btnViewBalance.visibility = View.GONE
+        getBalance()
+    }
 
-        // Show the balance TextView
-        balanceTextView.visibility = View.VISIBLE
+    private suspend fun getFirebaseIdToken(): String? {
+        return try {
+            val user = auth.currentUser
+            user?.getIdToken(false)?.await()?.token
+        } catch (e: Exception) {
+            Log.e("HomeActivity", "Error getting Firebase ID token", e)
+            null
+        }
+    }
+
+    private suspend fun getBalanceHelper(authToken: String) {
+        try {
+            val response = RetrofitInstance.api.getWallet(authToken)
+            if (response.isSuccessful && response.body() != null) {
+                val body = response.body()
+                    val wallet = body?.wallet
+                    if(wallet!=null){
+                        val amount = wallet.balance
+                        balanceTextView.text = "₹"+Integer.toString(amount)
+                        balanceTextView.visibility = View.VISIBLE
+                    }
+            } else {
+                btnViewBalance.visibility = View.VISIBLE
+                balanceTextView.visibility=View.GONE
+                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: IOException) {
+            btnViewBalance.visibility = View.VISIBLE
+            balanceTextView.visibility=View.GONE
+            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            btnViewBalance.visibility = View.VISIBLE
+            balanceTextView.visibility=View.GONE
+            Log.e("HomeActivity", "HttpException, unexpected response", e)
+        }
+    }
+
+    private fun getBalance() {
+        lifecycleScope.launch {
+            val token = getFirebaseIdToken()
+            if (token != null) {
+                getBalanceHelper("Bearer $token")
+            } else {
+                Log.e("HomeActivity", "Failed to get Firebase ID token")
+            }
+        }
     }
 }
