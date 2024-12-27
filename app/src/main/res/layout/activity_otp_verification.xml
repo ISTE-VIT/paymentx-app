@@ -47,7 +47,7 @@
         android:layout_width="328dp"
         android:layout_height="47dp"
         android:layout_marginTop="136dp"
-        android:text="OTP code has been sent to +91 8777508827 enter the code below to continue."
+        android:text="@string/otp_message"
         android:textColor="#2F2F2F"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

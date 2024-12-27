@@ -10,6 +10,7 @@ import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +39,10 @@ class OtpVerification : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         val phoneNumber = intent.getStringExtra("phoneNumber")
         val backarrow = findViewById<ImageView>(R.id.back)
+
+        // Add this line to update the TextView
+        val otpText = findViewById<TextView>(R.id.enter_otp_text)
+        otpText.text = getString(R.string.otp_message, phoneNumber)
 
         val inputs = listOf(
             findViewById<EditText>(R.id.uid_input1),
