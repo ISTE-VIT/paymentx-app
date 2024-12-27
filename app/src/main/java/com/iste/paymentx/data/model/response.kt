@@ -4,5 +4,6 @@ import androidx.core.app.NotificationCompat.MessagingStyle.Message
 
 data class response(
     val success : Boolean,
-    val message: String? = null
+    val message: String? = null,
+    val user: User? = null
 )

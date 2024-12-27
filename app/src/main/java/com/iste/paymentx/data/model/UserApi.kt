@@ -2,6 +2,7 @@ package com.iste.paymentx.data.model
 
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -29,6 +30,15 @@ interface UserApi {
     suspend fun createPin(
         @Header("Authorization") authToken: String,
         @Body pin: CreatePinRequest
+    ): Response<response>
+
+    @GET("/")
+    suspend fun init(
+    ): Response<response>
+
+    @GET("/api/users/check-user")
+    suspend fun checkUser(
+        @Header("Authorization") authToken: String
     ): Response<response>
 }
 

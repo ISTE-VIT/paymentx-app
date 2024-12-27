@@ -37,14 +37,13 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private var userRecieved: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val api = RetrofitInstance.api
         setContentView(R.layout.activity_home)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
         hideContent()
         setupBiometricAuthentication()
         startBiometricAuthentication()
@@ -74,6 +73,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+        checkUser()
         val userName = intent.getStringExtra("USER_NAME")
         val userEmail = intent.getStringExtra("USER_EMAIL")
         val userId = intent.getStringExtra("USER_ID")
@@ -231,13 +231,20 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showContent() {
-        findViewById<TextView>(R.id.user_name_text).visibility = View.VISIBLE
-        findViewById<TextView>(R.id.user_email_text).visibility = View.VISIBLE
-        findViewById<TextView>(R.id.user_id_text).visibility = View.VISIBLE
-        findViewById<ImageView>(R.id.logout_button).visibility = View.VISIBLE
-        findViewById<Button>(R.id.checkBut).visibility = View.VISIBLE
-        findViewById<Button>(R.id.checkMerchant).visibility = View.VISIBLE
-        findViewById<TextView>(R.id.or).visibility = View.VISIBLE
+        if (userRecieved){
+            val intent = Intent(this, MainScreen::class.java)
+            startActivity(intent)
+            finish()
+        }
+        else {
+            findViewById<TextView>(R.id.user_name_text).visibility = View.VISIBLE
+            findViewById<TextView>(R.id.user_email_text).visibility = View.VISIBLE
+            findViewById<TextView>(R.id.user_id_text).visibility = View.VISIBLE
+            findViewById<ImageView>(R.id.logout_button).visibility = View.VISIBLE
+            findViewById<Button>(R.id.checkBut).visibility = View.VISIBLE
+            findViewById<Button>(R.id.checkMerchant).visibility = View.VISIBLE
+            findViewById<TextView>(R.id.or).visibility = View.VISIBLE
+        }
     }
 
     private suspend fun getFirebaseIdToken(): String? {
@@ -269,6 +276,33 @@ class HomeActivity : AppCompatActivity() {
             val user = User(email = email, displayName = displayName, uid = uid, isMerchant = isMerchant)
             getFirebaseIdToken()?.let { token ->
                 loginHelper("Bearer $token", user)
+            } ?: Log.e("HomeActivity", "Failed to get Firebase ID token")
+        }
+    }
+
+    private suspend fun checkUserHelper(authToken: String) {
+        try {
+            val response = RetrofitInstance.api.checkUser(authToken)
+            if (response.isSuccessful && response.body() != null) {
+                val body = response.body()
+                val user = body?.user
+                if(user?.pin != null){
+                    userRecieved = true
+                }
+            } else {
+                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: IOException) {
+            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            Log.e("HomeActivity", "HttpException, unexpected response", e)
+        }
+    }
+
+    private fun checkUser() {
+        lifecycleScope.launch {
+            getFirebaseIdToken()?.let { token ->
+                checkUserHelper("Bearer $token")
             } ?: Log.e("HomeActivity", "Failed to get Firebase ID token")
         }
     }

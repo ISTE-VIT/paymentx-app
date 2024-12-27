@@ -26,6 +26,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.ui.main.HomeActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.iste.paymentx.data.model.AttachIdRequest
+import com.iste.paymentx.data.model.RetrofitInstance
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import retrofit2.HttpException
+import java.io.IOException
 
 class GoogleAuthActivity : AppCompatActivity() {
 
@@ -36,9 +44,9 @@ class GoogleAuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        apiInitFunc()
         enableEdgeToEdge()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
         // Check if already signed in before setting content view
         if (viewModel.isUserLoggedIn()) {
             val currentUser = FirebaseAuth.getInstance().currentUser
@@ -132,5 +140,26 @@ class GoogleAuthActivity : AppCompatActivity() {
         }
         startActivity(intent)
         finish()
+    }
+
+    private suspend fun apiInitHelper() {
+        try {
+            val response = RetrofitInstance.api.init()
+            if (response.isSuccessful && response.body() != null) {
+                Log.i("GoogleAuthActivity", "Api Set Successfully")
+            } else {
+                Log.e("GoogleAuthActivity", "Response not successful: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: IOException) {
+            Log.e("GoogleAuthActivity", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            Log.e("GoogleAuthActivity", "HttpException, unexpected response", e)
+        }
+    }
+
+    private fun apiInitFunc() {
+        lifecycleScope.launch {
+            apiInitHelper()
+        }
     }
 }
