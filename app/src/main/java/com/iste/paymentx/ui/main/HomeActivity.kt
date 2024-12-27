@@ -3,18 +3,13 @@ package com.iste.paymentx.ui.main
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -35,8 +30,6 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var biometricPrompt: BiometricPrompt
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private var userRecieved: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +38,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         hideContent()
-        setupBiometricAuthentication()
-        startBiometricAuthentication()
         setupAuth()
         setupUI()
     }
@@ -107,115 +98,6 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-    }
-
-    private fun setupBiometricAuthentication() {
-        val executor = ContextCompat.getMainExecutor(this)
-
-        biometricPrompt = BiometricPrompt(this, executor,
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    val cryptoObject = result.cryptoObject
-                    showContent()
-                }
-
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    handleAuthenticationError(errorCode, errString)
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    Toast.makeText(
-                        this@HomeActivity,
-                        "Authentication failed",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
-
-        promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Verify Identity")
-            .setSubtitle("Use your biometric credential or face to access the app")
-            .setAllowedAuthenticators(
-                BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                        BiometricManager.Authenticators.BIOMETRIC_WEAK or
-                        BiometricManager.Authenticators.DEVICE_CREDENTIAL
-            )
-            .build()
-    }
-
-    private fun handleAuthenticationError(errorCode: Int, errString: CharSequence) {
-        when (errorCode) {
-            BiometricPrompt.ERROR_NEGATIVE_BUTTON,
-            BiometricPrompt.ERROR_USER_CANCELED -> {
-                finish()
-            }
-            BiometricPrompt.ERROR_HW_NOT_PRESENT -> {
-                Toast.makeText(
-                    this,
-                    "This device doesn't support biometric authentication",
-                    Toast.LENGTH_LONG
-                ).show()
-                showContent()
-            }
-            else -> {
-                Toast.makeText(
-                    this,
-                    "Authentication error: $errString",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
-    private fun startBiometricAuthentication() {
-        if (checkBiometricAvailability()) {
-            biometricPrompt.authenticate(promptInfo)
-        }
-    }
-
-    private fun checkBiometricAvailability(): Boolean {
-        val biometricManager = BiometricManager.from(this)
-
-        return when (biometricManager.canAuthenticate(
-            BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                    BiometricManager.Authenticators.BIOMETRIC_WEAK or
-                    BiometricManager.Authenticators.DEVICE_CREDENTIAL
-        )) {
-            BiometricManager.BIOMETRIC_SUCCESS -> true
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                handleBiometricUnavailable("No biometric hardware")
-                false
-            }
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                handleBiometricUnavailable("Biometric hardware unavailable")
-                false
-            }
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                promptBiometricEnrollment()
-                false
-            }
-            else -> false
-        }
-    }
-
-    private fun handleBiometricUnavailable(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        showContent()
-    }
-
-    private fun promptBiometricEnrollment() {
-        val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
-            putExtra(
-                Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                        BiometricManager.Authenticators.BIOMETRIC_WEAK or
-                        BiometricManager.Authenticators.DEVICE_CREDENTIAL
-            )
-        }
-        startActivityForResult(enrollIntent, BIOMETRIC_ENROLLMENT_REQUEST_CODE)
     }
 
     private fun handleLogout() {
@@ -288,14 +170,20 @@ class HomeActivity : AppCompatActivity() {
                 val user = body?.user
                 if(user?.pin != null){
                     userRecieved = true
+                    showContent()
+                } else {
+                    showContent()
                 }
             } else {
                 Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+                showContent()
             }
         } catch (e: IOException) {
             Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+            showContent()
         } catch (e: HttpException) {
             Log.e("HomeActivity", "HttpException, unexpected response", e)
+            showContent()
         }
     }
 
@@ -305,16 +193,5 @@ class HomeActivity : AppCompatActivity() {
                 checkUserHelper("Bearer $token")
             } ?: Log.e("HomeActivity", "Failed to get Firebase ID token")
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (findViewById<TextView>(R.id.user_name_text).visibility != View.VISIBLE) {
-            startBiometricAuthentication()
-        }
-    }
-
-    companion object {
-        private const val BIOMETRIC_ENROLLMENT_REQUEST_CODE = 100
     }
 }

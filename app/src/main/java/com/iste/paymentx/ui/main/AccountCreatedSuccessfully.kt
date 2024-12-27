@@ -11,7 +11,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.iste.paymentx.R
 
 class AccountCreatedSuccessfully : AppCompatActivity() {
-    private lateinit var continueButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -19,9 +18,11 @@ class AccountCreatedSuccessfully : AppCompatActivity() {
 
         val continueButton = findViewById<Button>(R.id.Continue_button)
 
-        continueButton.setOnClickListener{
+        continueButton.setOnClickListener {
             val intent = Intent(this, MainScreen::class.java)
+            // Pass any necessary data to MainScreen if required
             startActivity(intent)
+            finish() // Close the current activity to avoid returning to it
         }
     }
 }
