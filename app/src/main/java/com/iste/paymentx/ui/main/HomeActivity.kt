@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -144,6 +145,7 @@ class HomeActivity : AppCompatActivity() {
             if (response.isSuccessful && response.body() != null) {
                 startActivity(Intent(this, ScanId::class.java))
             } else {
+                Toast.makeText(this,"hello",Toast.LENGTH_SHORT).show()
                 Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
             }
         } catch (e: IOException) {

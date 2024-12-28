@@ -51,5 +51,17 @@ interface UserApi {
     suspend fun getWallet(
         @Header("Authorization") authToken: String
     ): Response<response>
+
+    @PATCH("/api/wallets/topup")
+    suspend fun topup(
+        @Header("Authorization") authToken: String,
+        @Body details: WalletRequest
+    ): Response<response>
+
+    @PATCH("/api/wallets/withdraw")
+    suspend fun withdraw(
+        @Header("Authorization") authToken: String,
+        @Body details: WalletRequest
+    ): Response<response>
 }
 

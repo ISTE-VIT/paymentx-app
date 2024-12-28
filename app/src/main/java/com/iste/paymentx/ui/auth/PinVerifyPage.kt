@@ -16,10 +16,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
 import com.iste.paymentx.R
-import com.iste.paymentx.data.model.AttachIdRequest
 import com.iste.paymentx.data.model.CreatePinRequest
+import com.iste.paymentx.data.model.ErrorResponse
 import com.iste.paymentx.data.model.RetrofitInstance
+import com.iste.paymentx.data.model.WalletRequest
+import com.iste.paymentx.ui.main.MainScreen
 import com.iste.paymentx.ui.main.TickMarkAnimation
 import com.iste.paymentx.ui.main.TopUpCompleted
 import com.iste.paymentx.ui.main.WithdrawCompleted
@@ -37,8 +40,7 @@ class PinVerifyPage : AppCompatActivity() {
         setContentView(R.layout.activity_pin_verify_page)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val sharedPref = getSharedPreferences("PaymentX", MODE_PRIVATE)
-        val storedPin = sharedPref.getString("transactionPin", null)
+        //val sharedPref = getSharedPreferences("PaymentX", MODE_PRIVATE)
 
         // PIN input fields
         val pinInputs = listOf(
@@ -82,38 +84,17 @@ class PinVerifyPage : AppCompatActivity() {
             if (enteredPin.length == 6) {
                     val callingActivity = intent.getStringExtra("CALLING_ACTIVITY")
                     if (callingActivity == "ViewBalance") {
-                        verifyPin(enteredPin)
+                        verifyPinBalance(enteredPin)
                     } else {
-                        if(enteredPin==storedPin){
                             val amount = intent.getDoubleExtra("EXTRA_AMOUNT", 0.0).toInt()
                             if (amount > 0) {
                                 // Start tick mark animation
-                                val tickIntent = Intent(this, TickMarkAnimation::class.java)
-                                startActivity(tickIntent)
-
-                                // Determine the destination based on the calling activity
-                                Handler(Looper.getMainLooper()).postDelayed({
-                                    val destinationIntent = if (callingActivity == "Withdraw") {
-                                        Intent(this, WithdrawCompleted::class.java).apply {
-                                            putExtra("EXTRA_AMOUNT", amount)
-                                        }
-                                    } else if (callingActivity == "TopUp") {
-                                        Intent(this, TopUpCompleted::class.java).apply {
-                                            putExtra("EXTRA_AMOUNT", amount)
-                                        }
-                                    } else {
-                                        Toast.makeText(this, "Invalid operation", Toast.LENGTH_SHORT).show()
-                                        return@postDelayed
-                                    }
-                                    startActivity(destinationIntent)
-                                    finish()
-                                }, 2000) // 2 seconds delay for tick animation
+                                if (callingActivity != null) {
+                                    verifyPinWallet(enteredPin,amount,callingActivity)
+                                }
                             } else {
                                 Toast.makeText(this, "Invalid amount", Toast.LENGTH_SHORT).show()
                             }
-                        }else{
-                            Toast.makeText(this, "Incorrect Pin", Toast.LENGTH_SHORT).show()
-                        }
                     }
             } else {
                 Toast.makeText(this, "Please enter all 6 digits.", Toast.LENGTH_SHORT).show()
@@ -131,7 +112,7 @@ class PinVerifyPage : AppCompatActivity() {
         }
     }
 
-    private suspend fun verifyPinHelper(authToken: String,pin: String){
+    private suspend fun verifyPinHelperBalance(authToken: String,pin: String){
         try {
             val request = CreatePinRequest(pin)
             val response = RetrofitInstance.api.verifyPin(authToken,request)
@@ -154,14 +135,101 @@ class PinVerifyPage : AppCompatActivity() {
         }
     }
 
-    private fun verifyPin(pin: String){
+    private fun verifyPinBalance(pin: String){
         lifecycleScope.launch {
             val token = getFirebaseIdToken()
             if (token != null) {
-                verifyPinHelper("Bearer $token",pin)
+                verifyPinHelperBalance("Bearer $token",pin)
             } else {
                 Log.e("HomeActivity", "Failed to get Firebase ID token")
             }
         }
     }
+
+    private suspend fun verifyPinHelperWallet(authToken: String,pin: String,amount: Int,callingActivity: String){
+        try {
+            val request = WalletRequest(pin, amount)
+            if(callingActivity=="Withdraw"){
+                val response = RetrofitInstance.api.withdraw(authToken, request)
+                if(response.isSuccessful && response.body()!=null){
+                    val tickIntent = Intent(this, TickMarkAnimation::class.java)
+                    startActivity(tickIntent)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        val destinationIntent = Intent(this, WithdrawCompleted::class.java).apply {
+                            putExtra("EXTRA_AMOUNT", amount)
+                        }
+                        startActivity(destinationIntent)
+                        finish()
+                    },2000)
+                }
+                else {
+                    val errorBody = response.errorBody()?.string()
+                    val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+                    Toast.makeText(this,errorResponse.message,Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainScreen::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                    Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+                }
+            }
+            else if(callingActivity=="TopUp"){
+                val response = RetrofitInstance.api.topup(authToken, request)
+                if(response.isSuccessful && response.body()!=null){
+                    val tickIntent = Intent(this, TickMarkAnimation::class.java)
+                    startActivity(tickIntent)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        val destinationIntent = Intent(this, TopUpCompleted::class.java).apply {
+                            putExtra("EXTRA_AMOUNT", amount)
+                        }
+                        startActivity(destinationIntent)
+                        finish()
+                    },2000)
+                }
+                else {
+                    val errorBody = response.errorBody()?.string()
+                    val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+                    Toast.makeText(this,errorResponse.message,Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainScreen::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                    Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+                }
+            }
+            else{
+                val intent = Intent(this, MainScreen::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+        } catch (e: IOException) {
+            Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainScreen::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainScreen::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+            Log.e("HomeActivity", "HttpException, unexpected response", e)
+        }
+    }
+
+    private fun verifyPinWallet(pin: String,amount: Int,callingActivity: String){
+        lifecycleScope.launch {
+            val token = getFirebaseIdToken()
+            if (token != null) {
+                verifyPinHelperWallet("Bearer $token",pin,amount,callingActivity)
+            } else {
+                Log.e("HomeActivity", "Failed to get Firebase ID token")
+            }
+        }
+    }
+
+
 }

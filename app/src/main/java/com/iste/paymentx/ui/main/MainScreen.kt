@@ -55,7 +55,8 @@ class MainScreen : AppCompatActivity() {
         btnViewBalance = findViewById(R.id.btnViewBalance)
         btnTopUp = findViewById(R.id.btnTopUp)
         btnWithdraw = findViewById(R.id.btnWithdraw)
-
+        balanceTextView.visibility = View.GONE
+        btnViewBalance.visibility = View.VISIBLE
         // Set click listener for balance visibility
         btnViewBalance.setOnClickListener {
             btnViewBalance.visibility = View.GONE
