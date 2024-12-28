@@ -37,7 +37,7 @@
             android:textColor="#1D5F3E"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/backk" />
+            app:layout_constraintStart_toStartOf="@+id/back" />
     </androidx.cardview.widget.CardView>
 
     <!-- Centered Layout for Input Boxes -->

@@ -39,7 +39,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="270dp"
-        android:background="#FFFFFF"
+        android:background="#F5F8EC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" >
@@ -50,7 +50,7 @@
             android:layout_height="42dp"
             android:text="Your Amount will be credited to your bank account within 72 hours."
             android:textAlignment="center"
-            android:textColor="#595F67"
+            android:textColor="#DC2F2F2F"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="You’ve Withdrawn"
-        android:textColor="@color/black"
+        android:textColor="#2F2F2F"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="From Your Wallet"
-        android:textColor="@color/black"
+        android:textColor="#2F2F2F"
         app:layout_constraintBottom_toTopOf="@+id/downloadInvoiceCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
@@ -83,20 +83,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.116" />
 
+    <!-- CardView directly below "To Your Wallet" -->
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="58dp"
+        android:layout_height="46dp"
         android:layout_marginTop="52dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/backarrow" />
+        app:srcCompat="@drawable/baseline_arrow_back_24" />
 
-    <!-- CardView directly below "To Your Wallet" -->
     <androidx.cardview.widget.CardView
         android:id="@+id/downloadInvoiceCard"
         android:layout_width="0dp"
@@ -104,7 +104,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="#F5F8EC"
         android:elevation="8dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,7 +120,7 @@
             android:layout_marginStart="20dp"
             android:padding="16dp"
             android:text="Download Invoice"
-            android:textColor="@color/black"
+            android:textColor="#2F2F2F"
             android:textSize="20sp"
             android:textStyle="bold" />
 
