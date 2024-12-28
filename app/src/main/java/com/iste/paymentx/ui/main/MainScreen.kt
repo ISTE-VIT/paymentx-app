@@ -10,22 +10,17 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
-import com.google.gson.Gson
 import com.iste.paymentx.R
-import com.iste.paymentx.data.model.AttachIdRequest
 import com.iste.paymentx.data.model.RetrofitInstance
-import com.iste.paymentx.ui.auth.Phonenumber
 import com.iste.paymentx.ui.auth.PinVerifyPage
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
 
 class MainScreen : AppCompatActivity() {

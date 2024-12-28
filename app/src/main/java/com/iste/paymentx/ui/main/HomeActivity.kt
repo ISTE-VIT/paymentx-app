@@ -1,8 +1,11 @@
 package com.iste.paymentx.ui.main
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -32,15 +35,31 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private var userRecieved: Boolean = false
+    private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_home)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Initialize vibrator
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
         hideContent()
         setupAuth()
         setupUI()
+    }
+
+    private fun vibratePhone() {
+        if (vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(200)
+            }
+        }
     }
 
     private fun hideContent() {
@@ -146,6 +165,7 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(Intent(this, ScanId::class.java))
             } else {
                 Toast.makeText(this,"hello",Toast.LENGTH_SHORT).show()
+                vibratePhone()
                 Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
             }
         } catch (e: IOException) {

@@ -1,8 +1,11 @@
 package com.iste.paymentx.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
@@ -13,11 +16,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.iste.paymentx.R
 
 class Phonenumber : AppCompatActivity() {
+    private lateinit var vibrator: Vibrator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_phonenumber)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Initialize vibrator
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         val confirmButton = findViewById<Button>(R.id.confirmButton)
         val textField = findViewById<EditText>(R.id.phoneNumberEditText)
@@ -46,6 +54,18 @@ class Phonenumber : AppCompatActivity() {
             } else {
                 // Invalid phone number, show a toast
                 Toast.makeText(this, "Please enter a valid 10-digit phone number", Toast.LENGTH_SHORT).show()
+                vibratePhone()
+            }
+        }
+    }
+
+    private fun vibratePhone() {
+        if (vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(200)
             }
         }
     }

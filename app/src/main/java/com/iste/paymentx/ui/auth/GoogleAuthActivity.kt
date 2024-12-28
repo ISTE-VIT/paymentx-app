@@ -1,9 +1,12 @@
 package com.iste.paymentx.ui.auth
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.provider.Settings
 import android.util.Log
 import android.widget.Button
@@ -46,6 +49,7 @@ class GoogleAuthActivity : AppCompatActivity() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private var onSuccessfulAuthentication: (() -> Unit)? = null
+    private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +57,9 @@ class GoogleAuthActivity : AppCompatActivity() {
         enableEdgeToEdge()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setupBiometricAuthentication()
+
+        // Initialize vibrator
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         // Check if already signed in before setting content view
         if (viewModel.isUserLoggedIn()) {
@@ -83,6 +90,17 @@ class GoogleAuthActivity : AppCompatActivity() {
         }
     }
 
+    private fun vibratePhone() {
+        if (vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(200)
+            }
+        }
+    }
+
     private fun setupBiometricAuthentication() {
         val executor = ContextCompat.getMainExecutor(this)
 
@@ -105,6 +123,7 @@ class GoogleAuthActivity : AppCompatActivity() {
                         "Authentication failed",
                         Toast.LENGTH_SHORT
                     ).show()
+                    vibratePhone()
                 }
             })
 
@@ -131,6 +150,7 @@ class GoogleAuthActivity : AppCompatActivity() {
                     "This device doesn't support biometric authentication",
                     Toast.LENGTH_LONG
                 ).show()
+                vibratePhone()
                 onSuccessfulAuthentication?.invoke()
             }
             else -> {
@@ -139,6 +159,7 @@ class GoogleAuthActivity : AppCompatActivity() {
                     "Authentication error: $errString",
                     Toast.LENGTH_SHORT
                 ).show()
+                vibratePhone()
             }
         }
     }
@@ -179,6 +200,7 @@ class GoogleAuthActivity : AppCompatActivity() {
 
     private fun handleBiometricUnavailable(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        vibratePhone()
         onSuccessfulAuthentication?.invoke()
     }
 

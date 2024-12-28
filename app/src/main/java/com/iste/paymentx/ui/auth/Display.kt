@@ -1,10 +1,11 @@
 package com.iste.paymentx.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -16,8 +17,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
 import com.iste.paymentx.data.model.AttachIdRequest
 import com.iste.paymentx.data.model.RetrofitInstance
-import com.iste.paymentx.data.model.User
-import com.iste.paymentx.ui.main.TickMarkAnimation
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
@@ -28,6 +27,7 @@ class Display : AppCompatActivity() {
     private lateinit var uidTextView: TextView
     private lateinit var confirmButton: Button
     private lateinit var auth: FirebaseAuth
+    private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +35,9 @@ class Display : AppCompatActivity() {
         setContentView(R.layout.activity_display)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         auth = FirebaseAuth.getInstance()
+
+        // Initialize vibrator
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         try {
             // Initialize TextView and Button
@@ -51,6 +54,7 @@ class Display : AppCompatActivity() {
                 uidTextView.text = "No UID received"
                 Log.e("DisplayUID", "No UID received in intent")
                 Toast.makeText(this, "Error: No UID received", Toast.LENGTH_SHORT).show()
+                vibratePhone()
             }
 
             // Set OnClickListener for the Confirm button
@@ -64,6 +68,7 @@ class Display : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e("DisplayUID", "Error in onCreate: ${e.message}")
             Toast.makeText(this, "Error displaying UID", Toast.LENGTH_SHORT).show()
+            vibratePhone()
         }
     }
 
@@ -101,6 +106,17 @@ class Display : AppCompatActivity() {
                 attachIdHelper("Bearer $token",idCardUid)
             } else {
                 Log.e("HomeActivity", "Failed to get Firebase ID token")
+            }
+        }
+    }
+
+    private fun vibratePhone() {
+        if (vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(200)
             }
         }
     }

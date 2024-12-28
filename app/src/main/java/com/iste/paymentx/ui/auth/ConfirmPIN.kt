@@ -1,8 +1,11 @@
 package com.iste.paymentx.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -18,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
 import com.iste.paymentx.data.model.CreatePinRequest
 import com.iste.paymentx.data.model.RetrofitInstance
-import com.iste.paymentx.ui.main.AccountCreatedSuccessfully
 import com.iste.paymentx.ui.main.MainScreen
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -28,6 +30,7 @@ import java.io.IOException
 class ConfirmPIN : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var backarrow: ImageView
+    private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,9 @@ class ConfirmPIN : AppCompatActivity() {
         setContentView(R.layout.activity_confirm_pin)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         auth = FirebaseAuth.getInstance()
+
+        // Initialize vibrator
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         // Retrieve the PIN passed from CreateTransPIN
         val transactionPin = intent.getStringExtra("transactionPin")
@@ -47,6 +53,7 @@ class ConfirmPIN : AppCompatActivity() {
 
         if (transactionPin == null) {
             Toast.makeText(this, "Transaction PIN not received!", Toast.LENGTH_SHORT).show()
+            vibratePhone()
             finish() // Exit if no PIN is passed
             return
         }
@@ -99,10 +106,12 @@ class ConfirmPIN : AppCompatActivity() {
                 } else {
                     // Show error if PINs do not match
                     Toast.makeText(this, "PINs do not match. Try again.", Toast.LENGTH_SHORT).show()
+                    vibratePhone()
                 }
             } else {
                 // Show error if PIN is incomplete
                 Toast.makeText(this, "Please enter all 6 digits.", Toast.LENGTH_SHORT).show()
+                vibratePhone()
             }
         }
         val sharedPref = getSharedPreferences("PaymentX", MODE_PRIVATE)
@@ -146,6 +155,16 @@ class ConfirmPIN : AppCompatActivity() {
                 createPinHelper("Bearer $token",pin)
             } else {
                 Log.e("HomeActivity", "Failed to get Firebase ID token")
+            }
+        }
+    }
+    private fun vibratePhone() {
+        if (vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(200)
             }
         }
     }

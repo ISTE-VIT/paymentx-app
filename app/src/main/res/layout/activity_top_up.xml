@@ -13,7 +13,7 @@
         android:layout_width="409dp"
         android:layout_height="90dp"
         app:cardBackgroundColor="#C5D9C9"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/amountContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -42,37 +42,47 @@
     </androidx.cardview.widget.CardView>
 
     <!-- Rupee Symbol -->
-    <TextView
-        android:id="@+id/textView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/amountContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="192dp"
-        android:text="₹"
-        android:textColor="#1D5F3E"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardheader" />
-
-    <!-- Input Amount  -->
-    <EditText
-        android:id="@+id/amountEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="20dp"
-        android:ems="1"
-        android:hint="0"
-        android:inputType="number"
-        android:textColor="#2F2F2F"
-        android:textColorHint="#B3BDCB"
-        android:textSize="60sp"
-        android:textStyle="bold"
+        android:layout_marginTop="180dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.032"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/cardheader" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardheader">
+
+        <!-- Rupee Symbol -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₹"
+            android:textColor="#1D5F3E"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/amountEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/amountEditText" />
+
+        <!-- Input Amount  -->
+        <EditText
+            android:id="@+id/amountEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@null"
+            android:hint="0"
+            android:inputType="number"
+            android:textColor="#2F2F2F"
+            android:textColorHint="#B3BDCB"
+            android:textCursorDrawable="@drawable/custom_cursor"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Quick Amount Buttons -->
     <com.google.android.material.button.MaterialButton
@@ -88,7 +98,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amountEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/amountContainer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button2"
@@ -103,7 +113,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toStartOf="@+id/button3"
         app:layout_constraintStart_toEndOf="@+id/button1"
-        app:layout_constraintTop_toBottomOf="@+id/amountEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/amountContainer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button3"
@@ -118,7 +128,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/amountEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/amountContainer" />
 
     <!-- Continue Button -->
     <Button

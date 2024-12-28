@@ -1,10 +1,13 @@
 package com.iste.paymentx.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -33,6 +36,8 @@ import java.io.IOException
 
 class PinVerifyPage : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
+    private lateinit var vibrator: Vibrator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,7 +45,8 @@ class PinVerifyPage : AppCompatActivity() {
         setContentView(R.layout.activity_pin_verify_page)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        //val sharedPref = getSharedPreferences("PaymentX", MODE_PRIVATE)
+        // Initialize vibrator
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         // PIN input fields
         val pinInputs = listOf(
@@ -94,10 +100,23 @@ class PinVerifyPage : AppCompatActivity() {
                                 }
                             } else {
                                 Toast.makeText(this, "Invalid amount", Toast.LENGTH_SHORT).show()
+                                vibratePhone()
                             }
                     }
             } else {
                 Toast.makeText(this, "Please enter all 6 digits.", Toast.LENGTH_SHORT).show()
+                vibratePhone()
+            }
+        }
+    }
+
+    private fun vibratePhone() {
+        if (vibrator.hasVibrator()) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(200)
             }
         }
     }
@@ -121,15 +140,18 @@ class PinVerifyPage : AppCompatActivity() {
                 finish()
             } else {
                 Toast.makeText(this,"Incorrect Pin",Toast.LENGTH_SHORT).show()
+                vibratePhone()
                 finish()
                 Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
             }
         } catch (e: IOException) {
             Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show()
+            vibratePhone()
             finish()
             Log.e("HomeActivity", "IOException, you might not have internet connection", e)
         } catch (e: HttpException) {
             Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show()
+            vibratePhone()
             finish()
             Log.e("HomeActivity", "HttpException, unexpected response", e)
         }
@@ -166,6 +188,7 @@ class PinVerifyPage : AppCompatActivity() {
                     val errorBody = response.errorBody()?.string()
                     val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
                     Toast.makeText(this,errorResponse.message,Toast.LENGTH_SHORT).show()
+                    vibratePhone()
                     val intent = Intent(this, MainScreen::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
@@ -190,6 +213,7 @@ class PinVerifyPage : AppCompatActivity() {
                     val errorBody = response.errorBody()?.string()
                     val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
                     Toast.makeText(this,errorResponse.message,Toast.LENGTH_SHORT).show()
+                    vibratePhone()
                     val intent = Intent(this, MainScreen::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
@@ -205,6 +229,7 @@ class PinVerifyPage : AppCompatActivity() {
             }
         } catch (e: IOException) {
             Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show()
+            vibratePhone()
             val intent = Intent(this, MainScreen::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -212,6 +237,7 @@ class PinVerifyPage : AppCompatActivity() {
             Log.e("HomeActivity", "IOException, you might not have internet connection", e)
         } catch (e: HttpException) {
             Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show()
+            vibratePhone()
             val intent = Intent(this, MainScreen::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
