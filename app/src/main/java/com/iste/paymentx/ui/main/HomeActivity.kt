@@ -162,7 +162,12 @@ class HomeActivity : AppCompatActivity() {
         try {
             val response = RetrofitInstance.api.login(authToken, user)
             if (response.isSuccessful && response.body() != null) {
-                startActivity(Intent(this, ScanId::class.java))
+                val intent = Intent(this, ScanId::class.java).apply {
+                    putExtra("USER_NAME", user.displayName)
+                    putExtra("USER_EMAIL", user.email)
+                    putExtra("USER_ID", user.uid)
+                }
+                startActivity(intent)
             } else {
                 Toast.makeText(this,"hello",Toast.LENGTH_SHORT).show()
                 vibratePhone()

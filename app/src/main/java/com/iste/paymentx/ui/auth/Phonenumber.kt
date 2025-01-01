@@ -18,11 +18,21 @@ import com.iste.paymentx.R
 class Phonenumber : AppCompatActivity() {
     private lateinit var vibrator: Vibrator
 
+    // store credientials
+    private var userName: String? = null
+    private var userEmail: String? = null
+    private var userId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_phonenumber)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Get the user information from intent
+        userName = intent.getStringExtra("USER_NAME")
+        userEmail = intent.getStringExtra("USER_EMAIL")
+        userId = intent.getStringExtra("USER_ID")
 
         // Initialize vibrator
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -48,8 +58,12 @@ class Phonenumber : AppCompatActivity() {
             val number = textField.text.toString()
             if (number.length == 10) {
                 // Valid phone number, proceed to the next activity
-                val intent = Intent(this, OtpVerification::class.java)
-                intent.putExtra("phoneNumber", number)
+                val intent = Intent(this, OtpVerification::class.java).apply {
+                    putExtra("USER_NAME", userName)
+                    putExtra("USER_EMAIL", userEmail)
+                    putExtra("USER_ID", userId)
+                    putExtra("phoneNumber", number)
+                }
                 startActivity(intent)
             } else {
                 // Invalid phone number, show a toast

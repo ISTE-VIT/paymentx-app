@@ -13,12 +13,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.iste.paymentx.R
 
 class CreateTransPIN : AppCompatActivity() {
+    // store credientials
+    private var userName: String? = null
+    private var userEmail: String? = null
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_create_trans_pin)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Get the user information from intent
+        userName = intent.getStringExtra("USER_NAME")
+        userEmail = intent.getStringExtra("USER_EMAIL")
+        userId = intent.getStringExtra("USER_ID")
 
         val pinInputs = listOf(
             findViewById<EditText>(R.id.uid_input1),
@@ -61,8 +70,12 @@ class CreateTransPIN : AppCompatActivity() {
             // Ensure all inputs are filled
             val pin = pinInputs.joinToString("") { it.text.toString() }
             if (pin.length == pinInputs.size) {
-                val intent = Intent(this, ConfirmPIN::class.java)
-                intent.putExtra("transactionPin", pin) // Pass the PIN to the next activity
+                val intent = Intent(this, ConfirmPIN::class.java).apply {
+                    putExtra("USER_NAME", userName)
+                    putExtra("USER_EMAIL", userEmail)
+                    putExtra("USER_ID", userId)
+                    putExtra("transactionPin", pin) // Pass the PIN to the next activity
+                }
                 startActivity(intent)
             } else {
                 pinInputs.first().requestFocus() // Focus on the first input if validation fails

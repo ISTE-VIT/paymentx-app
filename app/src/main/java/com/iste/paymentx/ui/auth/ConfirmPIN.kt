@@ -32,11 +32,22 @@ class ConfirmPIN : AppCompatActivity() {
     private lateinit var backarrow: ImageView
     private lateinit var vibrator: Vibrator
 
+    // store credientials
+    private var userName: String? = null
+    private var userEmail: String? = null
+    private var userId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_confirm_pin)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Get the user information from intent
+        userName = intent.getStringExtra("USER_NAME")
+        userEmail = intent.getStringExtra("USER_EMAIL")
+        userId = intent.getStringExtra("USER_ID")
+
         auth = FirebaseAuth.getInstance()
 
         // Initialize vibrator
@@ -135,7 +146,11 @@ class ConfirmPIN : AppCompatActivity() {
             val request = CreatePinRequest(pin)
             val response = RetrofitInstance.api.createPin(authToken,request)
             if (response.isSuccessful && response.body() != null) {
-                val intent = Intent(this, MainScreen::class.java)
+                val intent = Intent(this, MainScreen::class.java).apply {
+                    putExtra("USER_NAME", userName)
+                    putExtra("USER_EMAIL", userEmail)
+                    putExtra("USER_ID", userId)
+                }
                 startActivity(intent)
                 finish()
             } else {

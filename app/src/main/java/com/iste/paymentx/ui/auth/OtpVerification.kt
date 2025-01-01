@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
-import com.iste.paymentx.data.model.AttachIdRequest
 import com.iste.paymentx.data.model.AttachPhoneRequest
 import com.iste.paymentx.data.model.RetrofitInstance
 import kotlinx.coroutines.launch
@@ -29,11 +28,21 @@ class OtpVerification : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var backarrow: ImageView
 
+    // store credientials
+    private var userName: String? = null
+    private var userEmail: String? = null
+    private var userId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_otp_verification)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Get the user information from intent
+        userName = intent.getStringExtra("USER_NAME")
+        userEmail = intent.getStringExtra("USER_EMAIL")
+        userId = intent.getStringExtra("USER_ID")
 
         auth = FirebaseAuth.getInstance()
         val phoneNumber = intent.getStringExtra("phoneNumber")
@@ -98,7 +107,11 @@ class OtpVerification : AppCompatActivity() {
     }
 
     private fun openCreateTransPINPage() {
-        val intent = Intent(this, CreateTransPIN::class.java)
+        val intent = Intent(this, CreateTransPIN::class.java).apply {
+            putExtra("USER_NAME", userName)
+            putExtra("USER_EMAIL", userEmail)
+            putExtra("USER_ID", userId)
+        }
         startActivity(intent)
     }
 

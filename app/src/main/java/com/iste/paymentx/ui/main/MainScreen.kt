@@ -1,6 +1,7 @@
 package com.iste.paymentx.ui.main
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Build
@@ -24,12 +25,17 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class MainScreen : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var balanceTextView: TextView
     private lateinit var btnViewBalance: Button
     private lateinit var btnTopUp: ImageView
     private lateinit var btnWithdraw: ImageView
-    private lateinit var btnTransact: ImageView
     private lateinit var auth: FirebaseAuth
+
+    // Store credentials
+    private var userName: String? = null
+    private var userEmail: String? = null
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +43,19 @@ class MainScreen : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_main_screen)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+
+        // Get the user information from intent or SharedPreferences
+        userName = intent.getStringExtra("USER_NAME") ?: sharedPreferences.getString("USER_NAME", null)
+        userEmail = intent.getStringExtra("USER_EMAIL")
+        userId = intent.getStringExtra("USER_ID")
+
+        // Save userName in SharedPreferences if retrieved from intent
+        if (userName != null) {
+            sharedPreferences.edit().putString("USER_NAME", userName).apply()
+        }
 
         // Set navigation bar color programmatically for additional compatibility
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -52,6 +71,11 @@ class MainScreen : AppCompatActivity() {
         btnWithdraw = findViewById(R.id.btnWithdraw)
         balanceTextView.visibility = View.GONE
         btnViewBalance.visibility = View.VISIBLE
+
+        // Add this line to set only the first name
+        val firstName = userName?.split(" ")?.first() ?: "User"
+        findViewById<TextView>(R.id.textView).text = "Hi, $firstName"
+
         // Set click listener for balance visibility
         btnViewBalance.setOnClickListener {
             btnViewBalance.visibility = View.GONE
@@ -102,24 +126,24 @@ class MainScreen : AppCompatActivity() {
             val response = RetrofitInstance.api.getWallet(authToken)
             if (response.isSuccessful && response.body() != null) {
                 val body = response.body()
-                    val wallet = body?.wallet
-                    if(wallet!=null){
-                        val amount = wallet.balance
-                        balanceTextView.text = "₹"+Integer.toString(amount)
-                        balanceTextView.visibility = View.VISIBLE
-                    }
+                val wallet = body?.wallet
+                if (wallet != null) {
+                    val amount = wallet.balance
+                    balanceTextView.text = "₹" + Integer.toString(amount)
+                    balanceTextView.visibility = View.VISIBLE
+                }
             } else {
                 btnViewBalance.visibility = View.VISIBLE
-                balanceTextView.visibility=View.GONE
+                balanceTextView.visibility = View.GONE
                 Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
             }
         } catch (e: IOException) {
             btnViewBalance.visibility = View.VISIBLE
-            balanceTextView.visibility=View.GONE
+            balanceTextView.visibility = View.GONE
             Log.e("HomeActivity", "IOException, you might not have internet connection", e)
         } catch (e: HttpException) {
             btnViewBalance.visibility = View.VISIBLE
-            balanceTextView.visibility=View.GONE
+            balanceTextView.visibility = View.GONE
             Log.e("HomeActivity", "HttpException, unexpected response", e)
         }
     }

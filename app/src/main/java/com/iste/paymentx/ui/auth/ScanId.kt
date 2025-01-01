@@ -34,18 +34,32 @@ class ScanId : AppCompatActivity() {
     private var audioFocusRequest: AudioFocusRequest? = null
     private var audioManager: AudioManager? = null
 
+    // store credientials
+    private var userName: String? = null
+    private var userEmail: String? = null
+    private var userId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_scan_id)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
+        // Get the user information from intent
+        userName = intent.getStringExtra("USER_NAME")
+        userEmail = intent.getStringExtra("USER_EMAIL")
+        userId = intent.getStringExtra("USER_ID")
+
         // Initialize TextView
         or_text = findViewById(R.id.or_text)
         
         submitButton = findViewById(R.id.submit_button)
         submitButton.setOnClickListener(){
-            val intent = Intent(this, Display::class.java)
+            val intent = Intent(this, Display::class.java).apply {
+                putExtra("USER_NAME", userName)
+                putExtra("USER_EMAIL", userEmail)
+                putExtra("USER_ID", userId)
+            }
             startActivity(intent)
         }
 
@@ -175,8 +189,12 @@ class ScanId : AppCompatActivity() {
             Toast.makeText(this, "Card detected: $uid", Toast.LENGTH_SHORT).show()
 
             // Create an intent to start DisplayUidActivity and pass the CARD_UID
-            val displayIntent = Intent(this, Display::class.java)
-            displayIntent.putExtra("CARD_UID", uid)
+            val displayIntent = Intent(this, Display::class.java).apply {
+                putExtra("CARD_UID", uid)
+                putExtra("USER_NAME", userName)
+                putExtra("USER_EMAIL", userEmail)
+                putExtra("USER_ID", userId)
+            }
             startActivity(displayIntent)
         } catch (e: Exception) {
             Log.e("NFC", "Error processing NFC tag: ${e.message}")
