@@ -1,10 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F8EC"
     tools:context=".ui.merchant.MerchantAccountInfo">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardheader"
+        android:layout_width="409dp"
+        android:layout_height="90dp"
+        app:cardBackgroundColor="#C5D9C9"
+        app:layout_constraintBottom_toTopOf="@+id/merchtxt1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="26dp"
+            android:layout_marginBottom="8dp"
+            android:text="Merchant Registeration"
+            android:textColor="#1D5F3E"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/merchtxt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Enter Shop's Name"
+        android:textColor="#1D5F3E"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.119"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardheader" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card1"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#F5F8EC"
+        app:cardCornerRadius="8dp"
+        android:foreground="@drawable/card_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/merchtxt1">
+
+        <EditText
+            android:id="@+id/shop_name"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:inputType="text"
+            android:textColor="#2F2F2F" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/merchtxt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Enter Shopkeer Name"
+        android:textColor="#1D5F3E"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card1"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card2"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#F5F8EC"
+        android:foreground="@drawable/card_border"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/merchtxt2">
+
+        <EditText
+            android:id="@+id/shopkeeper_name"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:inputType="text"
+            android:textColor="#2F2F2F" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/merchtxt3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Enter Shop's Location"
+        android:textColor="#1D5F3E"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card2"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card3"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#F5F8EC"
+        android:foreground="@drawable/card_border"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/merchtxt3">
+
+        <EditText
+            android:id="@+id/shop_location"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:inputType="text"
+            android:textColor="#2F2F2F" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/merchtxt4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Upload Shop Picture"
+        android:textColor="#1D5F3E"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card3"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card4"
+        android:layout_width="150dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#F5F8EC"
+        android:foreground="@drawable/card_border"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/merchtxt4"/>
+
+    <Button
+        android:id="@+id/merchconfirmButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="#1D5F3E"
+        android:text="@string/Confirm"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card4"
+        app:layout_constraintVertical_bias="0.36" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,31 +16,26 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.iste.paymentx.R
-import com.iste.paymentx.ui.auth.PinVerifyPage
-import com.iste.paymentx.ui.main.MainScreen
 
-class Receive : AppCompatActivity() {
+class MerchantWithdraw : AppCompatActivity() {
     private lateinit var amountEditText: EditText
     private lateinit var button1: Button
     private lateinit var button2: Button
     private lateinit var button3: Button
-    private lateinit var backArrow: ImageView
     private lateinit var continueButton: Button
+    private lateinit var backArrow: ImageView
     private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_receive)
+        setContentView(R.layout.activity_merchant_withdraw)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Initialize vibrator
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-        // Initialize views
         amountEditText = findViewById(R.id.merchamountEditText)
         button1 = findViewById(R.id.merchbutton1)
         button2 = findViewById(R.id.merchbutton2)
@@ -65,12 +60,13 @@ class Receive : AppCompatActivity() {
         backArrow.setOnClickListener {
             navigateToMainScreen()
         }
-        // Set click listener for continue button
         continueButton.setOnClickListener {
-            val amount = amountEditText.text.toString().toDoubleOrNull()
+            val amount = amountEditText.text.toString().toIntOrNull()
             if (amount != null && amount > 0) {
-                val intent = Intent(this, TapIDToPay::class.java)
-                intent.putExtra("EXTRA_AMOUNT", amount.toInt()) // Convert to Int
+                val intent = Intent(this, MerchantPINVerifyPage::class.java)
+                intent.putExtra("EXTRA_AMOUNT", amount)
+                intent.putExtra("CALLING_ACTIVITY", "Withdraw")
+                Log.d("MerchantWithdraw", "Sending amount: $amount")
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Enter a valid amount", Toast.LENGTH_SHORT).show()
@@ -78,7 +74,6 @@ class Receive : AppCompatActivity() {
             }
         }
     }
-
     private fun vibratePhone() {
         if (vibrator.hasVibrator()) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -89,7 +84,6 @@ class Receive : AppCompatActivity() {
             }
         }
     }
-
 
     private fun setupAutoResizingEditText() {
         // Set initial width to wrap_content
@@ -118,7 +112,7 @@ class Receive : AppCompatActivity() {
                     // Show error message
                     amountEditText.error = "Amount cannot be more than ₹5,00,000"
                     // Apply shake animation
-                    val shakeAnimation = AnimationUtils.loadAnimation(this@Receive, R.drawable.shake_animation)
+                    val shakeAnimation = AnimationUtils.loadAnimation(this@MerchantWithdraw, R.drawable.shake_animation)
                     amountEditText.startAnimation(shakeAnimation)
                     // Vibrate phone
                     vibratePhone()
@@ -132,6 +126,7 @@ class Receive : AppCompatActivity() {
         })
     }
 
+    // Also update the updateAmount function to include the validation
     private fun updateAmount(amountToAdd: Int) {
         val currentAmount = amountEditText.text.toString().toIntOrNull() ?: 0
         val newAmount = currentAmount + amountToAdd
@@ -147,10 +142,11 @@ class Receive : AppCompatActivity() {
             vibratePhone()
         }
     }
+
     private fun navigateToMainScreen() {
         val intent = Intent(this, MerchantMainScreen::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(intent)
-        finish() // Finish the current activity so it is removed from the back stack
+        finish()
     }
 }

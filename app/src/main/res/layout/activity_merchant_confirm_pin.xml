@@ -10,17 +10,17 @@
     tools:context=".ui.merchant.MerchantConfirmPIN">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardheader"
+        android:id="@+id/merchcardheader"
         android:layout_width="409dp"
         android:layout_height="90dp"
         app:cardBackgroundColor="#C5D9C9"
-        app:layout_constraintBottom_toTopOf="@+id/txt1"
+        app:layout_constraintBottom_toTopOf="@+id/merchtxt1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/back"
+            android:id="@+id/merchback"
             android:layout_width="40dp"
             android:layout_height="30dp"
             android:layout_gravity="start|bottom"
@@ -38,13 +38,13 @@
             android:textColor="#1D5F3E"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/back" />
+            app:layout_constraintStart_toStartOf="@+id/merchback" />
     </androidx.cardview.widget.CardView>
 
     <!-- Centered Layout for Input Boxes -->
 
     <TextView
-        android:id="@+id/txt1"
+        android:id="@+id/merchtxt1"
         android:layout_width="314dp"
         android:layout_height="41dp"
         android:layout_marginTop="124dp"
@@ -57,10 +57,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/input_group"
+        android:id="@+id/merchinput_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/txt1"
+        app:layout_constraintTop_toBottomOf="@id/merchtxt1"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -167,6 +167,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_group" />
+        app:layout_constraintTop_toBottomOf="@id/merchinput_group" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

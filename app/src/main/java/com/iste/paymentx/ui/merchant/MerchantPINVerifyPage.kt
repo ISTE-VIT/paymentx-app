@@ -4,62 +4,43 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.iste.paymentx.R
-import com.iste.paymentx.ui.auth.CreateTransPIN
-import com.iste.paymentx.ui.main.MainScreen
+import com.iste.paymentx.ui.main.TickMarkAnimation
+import com.iste.paymentx.ui.main.WithdrawCompleted
 
-class MerchantConfirmPIN : AppCompatActivity() {
-    private lateinit var backarrow: ImageView
+class MerchantPINVerifyPage : AppCompatActivity() {
+    private lateinit var btnVerify: Button
     private lateinit var vibrator: Vibrator
-
-    // store credientials
-    private var userName: String? = null
-    private var userEmail: String? = null
-    private var userId: String? = null
+    private var amount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_merchant_confirm_pin)
+        setContentView(R.layout.activity_merchant_pinverify_page)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        // Get the user information from intent
-        userName = intent.getStringExtra("USER_NAME")
-        userEmail = intent.getStringExtra("USER_EMAIL")
-        userId = intent.getStringExtra("USER_ID")
-
+        /// Get and verify amount
+        amount = intent.getIntExtra("EXTRA_AMOUNT", 0)
+        Log.d("MerchantPINVerify", "Received amount: $amount")
         // Initialize vibrator
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-        // Retrieve the PIN passed from CreateTransPIN
-        val transactionPin = intent.getStringExtra("transactionPin")
-        backarrow = findViewById(R.id.merchback)
-
-        backarrow.setOnClickListener {
-            val intent = Intent(this, MerchantCreateTransPIN::class.java)
-            startActivity(intent)
-        }
-
-        if (transactionPin == null) {
-            Toast.makeText(this, "Transaction PIN not received!", Toast.LENGTH_SHORT).show()
-            vibratePhone()
-            finish() // Exit if no PIN is passed
-            return
-        }
-
+        // PIN input fields
         val pinInputs = listOf(
             findViewById<EditText>(R.id.merchinput1),
             findViewById<EditText>(R.id.merchinput2),
@@ -68,6 +49,7 @@ class MerchantConfirmPIN : AppCompatActivity() {
             findViewById<EditText>(R.id.merchinput5),
             findViewById<EditText>(R.id.merchinput6)
         )
+
         pinInputs.forEachIndexed { index, editText ->
             editText.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -94,36 +76,26 @@ class MerchantConfirmPIN : AppCompatActivity() {
             }
         }
 
-        val btnVerify = findViewById<Button>(R.id.merchbtnConfirm)
+        btnVerify = findViewById(R.id.merchbtnVerify)
         btnVerify.setOnClickListener {
-            // Gather input PIN
             val enteredPin = pinInputs.joinToString("") { it.text.toString() }
-
             if (enteredPin.length == 6) {
-                if (enteredPin == transactionPin) {
-                    val intent = Intent(this, MerchantAccountInfo::class.java).apply {
-                        putExtra("USER_NAME", userName)
-                        putExtra("USER_EMAIL", userEmail)
-                        putExtra("USER_ID", userId)
+                val tickIntent = Intent(this, TickMarkAnimation::class.java)
+                startActivity(tickIntent)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val destinationIntent = Intent(this, MerchantWithdrawCompleted::class.java).apply {
+                        putExtra("EXTRA_AMOUNT", amount)
                     }
-                    startActivity(intent)
+                    startActivity(destinationIntent)
                     finish()
-                } else {
-                    // Show error if PINs do not match
-                    Toast.makeText(this, "PINs do not match. Try again.", Toast.LENGTH_SHORT).show()
-                    vibratePhone()
-                }
+                },2000)
             } else {
-                // Show error if PIN is incomplete
                 Toast.makeText(this, "Please enter all 6 digits.", Toast.LENGTH_SHORT).show()
                 vibratePhone()
             }
         }
-        val sharedPref = getSharedPreferences("PaymentX", MODE_PRIVATE)
-        val editor = sharedPref.edit()
-        editor.putString("transactionPin", transactionPin)  // Save PIN
-        editor.apply()
     }
+
     private fun vibratePhone() {
         if (vibrator.hasVibrator()) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {

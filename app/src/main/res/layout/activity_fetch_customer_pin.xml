@@ -7,14 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F8EC"
-    tools:context=".ui.merchant.MerchantCreateTransPIN">
+    tools:context=".ui.merchant.FetchCustomerPIN">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardheader"
         android:layout_width="409dp"
         android:layout_height="90dp"
         app:cardBackgroundColor="#C5D9C9"
-        app:layout_constraintBottom_toTopOf="@+id/merchtxt1"
+        app:layout_constraintBottom_toTopOf="@+id/txt1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -23,9 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|bottom"
-            android:layout_marginStart="26dp"
+            android:layout_marginStart="30dp"
             android:layout_marginBottom="8dp"
-            android:text="Create Transaction Pin"
+            android:text="Enter PIN"
             android:textColor="#1D5F3E"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -34,28 +34,58 @@
     <!-- Centered Layout for Input Boxes -->
 
     <TextView
-        android:id="@+id/merchtxt1"
-        android:layout_width="317dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="124dp"
-        android:text="Please set a 6-digit PIN to protect your account and enable secure transactions."
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hi, Name"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txt1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardheader"
+        app:layout_constraintVertical_bias="0.843" />
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="196dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="176dp"
+        android:text="Enter your 6 digits UPI pin"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/merchinput_group"
+    <TextView
+        android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/merchtxt1"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
+        android:text="to Pay ₹1000"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/input_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textView11"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
-            android:id="@+id/merchuid_input1"
+            android:id="@+id/input1"
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:background="@drawable/card_border"
@@ -68,7 +98,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <EditText
-            android:id="@+id/merchuid_input2"
+            android:id="@+id/input2"
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:background="@drawable/card_border"
@@ -78,12 +108,12 @@
             android:inputType="number"
             android:maxLength="1"
             android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@id/merchuid_input1"
+            app:layout_constraintStart_toEndOf="@id/input1"
             android:layout_marginStart="2dp"
-            app:layout_constraintTop_toTopOf="@id/merchuid_input1" />
+            app:layout_constraintTop_toTopOf="@id/input1" />
 
         <EditText
-            android:id="@+id/merchuid_input3"
+            android:id="@+id/input3"
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:background="@drawable/card_border"
@@ -93,12 +123,12 @@
             android:inputType="number"
             android:maxLength="1"
             android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@id/merchuid_input2"
+            app:layout_constraintStart_toEndOf="@id/input2"
             android:layout_marginStart="2dp"
-            app:layout_constraintTop_toTopOf="@id/merchuid_input2"/>
+            app:layout_constraintTop_toTopOf="@id/input2"/>
 
         <EditText
-            android:id="@+id/merchuid_input4"
+            android:id="@+id/input4"
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:background="@drawable/card_border"
@@ -108,12 +138,12 @@
             android:inputType="number"
             android:maxLength="1"
             android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@id/merchuid_input3"
+            app:layout_constraintStart_toEndOf="@id/input3"
             android:layout_marginStart="2dp"
-            app:layout_constraintTop_toTopOf="@id/merchuid_input3"/>
+            app:layout_constraintTop_toTopOf="@id/input3"/>
 
         <EditText
-            android:id="@+id/merchuid_input5"
+            android:id="@+id/input5"
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:background="@drawable/card_border"
@@ -123,12 +153,12 @@
             android:inputType="number"
             android:maxLength="1"
             android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@id/merchuid_input4"
+            app:layout_constraintStart_toEndOf="@id/input4"
             android:layout_marginStart="2dp"
-            app:layout_constraintTop_toTopOf="@id/merchuid_input4"/>
+            app:layout_constraintTop_toTopOf="@id/input4"/>
 
         <EditText
-            android:id="@+id/merchuid_input6"
+            android:id="@+id/input6"
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:background="@drawable/card_border"
@@ -138,13 +168,14 @@
             android:inputType="number"
             android:maxLength="1"
             android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@id/merchuid_input5"
+            app:layout_constraintStart_toEndOf="@id/input5"
             android:layout_marginStart="2dp"
-            app:layout_constraintTop_toTopOf="@id/merchuid_input5"/>
+            app:layout_constraintTop_toTopOf="@id/input5"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/merchbtnVerify"
+        android:id="@+id/btnVerify"
         android:layout_width="300dp"
         android:layout_height="56dp"
         android:layout_marginTop="60dp"
@@ -156,6 +187,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/merchinput_group" />
+        app:layout_constraintTop_toBottomOf="@id/input_group" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

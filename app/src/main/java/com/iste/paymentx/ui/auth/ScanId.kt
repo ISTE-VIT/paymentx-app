@@ -79,7 +79,6 @@ class ScanId : AppCompatActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-
         // Set up the intent filter to detect ALL NFC tags
         intentFilter = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED).apply {
             addCategory(Intent.CATEGORY_DEFAULT)

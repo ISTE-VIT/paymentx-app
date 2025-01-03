@@ -1,6 +1,7 @@
 package com.iste.paymentx.ui.merchant
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -12,15 +13,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.iste.paymentx.R
+import com.iste.paymentx.ui.main.MainScreen
 
-class ReceiveCompleted : AppCompatActivity() {
+class MerchantWithdrawCompleted : AppCompatActivity() {
     private lateinit var backarrow: ImageView
     private lateinit var amountTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_receive_completed)
+        setContentView(R.layout.activity_merchant_withdraw_completed)
 
         // Initialize views
         amountTextView = findViewById(R.id.textView2)
@@ -38,7 +40,7 @@ class ReceiveCompleted : AppCompatActivity() {
             Log.e("MerchantCompleted", "Amount is 0 or not received properly")
         }
 
-        backarrow = findViewById(R.id.imageView3)
+        backarrow = findViewById(R.id.merchimageView3)
         backarrow.setOnClickListener {
             navigateToMainScreen()
         }

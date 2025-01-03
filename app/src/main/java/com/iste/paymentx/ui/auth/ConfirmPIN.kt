@@ -55,7 +55,7 @@ class ConfirmPIN : AppCompatActivity() {
 
         // Retrieve the PIN passed from CreateTransPIN
         val transactionPin = intent.getStringExtra("transactionPin")
-        val backarrow = findViewById<ImageView>(R.id.back)
+        backarrow = findViewById(R.id.back)
 
         backarrow.setOnClickListener {
             val intent = Intent(this,CreateTransPIN::class.java)

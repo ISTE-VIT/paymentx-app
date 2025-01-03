@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F8EC"
-    tools:context=".ui.merchant.Receive">
+    tools:context=".ui.merchant.MerchantWithdraw">
 
+    <!-- back arrow-->
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardheader"
+        android:id="@+id/merchcardheader"
         android:layout_width="409dp"
         android:layout_height="90dp"
         app:cardBackgroundColor="#C5D9C9"
-        app:layout_constraintBottom_toTopOf="@+id/amountContainer"
+        app:layout_constraintBottom_toTopOf="@+id/merchamountContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -29,13 +29,13 @@
             android:src="@drawable/baseline_arrow_back_24"/>
 
         <TextView
-            android:id="@+id/headingTextView"
+            android:id="@+id/merchheadingTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|bottom"
             android:layout_marginStart="70dp"
             android:layout_marginBottom="8dp"
-            android:text="Add Transaction Amount"
+            android:text="Withdraw Money"
             android:textColor="#1D5F3E"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -43,19 +43,21 @@
     </androidx.cardview.widget.CardView>
 
     <!-- Rupee Symbol -->
+    <!-- Rupee Symbol and EditText Container -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/amountContainer"
+        android:id="@+id/merchamountContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardheader">
+        app:layout_constraintTop_toBottomOf="@+id/merchcardheader">
 
         <!-- Rupee Symbol -->
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/merchtextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="₹"
@@ -80,12 +82,11 @@
             android:textCursorDrawable="@drawable/custom_cursor"
             android:textSize="60sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/merchtextView"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Quick Amount Buttons -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/merchbutton1"
         android:layout_width="wrap_content"
@@ -99,7 +100,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toStartOf="@+id/merchbutton2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amountContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/merchamountContainer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/merchbutton2"
@@ -114,7 +115,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toStartOf="@+id/merchbutton3"
         app:layout_constraintStart_toEndOf="@+id/merchbutton1"
-        app:layout_constraintTop_toBottomOf="@+id/amountContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/merchamountContainer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/merchbutton3"
@@ -129,7 +130,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/merchbutton2"
-        app:layout_constraintTop_toBottomOf="@+id/amountContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/merchamountContainer" />
 
     <!-- Continue Button -->
     <Button
