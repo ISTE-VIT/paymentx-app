@@ -8,7 +8,9 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <uses-feature
@@ -54,10 +56,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.merchant.ReceiveCompleted"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.merchant.VerifyUserPIN"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -144,12 +142,10 @@
             android:name=".ui.auth.Display"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.main.HomeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.auth.ScanId"
             android:exported="true"
@@ -165,7 +161,6 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_filter" />
         </activity>
-
         <activity
             android:name=".ui.merchant.TapIDToPay"
             android:exported="true"
@@ -181,7 +176,6 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_filter" />
         </activity>
-
         <activity
             android:name=".ui.auth.GoogleAuthActivity"
             android:exported="true"
@@ -192,6 +186,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
+
 </manifest>

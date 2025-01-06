@@ -22,6 +22,7 @@ class MerchantWithdrawCompleted : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(R.layout.activity_merchant_withdraw_completed)
 
         // Initialize views

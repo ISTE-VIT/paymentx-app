@@ -1,6 +1,7 @@
 package com.iste.paymentx.ui.merchant
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -20,6 +21,7 @@ class ReceiveCompleted : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(R.layout.activity_receive_completed)
 
         // Initialize views
