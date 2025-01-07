@@ -63,5 +63,16 @@ interface UserApi {
         @Header("Authorization") authToken: String,
         @Body details: WalletRequest
     ): Response<response>
+
+    @POST("/api/transactions/initiate")
+    suspend fun doTrans(
+        @Header("Authorization") authToken: String,
+        @Body details: TransactionRequest
+    ): Response<ErrorResponse>
+
+    @GET("/api/transactions/merchant-history")
+    suspend fun getMerchTrans(
+        @Header("Authorization") authToken: String
+    ): Response<List<Transaction>>
 }
 

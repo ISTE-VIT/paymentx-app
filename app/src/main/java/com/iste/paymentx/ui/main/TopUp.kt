@@ -1,5 +1,6 @@
 package com.iste.paymentx.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -95,6 +96,7 @@ class TopUp : AppCompatActivity() {
         amountEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
+            @SuppressLint("ResourceType")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // Calculate new width based on text length
                 val textLength = s?.length ?: 0
@@ -129,6 +131,7 @@ class TopUp : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("ResourceType")
     private fun updateAmount(amountToAdd: Int) {
         val currentAmount = amountEditText.text.toString().toIntOrNull() ?: 0
         val newAmount = currentAmount + amountToAdd

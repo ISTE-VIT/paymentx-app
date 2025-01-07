@@ -8,6 +8,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
@@ -17,11 +18,20 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
+import com.iste.paymentx.data.model.CreatePinRequest
+import com.iste.paymentx.data.model.RetrofitInstance
 import com.iste.paymentx.ui.auth.CreateTransPIN
 import com.iste.paymentx.ui.main.MainScreen
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import retrofit2.HttpException
+import java.io.IOException
 
 class MerchantConfirmPIN : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
     private lateinit var backarrow: ImageView
     private lateinit var vibrator: Vibrator
 
@@ -41,6 +51,8 @@ class MerchantConfirmPIN : AppCompatActivity() {
         userEmail = intent.getStringExtra("USER_EMAIL")
         userId = intent.getStringExtra("USER_ID")
 
+        auth = FirebaseAuth.getInstance()
+
         // Initialize vibrator
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -49,7 +61,7 @@ class MerchantConfirmPIN : AppCompatActivity() {
         backarrow = findViewById(R.id.merchback)
 
         backarrow.setOnClickListener {
-            val intent = Intent(this, MerchantCreateTransPIN::class.java)
+            val intent = Intent(this,MerchantCreateTransPIN::class.java)
             startActivity(intent)
         }
 
@@ -68,6 +80,7 @@ class MerchantConfirmPIN : AppCompatActivity() {
             findViewById<EditText>(R.id.merchinput5),
             findViewById<EditText>(R.id.merchinput6)
         )
+
         pinInputs.forEachIndexed { index, editText ->
             editText.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -101,13 +114,9 @@ class MerchantConfirmPIN : AppCompatActivity() {
 
             if (enteredPin.length == 6) {
                 if (enteredPin == transactionPin) {
-                    val intent = Intent(this, MerchantAccountInfo::class.java).apply {
-                        putExtra("USER_NAME", userName)
-                        putExtra("USER_EMAIL", userEmail)
-                        putExtra("USER_ID", userId)
-                    }
-                    startActivity(intent)
-                    finish()
+                    // Redirect to MainScreen
+                    createPin(enteredPin)
+                    // Optional: Close this activity
                 } else {
                     // Show error if PINs do not match
                     Toast.makeText(this, "PINs do not match. Try again.", Toast.LENGTH_SHORT).show()
@@ -123,6 +132,49 @@ class MerchantConfirmPIN : AppCompatActivity() {
         val editor = sharedPref.edit()
         editor.putString("transactionPin", transactionPin)  // Save PIN
         editor.apply()
+    }
+
+    private suspend fun getFirebaseIdToken(): String? {
+        return try {
+            val user = auth.currentUser
+            user?.getIdToken(false)?.await()?.token
+        } catch (e: Exception) {
+            Log.e("HomeActivity", "Error getting Firebase ID token", e)
+            null
+        }
+    }
+
+    private suspend fun createPinHelper(authToken: String,pin: String) {
+        try {
+            val request = CreatePinRequest(pin)
+            val response = RetrofitInstance.api.createPin(authToken,request)
+            if (response.isSuccessful && response.body() != null) {
+                val intent = Intent(this, MerchantAccountInfo::class.java).apply {
+                    putExtra("USER_NAME", userName)
+                    putExtra("USER_EMAIL", userEmail)
+                    putExtra("USER_ID", userId)
+                }
+                startActivity(intent)
+                finish()
+            } else {
+                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: IOException) {
+            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            Log.e("HomeActivity", "HttpException, unexpected response", e)
+        }
+    }
+
+    private fun createPin(pin: String) {
+        lifecycleScope.launch {
+            val token = getFirebaseIdToken()
+            if (token != null) {
+                createPinHelper("Bearer $token",pin)
+            } else {
+                Log.e("HomeActivity", "Failed to get Firebase ID token")
+            }
+        }
     }
     private fun vibratePhone() {
         if (vibrator.hasVibrator()) {

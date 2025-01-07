@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
@@ -14,12 +15,20 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
+import com.iste.paymentx.data.model.AttachPhoneRequest
+import com.iste.paymentx.data.model.RetrofitInstance
 import com.iste.paymentx.ui.auth.CreateTransPIN
 import com.iste.paymentx.ui.auth.Phonenumber
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import retrofit2.HttpException
+import java.io.IOException
 
 class MerchantOtpVerification : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
     private lateinit var backarrow: ImageView
 
     // store credientials
@@ -38,7 +47,7 @@ class MerchantOtpVerification : AppCompatActivity() {
         userEmail = intent.getStringExtra("USER_EMAIL")
         userId = intent.getStringExtra("USER_ID")
 
-
+        auth = FirebaseAuth.getInstance()
         val phoneNumber = intent.getStringExtra("phoneNumber")
         val backarrow = findViewById<ImageView>(R.id.merchback)
 
@@ -56,18 +65,15 @@ class MerchantOtpVerification : AppCompatActivity() {
         setUpOtpInputs(inputs)
 
         backarrow.setOnClickListener {
-            val intent = Intent(this, MerchantPhoneNumberVerification::class.java)
+            val intent = Intent(this,MerchantPhoneNumberVerification::class.java)
             startActivity(intent)
         }
 
         val btnVerify = findViewById<Button>(R.id.merchbtnVerify)
-        btnVerify.setOnClickListener{
-            val intent = Intent(this, MerchantCreateTransPIN::class.java).apply {
-                putExtra("USER_NAME", userName)
-                putExtra("USER_EMAIL", userEmail)
-                putExtra("USER_ID", userId)
+        btnVerify.setOnClickListener {
+            if (phoneNumber != null) {
+                attachPhone(phoneNumber)
             }
-            startActivity(intent)
         }
     }
 
@@ -78,13 +84,7 @@ class MerchantOtpVerification : AppCompatActivity() {
             val previous = inputs.getOrNull(i - 1) // Get previous input or null if first
 
             current.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if (!s.isNullOrEmpty()) {
@@ -105,6 +105,52 @@ class MerchantOtpVerification : AppCompatActivity() {
                     }
                 }
                 false
+            }
+        }
+    }
+
+    private fun openCreateTransPINPage() {
+        val intent = Intent(this, MerchantCreateTransPIN::class.java).apply {
+            putExtra("USER_NAME", userName)
+            putExtra("USER_EMAIL", userEmail)
+            putExtra("USER_ID", userId)
+        }
+        startActivity(intent)
+    }
+
+    private suspend fun getFirebaseIdToken(): String? {
+        return try {
+            val user = auth.currentUser
+            user?.getIdToken(false)?.await()?.token
+        } catch (e: Exception) {
+            Log.e("HomeActivity", "Error getting Firebase ID token", e)
+            null
+        }
+    }
+
+    private suspend fun attachPhoneHelper(authToken: String,phoneNumber: String) {
+        try {
+            val request = AttachPhoneRequest(phoneNumber)
+            val response = RetrofitInstance.api.attachPhone(authToken,request)
+            if (response.isSuccessful && response.body() != null) {
+                openCreateTransPINPage()
+            } else {
+                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: IOException) {
+            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            Log.e("HomeActivity", "HttpException, unexpected response", e)
+        }
+    }
+
+    private fun attachPhone(phoneNumber: String) {
+        lifecycleScope.launch {
+            val token = getFirebaseIdToken()
+            if (token != null) {
+                attachPhoneHelper("Bearer $token",phoneNumber)
+            } else {
+                Log.e("HomeActivity", "Failed to get Firebase ID token")
             }
         }
     }

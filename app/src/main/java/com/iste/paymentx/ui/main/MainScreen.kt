@@ -15,9 +15,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
 import com.iste.paymentx.data.model.RetrofitInstance
+import com.iste.paymentx.ui.auth.GoogleAuthActivity
 import com.iste.paymentx.ui.auth.PinVerifyPage
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -31,6 +35,7 @@ class MainScreen : AppCompatActivity() {
     private lateinit var btnTopUp: ImageView
     private lateinit var btnWithdraw: ImageView
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     // Store credentials
     private var userName: String? = null
@@ -41,6 +46,13 @@ class MainScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         auth = FirebaseAuth.getInstance()
+        googleSignInClient = GoogleSignIn.getClient(
+            this,
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+        )
         setContentView(R.layout.activity_main_screen)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -51,6 +63,10 @@ class MainScreen : AppCompatActivity() {
         userName = intent.getStringExtra("USER_NAME") ?: sharedPreferences.getString("USER_NAME", null)
         userEmail = intent.getStringExtra("USER_EMAIL")
         userId = intent.getStringExtra("USER_ID")
+
+        findViewById<ImageView>(R.id.btnProfile).setOnClickListener(){
+            handleLogout()
+        }
 
         // Save userName in SharedPreferences if retrieved from intent
         if (userName != null) {
@@ -156,6 +172,18 @@ class MainScreen : AppCompatActivity() {
             } else {
                 Log.e("HomeActivity", "Failed to get Firebase ID token")
             }
+        }
+    }
+
+    private fun handleLogout() {
+        try {
+            auth.signOut()
+            googleSignInClient.revokeAccess().addOnCompleteListener {
+                startActivity(Intent(this, GoogleAuthActivity::class.java))
+                finish()
+            }
+        } catch (e: Exception) {
+            Log.e("MerchMainScreen", "Exception during logout: ", e)
         }
     }
 }

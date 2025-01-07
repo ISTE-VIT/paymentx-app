@@ -24,6 +24,7 @@ import com.iste.paymentx.data.model.RetrofitInstance
 import com.iste.paymentx.data.model.User
 import com.iste.paymentx.ui.auth.GoogleAuthActivity
 import com.iste.paymentx.ui.auth.ScanId
+import com.iste.paymentx.ui.merchant.MerchantMainScreen
 import com.iste.paymentx.ui.merchant.MerchantPhoneNumberVerification
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -109,13 +110,7 @@ class HomeActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.checkMerchant).setOnClickListener {
             if (userId != null) {
-                val intent = Intent(this, MerchantPhoneNumberVerification::class.java).apply {
-                    putExtra("USER_EMAIL", userEmail)
-                    putExtra("USER_NAME", userName)
-                    putExtra("USER_ID", userId)
-                    putExtra("IS_MERCHANT", true)
-                }
-                startActivity(intent)
+                login(email = userEmail, displayName = userName, uid = userId, isMerchant = true)
             }
         }
     }
@@ -132,11 +127,18 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun showContent() {
+    private fun showContent(merchant: Boolean) {
         if (userRecieved){
-            val intent = Intent(this, MainScreen::class.java)
-            startActivity(intent)
-            finish()
+            if(!merchant){
+                val intent = Intent(this, MainScreen::class.java)
+                startActivity(intent)
+                finish()
+            }
+            else{
+                val intent = Intent(this, MerchantMainScreen::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
         else {
             findViewById<TextView>(R.id.user_name_text).visibility = View.VISIBLE
@@ -162,14 +164,25 @@ class HomeActivity : AppCompatActivity() {
         try {
             val response = RetrofitInstance.api.login(authToken, user)
             if (response.isSuccessful && response.body() != null) {
-                val intent = Intent(this, ScanId::class.java).apply {
-                    putExtra("USER_NAME", user.displayName)
-                    putExtra("USER_EMAIL", user.email)
-                    putExtra("USER_ID", user.uid)
+                if(user.isMerchant){
+                    val intent = Intent(this, MerchantPhoneNumberVerification::class.java)
+                    intent.putExtra("USER_NAME", user.displayName)
+                    intent.putExtra("USER_EMAIL", user.email)
+                    intent.putExtra("USER_ID", user.uid)
+                    intent.putExtra("IS_MERCHANT", false)
+                    startActivity(intent)
+
                 }
-                startActivity(intent)
+                else{
+                    val intent = Intent(this, ScanId::class.java)
+                    intent.putExtra("USER_NAME", user.displayName)
+                    intent.putExtra("USER_EMAIL", user.email)
+                    intent.putExtra("USER_ID", user.uid)
+                    intent.putExtra("IS_MERCHANT", false)
+                    startActivity(intent)
+                }
+
             } else {
-                Toast.makeText(this,"hello",Toast.LENGTH_SHORT).show()
                 vibratePhone()
                 Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
             }
@@ -197,20 +210,20 @@ class HomeActivity : AppCompatActivity() {
                 val user = body?.user
                 if(user?.pin != null){
                     userRecieved = true
-                    showContent()
+                    showContent(user.isMerchant)
                 } else {
-                    showContent()
+                    showContent(true)
                 }
             } else {
                 Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
-                showContent()
+                showContent(true)
             }
         } catch (e: IOException) {
             Log.e("HomeActivity", "IOException, you might not have internet connection", e)
-            showContent()
+            showContent(true)
         } catch (e: HttpException) {
             Log.e("HomeActivity", "HttpException, unexpected response", e)
-            showContent()
+            showContent(true)
         }
     }
 

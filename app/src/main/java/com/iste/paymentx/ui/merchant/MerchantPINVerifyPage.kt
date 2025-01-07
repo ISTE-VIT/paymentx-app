@@ -19,13 +19,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentx.R
+import com.iste.paymentx.data.model.CreatePinRequest
+import com.iste.paymentx.data.model.RetrofitInstance
 import com.iste.paymentx.ui.main.TickMarkAnimation
 import com.iste.paymentx.ui.main.WithdrawCompleted
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import retrofit2.HttpException
+import java.io.IOException
 
 class MerchantPINVerifyPage : AppCompatActivity() {
     private lateinit var btnVerify: Button
     private lateinit var vibrator: Vibrator
+    private lateinit var auth: FirebaseAuth
     private var amount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +42,7 @@ class MerchantPINVerifyPage : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_merchant_pinverify_page)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
+        auth = FirebaseAuth.getInstance()
         /// Get and verify amount
         amount = intent.getIntExtra("EXTRA_AMOUNT", 0)
         Log.d("MerchantPINVerify", "Received amount: $amount")
@@ -103,6 +112,53 @@ class MerchantPINVerifyPage : AppCompatActivity() {
             } else {
                 @Suppress("DEPRECATION")
                 vibrator.vibrate(200)
+            }
+        }
+    }
+
+    private suspend fun getFirebaseIdToken(): String? {
+        return try {
+            val user = auth.currentUser
+            user?.getIdToken(false)?.await()?.token
+        } catch (e: Exception) {
+            Log.e("HomeActivity", "Error getting Firebase ID token", e)
+            null
+        }
+    }
+
+    private suspend fun verifyPinHelperBalance(authToken: String,pin: String){
+        try {
+            val request = CreatePinRequest(pin)
+            val response = RetrofitInstance.api.verifyPin(authToken,request)
+            if (response.isSuccessful && response.body() != null) {
+                setResult(RESULT_OK) // Send success result to MainScreen
+                finish()
+            } else {
+                Toast.makeText(this,"Incorrect Pin",Toast.LENGTH_SHORT).show()
+                vibratePhone()
+                finish()
+                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: IOException) {
+            Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show()
+            vibratePhone()
+            finish()
+            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show()
+            vibratePhone()
+            finish()
+            Log.e("HomeActivity", "HttpException, unexpected response", e)
+        }
+    }
+
+    private fun verifyPinBalance(pin: String){
+        lifecycleScope.launch {
+            val token = getFirebaseIdToken()
+            if (token != null) {
+                verifyPinHelperBalance("Bearer $token",pin)
+            } else {
+                Log.e("HomeActivity", "Failed to get Firebase ID token")
             }
         }
     }
