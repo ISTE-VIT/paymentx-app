@@ -64,9 +64,8 @@ class MerchantWithdraw : AppCompatActivity() {
             val amount = amountEditText.text.toString().toIntOrNull()
             if (amount != null && amount > 0) {
                 val intent = Intent(this, MerchantPINVerifyPage::class.java)
-                intent.putExtra("EXTRA_AMOUNT", amount)
+                intent.putExtra("EXTRA_AMOUNT", amount)  // Passing as Int
                 intent.putExtra("CALLING_ACTIVITY", "Withdraw")
-                Log.d("MerchantWithdraw", "Sending amount: $amount")
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Enter a valid amount", Toast.LENGTH_SHORT).show()

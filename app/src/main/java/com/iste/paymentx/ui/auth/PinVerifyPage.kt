@@ -256,6 +256,4 @@ class PinVerifyPage : AppCompatActivity() {
             }
         }
     }
-
-
 }

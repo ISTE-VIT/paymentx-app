@@ -40,12 +40,11 @@ class MerchantPINVerifyPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_merchant_pinverify_page)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         auth = FirebaseAuth.getInstance()
-        /// Get and verify amount
-        amount = intent.getIntExtra("EXTRA_AMOUNT", 0)
-        Log.d("MerchantPINVerify", "Received amount: $amount")
+
         // Initialize vibrator
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -93,7 +92,7 @@ class MerchantPINVerifyPage : AppCompatActivity() {
                 if (callingActivity == "MerchantViewBalance") {
                     verifyPinBalance(enteredPin)
                 } else {
-                    val amount = intent.getDoubleExtra("EXTRA_AMOUNT", 0.0).toInt()
+                    val amount = intent.getIntExtra("EXTRA_AMOUNT", 0)
                     if (amount > 0) {
                         // Start tick mark animation
                         if (callingActivity != null) {
@@ -172,7 +171,7 @@ class MerchantPINVerifyPage : AppCompatActivity() {
     private suspend fun verifyPinHelperWallet(authToken: String,pin: String,amount: Int,callingActivity: String){
         try {
             val request = WalletRequest(pin, amount)
-            if(callingActivity=="MerchantWithdraw"){
+            if(callingActivity=="Withdraw"){
                 val response = RetrofitInstance.api.withdraw(authToken, request)
                 if(response.isSuccessful && response.body()!=null){
                     val tickIntent = Intent(this, TickMarkAnimation::class.java)
