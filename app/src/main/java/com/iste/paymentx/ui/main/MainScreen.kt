@@ -45,6 +45,9 @@ class MainScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setContentView(R.layout.activity_main_screen)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         auth = FirebaseAuth.getInstance()
         googleSignInClient = GoogleSignIn.getClient(
             this,
@@ -53,8 +56,6 @@ class MainScreen : AppCompatActivity() {
                 .requestEmail()
                 .build()
         )
-        setContentView(R.layout.activity_main_screen)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)

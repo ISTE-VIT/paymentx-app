@@ -27,6 +27,7 @@ import com.iste.paymentx.R
 import com.iste.paymentx.data.model.RetrofitInstance
 import com.iste.paymentx.data.model.Transaction
 import com.iste.paymentx.ui.auth.GoogleAuthActivity
+import com.iste.paymentx.ui.auth.PinVerifyPage
 import com.iste.paymentx.ui.main.TopUp
 import com.iste.paymentx.ui.main.Withdraw
 import kotlinx.coroutines.launch
@@ -110,9 +111,16 @@ class MerchantMainScreen : AppCompatActivity() {
         balanceTextView.visibility = View.GONE
         btnViewBalance.visibility = View.VISIBLE
 
-
         // Add this line to set only the first name
         findViewById<TextView>(R.id.merchtextView).text = "Hi, $shopName"
+
+        // Set click listener for balance visibility
+        btnViewBalance.setOnClickListener {
+            btnViewBalance.visibility = View.GONE
+            val intent = Intent(this, MerchantPINVerifyPage::class.java)
+            intent.putExtra("CALLING_ACTIVITY", "MerchantViewBalance")
+            startActivityForResult(intent, 100) // Start for result to check PIN verification
+        }
 
         // Navigate to TopUp screen when TopUp button is clicked
         btnReceive.setOnClickListener {
@@ -129,15 +137,55 @@ class MerchantMainScreen : AppCompatActivity() {
         fetchTrans()
     }
 
-    private fun handleLogout() {
+    // Handle the result from PinVerifyPage
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        btnViewBalance.visibility = View.VISIBLE
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            showBalance() // Show the balance if PIN was verified
+        }
+    }
+
+    private fun showBalance() {
+        btnViewBalance.visibility = View.GONE
+        getBalance()
+    }
+
+    private suspend fun getBalanceHelper(authToken: String) {
         try {
-            auth.signOut()
-            googleSignInClient.revokeAccess().addOnCompleteListener {
-                startActivity(Intent(this, GoogleAuthActivity::class.java))
-                finish()
+            val response = RetrofitInstance.api.getWallet(authToken)
+            if (response.isSuccessful && response.body() != null) {
+                val body = response.body()
+                val wallet = body?.wallet
+                if (wallet != null) {
+                    val amount = wallet.balance
+                    balanceTextView.text = "₹" + Integer.toString(amount)
+                    balanceTextView.visibility = View.VISIBLE
+                }
+            } else {
+                btnViewBalance.visibility = View.VISIBLE
+                balanceTextView.visibility = View.GONE
+                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
             }
-        } catch (e: Exception) {
-            Log.e("MerchMainScreen", "Exception during logout: ", e)
+        } catch (e: IOException) {
+            btnViewBalance.visibility = View.VISIBLE
+            balanceTextView.visibility = View.GONE
+            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            btnViewBalance.visibility = View.VISIBLE
+            balanceTextView.visibility = View.GONE
+            Log.e("HomeActivity", "HttpException, unexpected response", e)
+        }
+    }
+
+    private fun getBalance() {
+        lifecycleScope.launch {
+            val token = getFirebaseIdToken()
+            if (token != null) {
+                getBalanceHelper("Bearer $token")
+            } else {
+                Log.e("HomeActivity", "Failed to get Firebase ID token")
+            }
         }
     }
 
@@ -147,6 +195,18 @@ class MerchantMainScreen : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e("HomeActivity", "Error getting Firebase ID token", e)
             null
+        }
+    }
+
+    private fun handleLogout() {
+        try {
+            auth.signOut()
+            googleSignInClient.revokeAccess().addOnCompleteListener {
+                startActivity(Intent(this, GoogleAuthActivity::class.java))
+                finish()
+            }
+        } catch (e: Exception) {
+            Log.e("MerchMainScreen", "Exception during logout: ", e)
         }
     }
 
