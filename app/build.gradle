@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.iste.paymentx'
+    namespace 'com.iste.paymentX'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.iste.paymentx"
+        applicationId "com.iste.paymentX"
         minSdk 28
         targetSdk 34
         versionCode 1
