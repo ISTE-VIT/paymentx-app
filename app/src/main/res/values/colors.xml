@@ -2,23 +2,23 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="navigation_bar_color">#1A607D8B</color>
 <!--    <color name="primary">#FF8383</color>-->
 <!--    <color name="secondary">#191919</color>-->
 <!--    <color name="tertiary">#fff</color>-->
 <!--    <color name="grey">#808080</color>-->
 <!--    <color name="dots_default">#D0D3D8</color>-->
 <!--    <color name="dots_selected">#0B0A0A</color>-->
-<!--    <color name="navigation_bar_color">#1A607D8B</color>-->
 <!--    <color name="light_bg_color">#FCF7F7</color>-->
 
     <!--    Light Theme Colors    -->
+    <color name="backarrow">#FF000000</color>
     <color name="bg_color">#F5F8EC</color>
     <color name="header">#C5D9C9</color>
     <color name="dark_green">#1D5F3E</color>
     <color name="grey_text_color">#607D8B</color>
     <color name="default_text_color">#2F2F2F</color>
     <color name="header_text">#1D5F3E</color>
-    <color name="backarrow">#FF000000</color>
     <color name="phone_input_text_hint">#565454</color>
     <color name="enter_amount">#B3BDCB</color>
     <color name="transaction_completed_page_bg">#66F56B</color>
