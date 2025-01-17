@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F8EC"
+    android:background="@color/bg_color"
     tools:context=".ui.auth.Display">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nfc"
-        android:textColor="#2F2F2F"
+        android:textColor="@color/default_text_color"
         android:textSize="22sp"
         android:layout_marginTop="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +28,7 @@
         android:layout_width="300dp"
         android:layout_height="56dp"
         android:layout_marginTop="100dp"
-        android:backgroundTint="#1D5F3E"
+        android:backgroundTint="@color/dark_green"
         android:text="@string/Confirm"
         android:textSize="16sp"
         android:textColor="@color/white"
@@ -40,7 +40,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="409dp"
         android:layout_height="54dp"
-        app:cardBackgroundColor="#C5D9C9"
+        app:cardBackgroundColor="@color/header"
         app:layout_constraintBottom_toTopOf="@+id/display_UID"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

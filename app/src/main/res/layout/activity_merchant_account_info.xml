@@ -3,17 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F8EC"
+    android:background="@color/bg_color"
     tools:context=".ui.merchant.MerchantAccountInfo">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardheader"
         android:layout_width="409dp"
         android:layout_height="90dp"
-        app:cardBackgroundColor="#C5D9C9"
+        app:cardBackgroundColor="@color/header"
         app:layout_constraintBottom_toTopOf="@+id/merchtxt1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +25,7 @@
             android:layout_marginStart="26dp"
             android:layout_marginBottom="8dp"
             android:text="Merchant Registeration"
-            android:textColor="#1D5F3E"
+            android:textColor="@color/dark_green"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -38,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="Enter Shop's Name"
-        android:textColor="#1D5F3E"
+        android:textColor="@color/dark_green"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +50,7 @@
         android:layout_width="330dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#F5F8EC"
+        android:backgroundTint="@color/bg_color"
         app:cardCornerRadius="8dp"
         android:foreground="@drawable/card_border"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +65,7 @@
             android:layout_marginStart="15dp"
             android:background="@null"
             android:inputType="text"
-            android:textColor="#2F2F2F" />
+            android:textColor="@color/default_text_color" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -75,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Enter Shopkeer Name"
-        android:textColor="#1D5F3E"
+        android:textColor="@color/dark_green"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +87,7 @@
         android:layout_width="330dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#F5F8EC"
+        android:backgroundTint="@color/bg_color"
         android:foreground="@drawable/card_border"
         app:cardCornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +102,7 @@
             android:layout_marginStart="15dp"
             android:background="@null"
             android:inputType="text"
-            android:textColor="#2F2F2F" />
+            android:textColor="@color/default_text_color" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -112,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Enter Shop's Location"
-        android:textColor="#1D5F3E"
+        android:textColor="@color/dark_green"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +124,7 @@
         android:layout_width="330dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#F5F8EC"
+        android:backgroundTint="@color/bg_color"
         android:foreground="@drawable/card_border"
         app:cardCornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,7 +139,7 @@
             android:layout_marginStart="15dp"
             android:background="@null"
             android:inputType="text"
-            android:textColor="#2F2F2F" />
+            android:textColor="@color/default_text_color" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -149,7 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Upload Shop Picture"
-        android:textColor="#1D5F3E"
+        android:textColor="@color/dark_green"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +161,7 @@
         android:layout_width="150dp"
         android:layout_height="140dp"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#F5F8EC"
+        android:backgroundTint="@color/bg_color"
         android:foreground="@drawable/card_border"
         app:cardCornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -176,7 +175,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:backgroundTint="#1D5F3E"
+        android:backgroundTint="@color/dark_green"
         android:text="@string/Confirm"
         android:textColor="@color/white"
         android:textSize="16sp"

@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.iste.paymentx" />
-                  <option name="mobileSdkAppId" value="1:95027698410:android:3382b0f530184dc1475593" />
-                  <option name="projectId" value="paymentxuser" />
-                  <option name="projectNumber" value="95027698410" />
+                  <option name="appId" value="com.iste.paymentX" />
+                  <option name="mobileSdkAppId" value="1:52224379887:android:4279cdd5a9675a0e15c41a" />
+                  <option name="projectId" value="paymentx-817e3" />
+                  <option name="projectNumber" value="52224379887" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

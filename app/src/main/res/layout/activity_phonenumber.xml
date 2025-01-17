@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F8EC"
+    android:background="@color/bg_color"
     tools:context=".ui.auth.Phonenumber">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardheader"
         android:layout_width="409dp"
         android:layout_height="90dp"
-        app:cardBackgroundColor="#C5D9C9"
+        app:cardBackgroundColor="@color/header"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,7 +25,7 @@
             android:layout_marginStart="26dp"
             android:layout_marginBottom="8dp"
             android:text="Phone Number Verification"
-            android:textColor="#1D5F3E"
+            android:textColor="@color/dark_green"
             android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
@@ -38,7 +38,7 @@
         android:layout_marginTop="120dp"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="#2F2F2F"
+        android:textColor="@color/default_text_color"
         app:layout_constraintBottom_toTopOf="@+id/phoneNumberCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -56,7 +56,7 @@
         android:layout_marginBottom="32dp"
         android:foreground="@drawable/card_border"
         app:cardCornerRadius="10dp"
-        android:backgroundTint="#C5D9C9"
+        android:backgroundTint="@color/header"
         app:cardElevation="4dp"
         app:layout_constraintStart_toEndOf="@+id/countryCode"
         app:layout_constraintTop_toBottomOf="@+id/textView">
@@ -73,7 +73,7 @@
             android:layout_width="153dp"
             android:layout_height="match_parent"
             android:layout_marginStart="47dp"
-            android:backgroundTint="#F5F8EC">
+            android:backgroundTint="@color/bg_color">
 
             <EditText
                 android:id="@+id/phoneNumberEditText"
@@ -86,7 +86,7 @@
                 android:maxLength="10"
                 android:padding="14dp"
                 android:textColor="@color/black"
-                android:textColorHint="#565454" />
+                android:textColorHint="@color/phone_input_text_hint" />
         </androidx.cardview.widget.CardView>
 
     </androidx.cardview.widget.CardView>
@@ -99,7 +99,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="68dp"
-        android:backgroundTint="#C5D9C9"
+        android:backgroundTint="@color/header"
         android:foreground="@drawable/card_border"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
@@ -125,7 +125,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="A verification code will be sent to this number."
-        android:textColor="#2F2F2F"
+        android:textColor="@color/default_text_color"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -137,7 +137,7 @@
         android:layout_width="300dp"
         android:layout_height="56dp"
         android:layout_marginTop="36dp"
-        android:backgroundTint="#1D5F3E"
+        android:backgroundTint="@color/dark_green"
         android:text="@string/Confirm"
         android:textColor="@color/white"
         android:textSize="16sp"

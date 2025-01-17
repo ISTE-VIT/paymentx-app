@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#66F56B"
+    android:background="@color/transaction_completed_page_bg"
     tools:context=".ui.main.WithdrawCompleted">
 
     <ImageView
@@ -39,7 +39,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="270dp"
-        android:background="#F5F8EC"
+        android:background="@color/bg_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" >
@@ -50,7 +50,7 @@
             android:layout_height="42dp"
             android:text="Your Amount will be credited to your bank account within 72 hours."
             android:textAlignment="center"
-            android:textColor="#DC2F2F2F"
+            android:textColor="@color/transaction_page"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="You’ve Withdrawn"
-        android:textColor="#2F2F2F"
+        android:textColor="@color/default_text_color"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="From Your Wallet"
-        android:textColor="#2F2F2F"
+        android:textColor="@color/default_text_color"
         app:layout_constraintBottom_toTopOf="@+id/downloadInvoiceCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
@@ -105,7 +105,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="#F5F8EC"
+        android:backgroundTint="@color/bg_color"
         android:elevation="8dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +121,7 @@
             android:layout_marginStart="20dp"
             android:padding="16dp"
             android:text="Download Invoice"
-            android:textColor="#2F2F2F"
+            android:textColor="@color/default_text_color"
             android:textSize="20sp"
             android:textStyle="bold" />
 

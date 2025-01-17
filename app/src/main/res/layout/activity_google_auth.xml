@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F8EC"
+    android:background="@color/bg_color"
     tools:context=".ui.auth.GoogleAuthActivity">
 
     <androidx.viewpager2.widget.ViewPager2
@@ -23,7 +23,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/dots_indicator"
         android:layout_width="wrap_content"
-        android:backgroundTint="#F5F8EC"
+        android:backgroundTint="@color/bg_color"
         android:layout_height="12dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/viewPager"
@@ -49,7 +49,7 @@
         android:layout_marginTop="24dp"
         android:text="@string/app_name"
         android:textAlignment="center"
-        android:textColor="#1D5F3E"
+        android:textColor="@color/dark_green"
         android:textSize="32sp"
         android:textStyle="bold"
         android:typeface="serif"
@@ -65,7 +65,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/details"
         android:textAlignment="center"
-        android:textColor="#2F2F2F"
+        android:textColor="@color/default_text_color"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
         android:layout_marginTop="6dp"
         android:text="@string/details_ano"
         android:textAlignment="center"
-        android:textColor="#35515F"
+        android:textColor="@color/default_text_color"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +91,7 @@
         android:layout_height="56dp"
         android:layout_marginHorizontal="48dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#1D5F3E"
+        android:backgroundTint="@color/dark_green"
         android:text="@string/btn_text"
         android:textColor="@color/white"
         android:textSize="18sp"
@@ -103,7 +103,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="409dp"
         android:layout_height="54dp"
-        app:cardBackgroundColor="#C5D9C9"
+        app:cardBackgroundColor="@color/header"
         app:layout_constraintBottom_toTopOf="@+id/viewPager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

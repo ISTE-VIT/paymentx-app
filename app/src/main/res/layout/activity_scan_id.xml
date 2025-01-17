@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F8EC"
+    android:background="@color/bg_color"
     tools:context=".ui.auth.GoogleAuthActivity">
 
     <ImageView
@@ -30,7 +30,7 @@
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="#1D5F3E"
+        android:textColor="@color/dark_green"
         app:layout_constraintTop_toBottomOf="@id/nfc_Scan"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/EnterUID"
-        android:textColor="#2F2F2F"
+        android:textColor="@color/default_text_color"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/or_text"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/Colon"
-            android:textColor="#1D5F3E"
+            android:textColor="@color/dark_green"
             android:textSize="38sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/uid_input1"
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Colon"
-            android:textColor="#1D5F3E"
+            android:textColor="@color/dark_green"
             android:textSize="38sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/uid_input2"
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Colon"
-            android:textColor="#1D5F3E"
+            android:textColor="@color/dark_green"
             android:textSize="38sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/uid_input3"
@@ -148,7 +148,7 @@
         android:id="@+id/submit_button"
         android:layout_width="300dp"
         android:layout_height="56dp"
-        android:backgroundTint="#1D5F3E"
+        android:backgroundTint="@color/dark_green"
         android:text="@string/Submit"
         android:textSize="16sp"
         android:textColor="@color/white"
@@ -161,7 +161,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="409dp"
         android:layout_height="90dp"
-        app:cardBackgroundColor="#C5D9C9"
+        app:cardBackgroundColor="@color/header"
         app:layout_constraintBottom_toTopOf="@+id/nfc_Scan"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -174,7 +174,7 @@
             android:layout_marginStart="26dp"
             android:layout_marginBottom="8dp"
             android:text="Register Your UID"
-            android:textColor="#1D5F3E"
+            android:textColor="@color/dark_green"
             android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
