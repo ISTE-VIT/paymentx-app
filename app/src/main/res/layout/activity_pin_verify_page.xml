@@ -25,7 +25,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginBottom="8dp"
             android:text="Enter PIN"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/header_text"
             android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
@@ -150,7 +150,7 @@
         android:layout_marginTop="60dp"
         android:backgroundTint="@color/dark_green"
         android:text="VERIFY"
-        android:textColor="@color/white"
+        android:textColor="@color/btn_text_color"
         android:textSize="16sp"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"

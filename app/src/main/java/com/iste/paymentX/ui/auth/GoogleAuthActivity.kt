@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 
 class GoogleAuthActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -40,6 +41,7 @@ class GoogleAuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(R.layout.activity_google_auth)
 

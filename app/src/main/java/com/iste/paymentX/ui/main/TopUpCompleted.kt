@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.iste.paymentX.R
 
 class TopUpCompleted : AppCompatActivity() {
@@ -19,6 +20,7 @@ class TopUpCompleted : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_top_up_completed)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         topUpAmountTextView = findViewById(R.id.textView2)

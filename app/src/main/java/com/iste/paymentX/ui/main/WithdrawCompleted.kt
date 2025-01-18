@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.iste.paymentX.R
 
 class WithdrawCompleted : AppCompatActivity() {
@@ -19,6 +20,7 @@ class WithdrawCompleted : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_withdraw_completed)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         withdrawnAmountTextView = findViewById(R.id.textView2)

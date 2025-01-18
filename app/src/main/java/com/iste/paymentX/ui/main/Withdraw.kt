@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.iste.paymentX.R
 import com.iste.paymentX.ui.auth.PinVerifyPage
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatDelegate
 
 class Withdraw : AppCompatActivity() {
     private lateinit var amountEditText: EditText
@@ -32,6 +33,7 @@ class Withdraw : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_withdraw)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Initialize vibrator

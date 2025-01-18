@@ -17,6 +17,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
@@ -43,6 +44,7 @@ class PinVerifyPage : AppCompatActivity() {
         enableEdgeToEdge()
         auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_pin_verify_page)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Initialize vibrator

@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="John Doe"
-            android:textColor="#0A20B4"
+            android:textColor="@color/recycler_view_name"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Amount: ₹500"
             android:textStyle="bold"
-            android:textColor="#1D5F3E"
+            android:textColor="@color/dark_green"
             android:textSize="14sp" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status: Completed"
-            android:textColor="@android:color/black"
+            android:textColor="@color/default_text_color"
             android:textSize="14sp" />
 
         <TextView
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Timestamp: 2025-01-07T12:34:56Z"
-            android:textColor="@android:color/black"
+            android:textColor="@color/default_text_color"
             android:textSize="12sp" />
     </LinearLayout>
 

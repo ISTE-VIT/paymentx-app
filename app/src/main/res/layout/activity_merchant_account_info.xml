@@ -25,7 +25,7 @@
             android:layout_marginStart="26dp"
             android:layout_marginBottom="8dp"
             android:text="Merchant Registeration"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/header_text"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -177,7 +177,7 @@
         android:layout_marginEnd="25dp"
         android:backgroundTint="@color/dark_green"
         android:text="@string/Confirm"
-        android:textColor="@color/white"
+        android:textColor="@color/btn_text_color"
         android:textSize="16sp"
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"

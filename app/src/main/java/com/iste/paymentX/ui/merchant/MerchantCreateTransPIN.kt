@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.iste.paymentX.R
 
 class MerchantCreateTransPIN : AppCompatActivity() {
@@ -22,6 +23,7 @@ class MerchantCreateTransPIN : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_merchant_create_trans_pin)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Get the user information from intent

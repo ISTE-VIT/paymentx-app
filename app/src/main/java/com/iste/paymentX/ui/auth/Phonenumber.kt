@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.iste.paymentX.R
 
 class Phonenumber : AppCompatActivity() {
@@ -26,6 +27,7 @@ class Phonenumber : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         setContentView(R.layout.activity_phonenumber)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 

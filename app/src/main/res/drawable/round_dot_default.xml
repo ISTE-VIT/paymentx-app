@@ -4,10 +4,10 @@
         <shape android:shape="rectangle">
             <size android:width="4dp" android:height="4dp"/>
             <corners android:radius="2dp"/>
-            <solid android:color="#D0D3D8"/>
+            <solid android:color="@color/slider_dot"/>
             <stroke
                 android:width="1.4dp"
-                android:color="#FCF7F7"/>
+                android:color="@color/bg_color"/>
         </shape>
     </item>
 </layer-list>

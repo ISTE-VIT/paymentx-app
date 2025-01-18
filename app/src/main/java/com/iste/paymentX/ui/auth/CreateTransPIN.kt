@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.iste.paymentX.R
 
 class CreateTransPIN : AppCompatActivity() {
@@ -21,6 +22,7 @@ class CreateTransPIN : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         setContentView(R.layout.activity_create_trans_pin)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 

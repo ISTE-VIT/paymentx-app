@@ -149,7 +149,7 @@
         android:layout_marginTop="60dp"
         android:backgroundTint="@color/dark_green"
         android:text="VERIFY"
-        android:textColor="@color/white"
+        android:textColor="@color/btn_text_color"
         android:textSize="16sp"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"

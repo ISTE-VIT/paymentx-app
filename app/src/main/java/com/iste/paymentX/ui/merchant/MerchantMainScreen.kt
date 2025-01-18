@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,6 +55,7 @@ class MerchantMainScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_merchant_main_screen)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         auth = FirebaseAuth.getInstance()
@@ -73,7 +75,7 @@ class MerchantMainScreen : AppCompatActivity() {
         // Set navigation bar color programmatically for additional compatibility
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.navigation_bar_color)
-            window.statusBarColor = Color.parseColor("#C5D9C9")
+            window.statusBarColor = ContextCompat.getColor(this, R.color.header)
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
 

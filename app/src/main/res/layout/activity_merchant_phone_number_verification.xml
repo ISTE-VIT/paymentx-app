@@ -25,7 +25,7 @@
             android:layout_marginStart="26dp"
             android:layout_marginBottom="8dp"
             android:text="Phone Number Verification"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/header_text"
             android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
@@ -56,7 +56,7 @@
         android:layout_marginBottom="32dp"
         android:foreground="@drawable/card_border"
         app:cardCornerRadius="10dp"
-        android:backgroundTint="@color/header"
+        android:backgroundTint="@color/phone_input_box"
         app:cardElevation="4dp"
         app:layout_constraintStart_toEndOf="@+id/merchcountryCode"
         app:layout_constraintTop_toBottomOf="@+id/merchtextView">
@@ -99,7 +99,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="68dp"
-        android:backgroundTint="@color/header"
+        android:backgroundTint="@color/phone_input_box"
         android:foreground="@drawable/card_border"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
@@ -111,10 +111,10 @@
 
         <ImageView
             android:id="@+id/merchimageView2"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
             app:srcCompat="@drawable/countrycode" />
 
     </androidx.cardview.widget.CardView>
@@ -139,7 +139,7 @@
         android:layout_marginTop="36dp"
         android:backgroundTint="@color/dark_green"
         android:text="@string/Confirm"
-        android:textColor="@color/white"
+        android:textColor="@color/btn_text_color"
         android:textSize="16sp"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
