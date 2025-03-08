@@ -1,1 +1,2 @@
-user app for paymentx
+- user app for paymentx
+- backend repo - https://github.com/pratham-developer/paymentx-backend
