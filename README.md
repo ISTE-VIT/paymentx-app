@@ -338,20 +338,20 @@ PaymentX/
       <td align="center">
         <h3>Rudra Gupta</h3>
         <p><i>Android Developer</i></p>
-        <a href="https://github.com/Rudragupta8777"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" height="22"></a>
-        <a href="https://www.linkedin.com/in/rudra-gupta-36827828b/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" height="22"></a>
+        <a href="https://github.com/Rudragupta8777"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" height="22" target="_blank"></a>
+        <a href="https://www.linkedin.com/in/rudra-gupta-36827828b/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" height="22" target="_blank"></a>
       </td>
       <td align="center">
         <h3>Pratham Khanduja</h3>
         <p><i>Backend Developer</i></p>
-        <a href="https://github.com/pratham-developer"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" height="22"></a>
-        <a href="https://www.linkedin.com/in/pratham-khanduja/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" height="22"></a>
+        <a href="https://github.com/pratham-developer"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" height="22" target="_blank"></a>
+        <a href="https://www.linkedin.com/in/pratham-khanduja/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" height="22" target="_blank"></a>
       </td>
       <td align="center">
         <h3>Saniya Goyal</h3>
         <p><i>UI/UX Designer</i></p>
-        <a href="https://github.com/san7iya"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" height="22"></a>
-        <a href="https://www.linkedin.com/in/saniya7goyal/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" height="22"></a>
+        <a href="https://github.com/san7iya"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" height="22" target="_blank"></a>
+        <a href="https://www.linkedin.com/in/saniya7goyal/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" height="22" target="_blank"></a>
       </td>
     </tr>
   </table>
@@ -364,7 +364,7 @@ PaymentX/
     <b>PaymentX</b>
   </h2>
   <h3>
-    <i>Transforming Campus Payments</i> | Made with ❤️ at <a href="https://github.com/ISTE-VIT">ISTE-VIT</a>
+    <i>Transforming Campus Payments</i> | Made with ❤️ at <a href="https://github.com/ISTE-VIT" target="_blank">ISTE-VIT</a>
   </h3>
   
   ---
