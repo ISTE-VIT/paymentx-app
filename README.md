@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://via.placeholder.com/1200x300/4F46E5/FFFFFF?text=PaymentX" alt="PaymentX" width="100%"/>
+  <img src="https://media-hosting.imagekit.io/c28554254034453e/paymentX_logo.png?Expires=1838319405&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=znkKp0YY2aefQAJ39EuLpVe5wVhm9SoriSi9B37neT20iUqBKerqL7x13cmH4YVvFnlboZH24ntEkYaXeybZT9TAXZVk7gVUVpIj1eSFxkhgN2EcZAuUfcLy6~iEgytSqrJ~F5b57f8j48eoEL6NIuJ4ywCuBQM4bcgSyK~3U1OLjlOSqJEHHnFX6lIM9~OxaQL8OBjNZhoIvmIlvfSDwa~z0WxzX1NLONr0kbIR4zH9uQ2ldUcahPWYugIDMBjrFgJ7DBGf6e9s94JXsPXVzdRG61qyaIiSjhcvYuVXSM29XdHHyUcQaNzmr-Whcoe3c6U~XfHAj9wR8BrO2HkW2A__" alt="PaymentX" width="100%"/>
   
   # PaymentX: NFC-Based Offline Payment System
   
