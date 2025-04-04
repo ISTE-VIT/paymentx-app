@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/merchheader" />
+        app:layout_constraintTop_toBottomOf="@+id/merchheader"/>
 
     <TextView
         android:id="@+id/merchappname"
@@ -99,40 +99,52 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/merchconstraintLayout"
-        android:layout_width="320dp"
-        android:layout_height="107dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/card_gradient_background"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/merchconstraintLayout1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/merchtxt3">
+        app:layout_constraintTop_toBottomOf="@+id/merchtxt3"
+        app:layout_constraintHorizontal_weight="1">
 
         <ImageView
-            android:id="@+id/merchbtnTopUp"
+            android:id="@+id/merchbtnRecieve"
             android:layout_width="150dp"
             android:layout_height="75dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="18dp"
             android:src="@drawable/receive"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/merchbtnWithdraw"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/merchconstraintLayout1"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/card_gradient_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/merchconstraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/merchtxt3"
+        app:layout_constraintHorizontal_weight="1">
 
         <ImageView
             android:id="@+id/merchbtnWithdraw"
             android:layout_width="150dp"
             android:layout_height="75dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="12dp"
             android:src="@drawable/withdraw"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/merchbtnTopUp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -153,10 +165,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/merchcard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/merchtextView3" />
@@ -180,10 +192,12 @@
         android:layout_height="78dp"
         android:layout_marginTop="2dp"
         android:background="@color/navigation_bar_color"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/merchrecyclerView">
+        app:layout_constraintTop_toBottomOf="@+id/merchrecyclerView"
+        app:layout_constraintVertical_bias="1.0">
 
         <ImageView
             android:id="@+id/merchbtnTransact"
@@ -230,5 +244,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

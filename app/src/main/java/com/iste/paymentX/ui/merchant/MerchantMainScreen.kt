@@ -103,7 +103,7 @@ class MerchantMainScreen : AppCompatActivity() {
         // Initialize views
         balanceTextView = findViewById(R.id.merchtextView2)
         btnViewBalance = findViewById(R.id.merchbtnViewBalance)
-        btnReceive = findViewById(R.id.merchbtnTopUp)
+        btnReceive = findViewById(R.id.merchbtnRecieve)
         btnWithdraw = findViewById(R.id.merchbtnWithdraw)
         balanceTextView.visibility = View.GONE
         btnViewBalance.visibility = View.VISIBLE

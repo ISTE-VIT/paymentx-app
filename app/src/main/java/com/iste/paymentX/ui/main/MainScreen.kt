@@ -37,6 +37,7 @@ class MainScreen : AppCompatActivity() {
     private lateinit var btnWithdraw: ImageView
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var transactionbtn: ImageView
 
     // Store credentials
     private var userName: String? = null
@@ -88,6 +89,7 @@ class MainScreen : AppCompatActivity() {
         btnViewBalance = findViewById(R.id.btnViewBalance)
         btnTopUp = findViewById(R.id.btnTopUp)
         btnWithdraw = findViewById(R.id.btnWithdraw)
+        transactionbtn = findViewById(R.id.btnTransact)
         balanceTextView.visibility = View.GONE
         btnViewBalance.visibility = View.VISIBLE
 
@@ -106,6 +108,11 @@ class MainScreen : AppCompatActivity() {
         // Navigate to TopUp screen when TopUp button is clicked
         btnTopUp.setOnClickListener {
             val intent = Intent(this, TopUp::class.java)
+            startActivity(intent)
+        }
+
+        transactionbtn.setOnClickListener {
+            val intent = Intent(this, Transactions::class.java)
             startActivity(intent)
         }
 

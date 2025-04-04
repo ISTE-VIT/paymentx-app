@@ -99,40 +99,52 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="107dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/card_gradient_background"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/constraintLayout1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt3">
+        app:layout_constraintTop_toBottomOf="@+id/txt3"
+        app:layout_constraintHorizontal_weight="1">
 
         <ImageView
             android:id="@+id/btnTopUp"
             android:layout_width="150dp"
             android:layout_height="75dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="18dp"
             android:src="@drawable/top_up"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/btnWithdraw"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout1"
+        android:layout_width="0dp"
+        android:layout_height="107dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/card_gradient_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/txt3"
+        app:layout_constraintHorizontal_weight="1">
 
         <ImageView
             android:id="@+id/btnWithdraw"
             android:layout_width="150dp"
             android:layout_height="75dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="12dp"
             android:src="@drawable/withdraw"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnTopUp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -153,13 +165,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
     <TextView
         android:id="@+id/textView4"
@@ -180,6 +192,7 @@
         android:layout_height="78dp"
         android:layout_marginTop="2dp"
         android:background="@color/navigation_bar_color"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
@@ -204,6 +217,7 @@
             android:backgroundTint="@color/black"
             android:src="@drawable/selected_home_logo"
             android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnProfile"
             app:layout_constraintStart_toEndOf="@+id/btnTransact"
             app:layout_constraintTop_toTopOf="parent" />
