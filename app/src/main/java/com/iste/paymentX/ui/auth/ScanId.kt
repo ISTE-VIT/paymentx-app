@@ -168,8 +168,6 @@ class ScanId : AppCompatActivity() {
             Log.d("NFC", "NFC action not recognized: ${intent.action}")
         }
     }
-
-
     private fun displayUid(tag: Tag) {
         try {
             // Extract and format the UID from the Tag object
