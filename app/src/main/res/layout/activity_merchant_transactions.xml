@@ -68,23 +68,29 @@
 
         <LinearLayout
             android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu"
+                android:layout_gravity="center"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnStatusFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:text="Status"
                 android:textColor="@color/dark_green"
                 app:backgroundTint="@color/bg_color"
-                app:cornerRadius="12dp"
+                app:cornerRadius="10dp"
                 app:strokeColor="@color/dark_green"
-                app:strokeWidth="1.5dp" />
+                app:strokeWidth="0.8dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDateFilter"
@@ -94,9 +100,9 @@
                 android:text="Date"
                 android:textColor="@color/dark_green"
                 app:backgroundTint="@color/bg_color"
-                app:cornerRadius="12dp"
+                app:cornerRadius="10dp"
                 app:strokeColor="@color/dark_green"
-                app:strokeWidth="1.5dp" />
+                app:strokeWidth="0.8dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAmountFilter"
@@ -106,9 +112,9 @@
                 android:text="Amount"
                 android:textColor="@color/dark_green"
                 app:backgroundTint="@color/bg_color"
-                app:cornerRadius="12dp"
+                app:cornerRadius="10dp"
                 app:strokeColor="@color/dark_green"
-                app:strokeWidth="1.5dp" />
+                app:strokeWidth="0.8dp" />
         </LinearLayout>
     </HorizontalScrollView>
 
