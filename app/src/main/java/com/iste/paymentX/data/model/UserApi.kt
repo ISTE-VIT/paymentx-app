@@ -74,5 +74,10 @@ interface UserApi {
     suspend fun getMerchTrans(
         @Header("Authorization") authToken: String
     ): Response<List<Transaction>>
+
+    @GET("/api/transactions/user-history")
+    suspend fun getUserTrans(
+        @Header("Authorization") authToken: String
+    ): Response<List<Transaction>>
 }
 

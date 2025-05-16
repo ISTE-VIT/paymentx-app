@@ -37,6 +37,7 @@ class MerchantMainScreen : AppCompatActivity() {
     private lateinit var btnViewBalance: Button
     private lateinit var btnReceive: ImageView
     private lateinit var btnWithdraw: ImageView
+    private lateinit var btnTransact: ImageView  // Added declaration for transaction button
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var recyclerView: RecyclerView
@@ -71,6 +72,12 @@ class MerchantMainScreen : AppCompatActivity() {
             handleLogout()
         }
 
+        // Add click listener for transaction button
+        btnTransact = findViewById(R.id.merchbtnTransact)
+        btnTransact.setOnClickListener {
+            val intent = Intent(this, MerchantTransactions::class.java)
+            startActivity(intent)
+        }
 
         // Set navigation bar color programmatically for additional compatibility
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -128,6 +135,12 @@ class MerchantMainScreen : AppCompatActivity() {
         // Navigate to Withdraw screen when Withdraw button is clicked
         btnWithdraw.setOnClickListener {
             val intent = Intent(this, MerchantWithdraw::class.java)
+            startActivity(intent)
+        }
+
+        // Add click listener for "See All" text to navigate to transactions screen
+        findViewById<TextView>(R.id.merchtextView4).setOnClickListener {
+            val intent = Intent(this, MerchantTransactions::class.java)
             startActivity(intent)
         }
 

@@ -1,4 +1,4 @@
-package com.iste.paymentX.ui.main
+package com.iste.paymentX.ui.merchant
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.iste.paymentX.R
 import com.iste.paymentX.data.model.RetrofitInstance
 import com.iste.paymentX.data.model.Transaction
@@ -30,9 +31,9 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class Transactions : AppCompatActivity() {
+class MerchantTransactions : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var transactionAdapter: UserTransactionAdapter
+    private lateinit var transactionAdapter: MerchTransactionAdapter
     private lateinit var btnHome: ImageView
     private lateinit var btnProfile: ImageView
     private lateinit var btnTransact: ImageView
@@ -52,7 +53,7 @@ class Transactions : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_transactions)
+        setContentView(R.layout.activity_merchant_transactions)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -81,15 +82,15 @@ class Transactions : AppCompatActivity() {
 
     private fun initializeViews() {
         // Initialize RecyclerView
-        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView = findViewById(R.id.merchrecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        transactionAdapter = UserTransactionAdapter(transactionList)
+        transactionAdapter = MerchTransactionAdapter(transactionList)
         recyclerView.adapter = transactionAdapter
 
         // Initialize navigation buttons
-        btnHome = findViewById(R.id.btnHome)
-        btnProfile = findViewById(R.id.btnProfile)
-        btnTransact = findViewById(R.id.btnTransact)
+        btnHome = findViewById(R.id.merchbtnHome)
+        btnProfile = findViewById(R.id.merchbtnProfile)
+        btnTransact = findViewById(R.id.merchbtnTransact)
 
         // Initialize search and filter
         searchEditText = findViewById(R.id.searchEditText)
@@ -129,7 +130,7 @@ class Transactions : AppCompatActivity() {
 
     private fun setupNavigation() {
         btnHome.setOnClickListener {
-            val intent = Intent(this, MainScreen::class.java)
+            val intent = Intent(this, MerchantMainScreen::class.java)
             startActivity(intent)
             finish()
         }
@@ -146,13 +147,13 @@ class Transactions : AppCompatActivity() {
         lifecycleScope.launch {
             getFirebaseIdToken()?.let { token ->
                 fetchTransactionsHelper("Bearer $token")
-            } ?: Log.e("Transactions", "Failed to get Firebase ID token")
+            } ?: Log.e("MerchantTransactions", "Failed to get Firebase ID token")
         }
     }
 
     private suspend fun fetchTransactionsHelper(authToken: String) {
         try {
-            val response = RetrofitInstance.api.getUserTrans(authToken)
+            val response = RetrofitInstance.api.getMerchTrans(authToken)
             if (response.isSuccessful && response.body() != null) {
                 response.body()?.let { transactions ->
                     transactionList.clear()
@@ -164,12 +165,12 @@ class Transactions : AppCompatActivity() {
                     transactionAdapter.notifyDataSetChanged()
                 }
             } else {
-                Log.e("Transactions", "Response not successful: ${response.code()} - ${response.message()}")
+                Log.e("MerchantTransactions", "Response not successful: ${response.code()} - ${response.message()}")
             }
         } catch (e: IOException) {
-            Log.e("Transactions", "IOException, you might not have internet connection", e)
+            Log.e("MerchantTransactions", "IOException, you might not have internet connection", e)
         } catch (e: HttpException) {
-            Log.e("Transactions", "HttpException, unexpected response", e)
+            Log.e("MerchantTransactions", "HttpException, unexpected response", e)
         }
     }
 
@@ -177,7 +178,7 @@ class Transactions : AppCompatActivity() {
         return try {
             auth.currentUser?.getIdToken(false)?.await()?.token
         } catch (e: Exception) {
-            Log.e("Transactions", "Error getting Firebase ID token", e)
+            Log.e("MerchantTransactions", "Error getting Firebase ID token", e)
             null
         }
     }
@@ -189,7 +190,7 @@ class Transactions : AppCompatActivity() {
             startActivity(intent)
             finish()
         } catch (e: Exception) {
-            Log.e("Transactions", "Exception during logout: ", e)
+            Log.e("MerchantTransactions", "Exception during logout: ", e)
         }
     }
 
@@ -198,9 +199,9 @@ class Transactions : AppCompatActivity() {
             // If search is empty, show all transactions
             originalTransactionList
         } else {
-            // Filter by merchant name, amount, status, etc.
+            // Filter by username, amount, status, etc.
             originalTransactionList.filter { transaction ->
-                (transaction.merchantName?.contains(query, ignoreCase = true) ?: false) ||
+                transaction.userName.contains(query, ignoreCase = true) ||
                         transaction.amount.toString().contains(query) ||
                         transaction.status.contains(query, ignoreCase = true)
             }

@@ -3,7 +3,6 @@ package com.iste.paymentX.ui.main
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -16,12 +15,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentX.R
 import com.iste.paymentX.data.model.RetrofitInstance
+import com.iste.paymentX.data.model.Transaction
 import com.iste.paymentX.ui.auth.GoogleAuthActivity
 import com.iste.paymentX.ui.auth.PinVerifyPage
 import kotlinx.coroutines.launch
@@ -37,7 +39,10 @@ class MainScreen : AppCompatActivity() {
     private lateinit var btnWithdraw: ImageView
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var transactionbtn: ImageView
+    private lateinit var btnTransact: ImageView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var transactionAdapter: UserTransactionAdapter
+    private val transactionList: MutableList<Transaction> = mutableListOf()
 
     // Store credentials
     private var userName: String? = null
@@ -89,9 +94,15 @@ class MainScreen : AppCompatActivity() {
         btnViewBalance = findViewById(R.id.btnViewBalance)
         btnTopUp = findViewById(R.id.btnTopUp)
         btnWithdraw = findViewById(R.id.btnWithdraw)
-        transactionbtn = findViewById(R.id.btnTransact)
+        btnTransact = findViewById(R.id.btnTransact)
         balanceTextView.visibility = View.GONE
         btnViewBalance.visibility = View.VISIBLE
+
+        // Initialize RecyclerView
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        transactionAdapter = UserTransactionAdapter(transactionList)
+        recyclerView.adapter = transactionAdapter
 
         // Add this line to set only the first name
         val firstName = userName?.split(" ")?.first() ?: "User"
@@ -111,9 +122,15 @@ class MainScreen : AppCompatActivity() {
             startActivity(intent)
         }
 
-        transactionbtn.setOnClickListener {
-            val intent = Intent(this, Transactions::class.java)
-            startActivity(intent)
+        // Fix for Transaction button - proper click handler
+        btnTransact.setOnClickListener {
+            try {
+                val intent = Intent(this, Transactions::class.java)
+                startActivity(intent)
+                // Don't call finish() here as we want to keep MainScreen in the back stack
+            } catch (e: Exception) {
+                Log.e("MainScreen", "Error navigating to Transactions: ", e)
+            }
         }
 
         // Navigate to Withdraw screen when Withdraw button is clicked
@@ -121,6 +138,15 @@ class MainScreen : AppCompatActivity() {
             val intent = Intent(this, Withdraw::class.java)
             startActivity(intent)
         }
+
+        // Add click listener for "See All" text to navigate to transactions screen
+        findViewById<TextView>(R.id.textView4).setOnClickListener {
+            val intent = Intent(this, Transactions::class.java)
+            startActivity(intent)
+        }
+
+        // Fetch recent transactions
+        fetchTransactions()
     }
 
     // Handle the result from PinVerifyPage
@@ -142,7 +168,7 @@ class MainScreen : AppCompatActivity() {
             val user = auth.currentUser
             user?.getIdToken(false)?.await()?.token
         } catch (e: Exception) {
-            Log.e("HomeActivity", "Error getting Firebase ID token", e)
+            Log.e("MainScreen", "Error getting Firebase ID token", e)
             null
         }
     }
@@ -161,16 +187,16 @@ class MainScreen : AppCompatActivity() {
             } else {
                 btnViewBalance.visibility = View.VISIBLE
                 balanceTextView.visibility = View.GONE
-                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+                Log.e("MainScreen", "Response not successful: ${response.code()} - ${response.message()}")
             }
         } catch (e: IOException) {
             btnViewBalance.visibility = View.VISIBLE
             balanceTextView.visibility = View.GONE
-            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+            Log.e("MainScreen", "IOException, you might not have internet connection", e)
         } catch (e: HttpException) {
             btnViewBalance.visibility = View.VISIBLE
             balanceTextView.visibility = View.GONE
-            Log.e("HomeActivity", "HttpException, unexpected response", e)
+            Log.e("MainScreen", "HttpException, unexpected response", e)
         }
     }
 
@@ -180,8 +206,36 @@ class MainScreen : AppCompatActivity() {
             if (token != null) {
                 getBalanceHelper("Bearer $token")
             } else {
-                Log.e("HomeActivity", "Failed to get Firebase ID token")
+                Log.e("MainScreen", "Failed to get Firebase ID token")
             }
+        }
+    }
+
+    private fun fetchTransactions() {
+        lifecycleScope.launch {
+            getFirebaseIdToken()?.let { token ->
+                fetchTransactionsHelper("Bearer $token")
+            } ?: Log.e("MainScreen", "Failed to get Firebase ID token")
+        }
+    }
+
+    private suspend fun fetchTransactionsHelper(authToken: String) {
+        try {
+            val response = RetrofitInstance.api.getUserTrans(authToken)
+            if (response.isSuccessful && response.body() != null) {
+                response.body()?.let { transactions ->
+                    transactionList.clear()
+                    // Add recent transactions (limit to 5 for main screen)
+                    transactionList.addAll(transactions.take(5))
+                    transactionAdapter.notifyDataSetChanged()
+                }
+            } else {
+                Log.e("MainScreen", "Response not successful: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: IOException) {
+            Log.e("MainScreen", "IOException, you might not have internet connection", e)
+        } catch (e: HttpException) {
+            Log.e("MainScreen", "HttpException, unexpected response", e)
         }
     }
 
@@ -193,7 +247,7 @@ class MainScreen : AppCompatActivity() {
                 finish()
             }
         } catch (e: Exception) {
-            Log.e("MerchMainScreen", "Exception during logout: ", e)
+            Log.e("MainScreen", "Exception during logout: ", e)
         }
     }
 }
