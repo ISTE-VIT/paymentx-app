@@ -111,6 +111,11 @@ class UserProfile : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        findViewById<CardView>(R.id.developer_team).setOnClickListener {
+            val intent = Intent(this, DeveloperTeam::class.java)
+            startActivity(intent)
+        }
     }
 
     private suspend fun getFirebaseIdToken(): String? {

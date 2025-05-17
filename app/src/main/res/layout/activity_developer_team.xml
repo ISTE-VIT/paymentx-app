@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".ui.main.DeveloperTeam">
+
+    <!-- back arrow header - keep outside of ScrollView -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/merchcardheader"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:cardBackgroundColor="@color/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/previouspage"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+        <TextView
+            android:id="@+id/merchheadingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="70dp"
+            android:layout_marginBottom="8dp"
+            android:text="Developer Team"
+            android:textColor="@color/header_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/previouspage" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- ScrollView for the content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/merchcardheader"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/rudra_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/developer_team_icon"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/name_rudra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center"
+                android:text="Rudra Gupta"
+                android:textColor="@color/dark_green"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rudra_icon" />
+
+            <TextView
+                android:id="@+id/rudra_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="App Developer"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#455A64"
+                app:layout_constraintTop_toBottomOf="@+id/name_rudra"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rudra"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:elevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/rudra_role">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_linkedin_rudra"
+                    android:layout_width="145dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/bg_color"
+                    android:foreground="@drawable/card_border"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/linkedin_icon_1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/linkedin_icon" />
+
+                    <TextView
+                        android:id="@+id/linkedin_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:text="LinkedIn"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_github_rudra"
+                    android:layout_width="145dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="@color/bg_color"
+                    android:foreground="@drawable/card_border"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_linkedin_rudra"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/github_icon_1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/github_icon" />
+
+                    <TextView
+                        android:id="@+id/github_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:text="GitHub"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/pratham_icon"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/pratham_icon"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rudra" />
+
+            <TextView
+                android:id="@+id/name_pratham"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center"
+                android:text="Pratham Khanduja"
+                android:textColor="@color/dark_green"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pratham_icon" />
+
+            <TextView
+                android:id="@+id/pratham_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="App &amp; Backend Developer"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#455A64"
+                app:layout_constraintTop_toBottomOf="@+id/name_pratham"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pratham"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:elevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/pratham_role">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_linkedin_pratham"
+                    android:layout_width="145dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/bg_color"
+                    android:foreground="@drawable/card_border"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/linkedin_icon_2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/linkedin_icon" />
+
+                    <TextView
+                        android:id="@+id/linkedin_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:text="LinkedIn"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_github_pratham"
+                    android:layout_width="145dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="@color/bg_color"
+                    android:foreground="@drawable/card_border"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_linkedin_pratham"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/github_icon_2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/github_icon" />
+
+                    <TextView
+                        android:id="@+id/github_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:text="GitHub"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/saniya_icon"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/saniya_icon"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pratham" />
+
+            <TextView
+                android:id="@+id/name_saniya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center"
+                android:text="Saniya Goyal"
+                android:textColor="@color/dark_green"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/saniya_icon" />
+
+            <TextView
+                android:id="@+id/saniya_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UI/UX Designer"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#455A64"
+                app:layout_constraintTop_toBottomOf="@+id/name_saniya"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/saniya"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:elevation="0dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintTop_toBottomOf="@+id/saniya_role"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_linkedin_saniya"
+                    android:layout_width="145dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="@color/bg_color"
+                    android:foreground="@drawable/card_border"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/linkedin_icon_3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/linkedin_icon" />
+
+                    <TextView
+                        android:id="@+id/linkedin_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:text="LinkedIn"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_github_saniya"
+                    android:layout_width="145dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="@color/bg_color"
+                    android:foreground="@drawable/card_border"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_linkedin_saniya"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/github_icon_3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/github_icon" />
+
+                    <TextView
+                        android:id="@+id/github_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="15dp"
+                        android:text="GitHub"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

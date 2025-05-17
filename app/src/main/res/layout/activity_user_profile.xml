@@ -96,7 +96,7 @@
             android:text="rudra.gupta2023@vitstudent.ac.in"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textAlignment="center"
             android:textColor="#455A64"/>
 
