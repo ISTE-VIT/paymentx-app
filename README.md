@@ -189,12 +189,12 @@ PaymentX/
   </tr>
   <tr>
     <td>User App Core Features</td>
-    <td>🔄 In Progress</td>
+    <td>⏳ In Progress</td>
     <td>Basic functionality implemented, UI refinements ongoing</td>
   </tr>
   <tr>
     <td>User Transaction History</td>
-    <td>⏳ Pending</td>
+    <td>✅ Complete</td>
     <td>Implementation planned for next sprint</td>
   </tr>
 </table>
