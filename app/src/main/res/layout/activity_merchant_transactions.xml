@@ -172,7 +172,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/black"
-            android:src="@drawable/profile"
+            android:src="@drawable/profile_icon"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/merchbtnHome"
