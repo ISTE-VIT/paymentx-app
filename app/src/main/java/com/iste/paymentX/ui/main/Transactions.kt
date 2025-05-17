@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentX.R
 import com.iste.paymentX.data.model.RetrofitInstance
 import com.iste.paymentX.data.model.Transaction
-import com.iste.paymentX.ui.auth.GoogleAuthActivity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
@@ -135,11 +134,31 @@ class Transactions : AppCompatActivity() {
         }
 
         btnProfile.setOnClickListener {
-            handleLogout()
+            navigateToUserProfile()
         }
 
         // Transaction button is already selected on this screen
         btnTransact.isSelected = true
+    }
+
+    private fun navigateToUserProfile() {
+        try {
+            val currentUser = auth.currentUser
+
+            val intent = Intent(this, UserProfile::class.java)
+
+            // Pass user data to UserProfile activity if available
+            if (currentUser != null) {
+                intent.putExtra("USER_NAME", currentUser.displayName)
+                intent.putExtra("USER_EMAIL", currentUser.email)
+                intent.putExtra("USER_ID", currentUser.uid)
+            }
+
+            startActivity(intent)
+            // Don't call finish() to keep Transactions in the back stack
+        } catch (e: Exception) {
+            Log.e("Transactions", "Error navigating to UserProfile: ", e)
+        }
     }
 
     private fun fetchTransactions() {
@@ -179,17 +198,6 @@ class Transactions : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e("Transactions", "Error getting Firebase ID token", e)
             null
-        }
-    }
-
-    private fun handleLogout() {
-        try {
-            auth.signOut()
-            val intent = Intent(this, GoogleAuthActivity::class.java)
-            startActivity(intent)
-            finish()
-        } catch (e: Exception) {
-            Log.e("Transactions", "Exception during logout: ", e)
         }
     }
 

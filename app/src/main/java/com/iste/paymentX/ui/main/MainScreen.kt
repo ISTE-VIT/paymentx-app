@@ -73,8 +73,14 @@ class MainScreen : AppCompatActivity() {
         userEmail = intent.getStringExtra("USER_EMAIL")
         userId = intent.getStringExtra("USER_ID")
 
-        findViewById<ImageView>(R.id.btnProfile).setOnClickListener(){
-            handleLogout()
+        findViewById<ImageView>(R.id.btnProfile).setOnClickListener {
+            val intent = Intent(this, UserProfile::class.java)
+            // Pass user data to UserProfile activity
+            intent.putExtra("USER_NAME", userName)
+            intent.putExtra("USER_EMAIL", userEmail)
+            intent.putExtra("USER_ID", userId)
+            startActivity(intent)
+            // Don't call finish() here to keep MainScreen in the back stack
         }
 
         // Save userName in SharedPreferences if retrieved from intent
@@ -236,18 +242,6 @@ class MainScreen : AppCompatActivity() {
             Log.e("MainScreen", "IOException, you might not have internet connection", e)
         } catch (e: HttpException) {
             Log.e("MainScreen", "HttpException, unexpected response", e)
-        }
-    }
-
-    private fun handleLogout() {
-        try {
-            auth.signOut()
-            googleSignInClient.revokeAccess().addOnCompleteListener {
-                startActivity(Intent(this, GoogleAuthActivity::class.java))
-                finish()
-            }
-        } catch (e: Exception) {
-            Log.e("MainScreen", "Exception during logout: ", e)
         }
     }
 }

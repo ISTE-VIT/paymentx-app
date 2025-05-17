@@ -81,7 +81,7 @@
                 android:layout_height="match_parent"
                 android:backgroundTint="@android:color/transparent"
                 android:ems="10"
-                android:hint="9832106845"
+                android:hint="8019505140"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:padding="14dp"
