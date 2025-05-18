@@ -116,8 +116,14 @@ class UserProfile : AppCompatActivity() {
             finish()
         }
 
+        findViewById<CardView>(R.id.feedback).setOnClickListener {
+            val intent = Intent(this, FeedbackForm::class.java)
+            animateButtonClick(it)
+            startActivity(intent)
+        }
+
         findViewById<CardView>(R.id.help).setOnClickListener {
-            val intent = Intent(this, Feedback::class.java)
+            val intent = Intent(this, HelpCentre::class.java)
             animateButtonClick(it)
             startActivity(intent)
         }

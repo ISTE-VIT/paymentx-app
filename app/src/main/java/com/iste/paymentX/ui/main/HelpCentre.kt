@@ -14,7 +14,7 @@ import androidx.cardview.widget.CardView
 import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentX.R
 
-class Feedback : AppCompatActivity() {
+class HelpCentre : AppCompatActivity() {
 
     // UI elements
     private lateinit var searchEditText: EditText
@@ -27,7 +27,7 @@ class Feedback : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_feedback)
+        setContentView(R.layout.activity_help_centre)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Initialize Firebase Auth
