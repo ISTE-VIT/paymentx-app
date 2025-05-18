@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".ui.main.Feedback">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardheader"
+        android:layout_width="409dp"
+        android:layout_height="90dp"
+        app:cardBackgroundColor="@color/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="70dp"
+            android:layout_marginBottom="8dp"
+            android:text="Help Centre"
+            android:textColor="@color/header_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/back" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="Hello, Rudra!"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardheader" />
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="What can I help you for today ?"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_search"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/bg_color"
+        android:foreground="@drawable/search_border"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/desc">
+
+        <ImageView
+            android:id="@+id/btnSearch"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center|left"
+            android:layout_marginTop="7.5dp"
+            android:layout_marginBottom="7.5dp"
+            android:src="@drawable/search" />
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="285dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="10dp"
+            android:background="@null"
+            android:textSize="22sp"
+            android:hint="Search Transactions"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_green"
+            android:inputType="text" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/desc1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="25dp"
+        android:text="Frequently Asked"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_search" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/contact_us"
+        app:layout_constraintTop_toBottomOf="@id/desc1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- FAQ Item 1 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How to Top Up on this App?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Go to your dashboard and tap the Top Up button. Enter the desired amount and confirm the transaction. Your wallet will be updated instantly."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 2 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How to Withdraw on this App?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tap the Withdraw button, enter the amount you'd like to withdraw, and confirm. The amount will be deducted from your wallet."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 3 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How to Make a Payment Using NFC?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ensure NFC is turned ON in your phone settings. Tap your ID card on the recipient's device when prompted, enter your PIN, and confirm the transaction."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 4 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="What If My NFC Isn't Working?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check if NFC is enabled under Settings > Connected Devices > NFC. Also, ensure your ID card is properly positioned over the NFC sensor area of the phone."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 5 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Who Can Use PaymentX?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Only users with a valid VIT student email address can register. Others will not be able to sign up."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 6 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Is Internet Required for Transactions?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No. The app supports offline NFC transactions. However, an internet connection is required during login, signup, or top-up/withdraw operations."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 7 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How Do I Register or Sign In?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Use your VIT email ID to sign up or log in securely through Firebase Authentication."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 8 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="What Is My Wallet Linked To?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your wallet is linked to the UID of your student ID card, ensuring security and uniqueness."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 9 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Is There a Real Money Gateway?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No. PaymentX uses a dummy currency for internal demonstration and testing purposes only."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 10 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="What Happens If I Forget My PIN?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Currently, PIN reset functionality may be limited. Please contact your admin or the PaymentX support team to reset your PIN securely."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 11 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Can Merchants View Their Transaction History?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Yes. Merchants have access to a transaction history panel to view received payments and withdrawals."
+                    android:layout_marginTop="45dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 12 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How Do I Know If My Transaction Was Successful?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="After each payment, you will receive a confirmation message on-screen. Transaction records will also appear in the wallet history (upcoming feature)."
+                    android:layout_marginTop="45dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 13 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Can I Use PaymentX on iOS?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No. The app is currently available only on Android."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 14 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="8dp"
+                android:foreground="@drawable/card_border"
+                android:backgroundTint="@color/bg_color"
+                android:layout_marginBottom="25dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Why Am I Not Able to Register?"
+                    android:textColor="@color/dark_green"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Make sure you are using your official @vit.ac.in email address. Other domains are not supported."
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Contact Us Button -->
+    <Button
+        android:id="@+id/contact_us"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/dark_green"
+        android:text="CONTACT US"
+        android:textColor="@color/btn_text_color"
+        android:textSize="16sp"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

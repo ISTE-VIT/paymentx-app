@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentX.R
 import com.iste.paymentX.data.model.RetrofitInstance
 import com.iste.paymentX.data.model.Transaction
-import com.iste.paymentX.ui.auth.GoogleAuthActivity
 import com.iste.paymentX.ui.auth.PinVerifyPage
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await

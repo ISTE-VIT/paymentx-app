@@ -91,9 +91,11 @@ class UserProfile : AppCompatActivity() {
 
         // Set up sign out functionality
         findViewById<ConstraintLayout>(R.id.sign_out).setOnClickListener {
+            animateButtonClick(it)
             handleLogout()
         }
         findViewById<CardView>(R.id.sign_out1).setOnClickListener {
+            animateButtonClick(it)
             handleLogout()
         }
 
@@ -101,6 +103,7 @@ class UserProfile : AppCompatActivity() {
         findViewById<ImageView>(R.id.btnHome).setOnClickListener {
             val intent = Intent(this, MainScreen::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            animateButtonClick(it)
             startActivity(intent)
             finish()
         }
@@ -108,14 +111,38 @@ class UserProfile : AppCompatActivity() {
         findViewById<ImageView>(R.id.btnTransact).setOnClickListener {
             // Navigate to transactions and finish this activity
             val intent = Intent(this, Transactions::class.java)
+            animateButtonClick(it)
             startActivity(intent)
             finish()
         }
 
-        findViewById<CardView>(R.id.developer_team).setOnClickListener {
-            val intent = Intent(this, DeveloperTeam::class.java)
+        findViewById<CardView>(R.id.help).setOnClickListener {
+            val intent = Intent(this, Feedback::class.java)
+            animateButtonClick(it)
             startActivity(intent)
         }
+
+        findViewById<CardView>(R.id.developer_team).setOnClickListener {
+            val intent = Intent(this, DeveloperTeam::class.java)
+            animateButtonClick(it)
+            startActivity(intent)
+        }
+    }
+
+    // Helper method to add click animation
+    private fun animateButtonClick(view: android.view.View) {
+        view.animate()
+            .scaleX(0.95f)
+            .scaleY(0.95f)
+            .setDuration(100)
+            .withEndAction {
+                view.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(100)
+                    .start()
+            }
+            .start()
     }
 
     private suspend fun getFirebaseIdToken(): String? {
