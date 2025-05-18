@@ -90,7 +90,7 @@
         android:backgroundTint="@color/dark_green"
         android:text="View Balance"
         android:textColor="@color/white"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.897"
