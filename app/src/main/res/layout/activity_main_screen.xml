@@ -16,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/grey_text_color"
-        android:src="@drawable/paymentx_logo"
+        android:src="@drawable/main_screen_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
