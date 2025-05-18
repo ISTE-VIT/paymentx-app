@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".ui.main.ContactUs">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardheader"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:cardBackgroundColor="@color/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="70dp"
+            android:layout_marginBottom="8dp"
+            android:text="Contact Us"
+            android:textColor="@color/header_text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/back" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="Hello, Rudra!"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardheader" />
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="How can we help you?"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name" />
+
+    <TextView
+        android:id="@+id/name_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textColor="@color/dark_green"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/desc"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_name"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/bg_color"
+        android:foreground="@drawable/search_border"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_label">
+
+        <ImageView
+            android:id="@+id/name_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center|left"
+            android:layout_marginTop="7.5dp"
+            android:layout_marginBottom="7.5dp"
+            android:src="@drawable/name" />
+
+        <EditText
+            android:id="@+id/enter_name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="10dp"
+            android:background="@null"
+            android:textSize="18sp"
+            android:hint="Enter your name"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_green"
+            android:inputType="text" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/email_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email Address"
+        android:textColor="@color/dark_green"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/card_name"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_email"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/bg_color"
+        android:foreground="@drawable/search_border"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_label">
+
+        <ImageView
+            android:id="@+id/email_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center|left"
+            android:layout_marginTop="7.5dp"
+            android:layout_marginBottom="7.5dp"
+            android:src="@drawable/email" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="10dp"
+            android:background="@null"
+            android:textSize="18sp"
+            android:hint="Enter your email"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_green"
+            android:inputType="textEmailAddress" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/phno_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Phone Number"
+        android:textColor="@color/dark_green"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/card_email"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_phno"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/bg_color"
+        android:foreground="@drawable/search_border"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phno_label">
+
+        <ImageView
+            android:id="@+id/phno_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center|left"
+            android:layout_marginTop="7.5dp"
+            android:layout_marginBottom="7.5dp"
+            android:src="@drawable/phno" />
+
+        <EditText
+            android:id="@+id/phno"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="10dp"
+            android:background="@null"
+            android:textSize="18sp"
+            android:hint="Enter your phone number"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_green"
+            android:inputType="phone"
+            android:maxLength="10"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/subject_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Subject"
+        android:textColor="@color/dark_green"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/card_phno"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_subject"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/bg_color"
+        android:foreground="@drawable/search_border"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subject_label">
+
+        <ImageView
+            android:id="@+id/subject_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center|left"
+            android:layout_marginTop="7.5dp"
+            android:layout_marginBottom="7.5dp"
+            android:src="@drawable/subject" />
+
+        <EditText
+            android:id="@+id/subject"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="10dp"
+            android:background="@null"
+            android:textSize="18sp"
+            android:hint="Enter your subject"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_green"
+            android:inputType="text"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/message_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Message"
+        android:textColor="@color/dark_green"
+        android:layout_marginStart="25dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_subject" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/bg_color"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="25dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_subject">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/attach"
+            android:layout_gravity="center|left"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attach File"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/black" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_message"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/bg_color"
+        android:foreground="@drawable/card_border"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message_label">
+
+        <EditText
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="top|start"
+            android:hint="Add your message..."
+            android:inputType="textMultiLine"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/dark_green"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/desc"/>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submit_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="SUBMIT"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/dark_green"
+        app:cornerRadius="15dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_message" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

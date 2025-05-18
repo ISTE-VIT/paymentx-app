@@ -122,6 +122,12 @@ class UserProfile : AppCompatActivity() {
             startActivity(intent)
         }
 
+        findViewById<CardView>(R.id.contact).setOnClickListener {
+            val intent = Intent(this, ContactUs::class.java)
+            animateButtonClick(it)
+            startActivity(intent)
+        }
+
         findViewById<CardView>(R.id.feedback).setOnClickListener {
             val intent = Intent(this, FeedbackForm::class.java)
             animateButtonClick(it)

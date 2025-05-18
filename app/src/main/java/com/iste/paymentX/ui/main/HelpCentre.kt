@@ -1,10 +1,12 @@
 package com.iste.paymentX.ui.main
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentX.R
 
@@ -64,6 +67,11 @@ class HelpCentre : AppCompatActivity() {
         val backButton: ImageView = findViewById(R.id.back)
         backButton.setOnClickListener {
             onBackPressed() // Go back to the previous screen
+        }
+
+        findViewById<Button>(R.id.contact_us).setOnClickListener {
+            val intent = Intent(this, ContactUs::class.java)
+            startActivity(intent)
         }
 
         // Handle search functionality
