@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transaction_completed_page_bg"
+    android:background="#C5D9C9"
     tools:context=".ui.main.WithdrawCompleted">
 
     <ImageView
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:text="₹1600"
-        android:textColor="#FF000000"
+        android:textColor="@color/dark_green"
         android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
@@ -105,7 +105,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="@color/bg_color"
+        android:backgroundTint="@color/dark_green"
         android:elevation="8dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +121,7 @@
             android:layout_marginStart="20dp"
             android:padding="16dp"
             android:text="Download Invoice"
-            android:textColor="@color/default_text_color"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
