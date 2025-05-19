@@ -147,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="+91 9883210865"
+                android:text="+91 8019505140"
                 android:textColor="#455A64"
                 android:textSize="20sp" />
         </LinearLayout>

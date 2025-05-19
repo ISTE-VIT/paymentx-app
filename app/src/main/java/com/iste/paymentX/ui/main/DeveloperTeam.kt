@@ -21,8 +21,7 @@ class DeveloperTeam : AppCompatActivity() {
 
         val back = findViewById<ImageView>(R.id.previouspage)
         back.setOnClickListener {
-            val intent = Intent(this, UserProfile::class.java)
-            startActivity(intent)
+            onBackPressed()
         }
 
         // Initialize UI elements

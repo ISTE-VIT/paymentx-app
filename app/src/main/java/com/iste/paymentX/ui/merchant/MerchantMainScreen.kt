@@ -26,6 +26,7 @@ import com.iste.paymentX.R
 import com.iste.paymentX.data.model.RetrofitInstance
 import com.iste.paymentX.data.model.Transaction
 import com.iste.paymentX.ui.auth.GoogleAuthActivity
+import com.iste.paymentX.ui.main.UserProfile
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
@@ -43,6 +44,7 @@ class MerchantMainScreen : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var transactionAdapter: MerchTransactionAdapter
     private val transactionList: MutableList<Transaction> = mutableListOf()
+    private lateinit var greetingTextView: TextView
 
     // Variables to store the received data
     private var userName: String? = null
@@ -67,10 +69,6 @@ class MerchantMainScreen : AppCompatActivity() {
                 .requestEmail()
                 .build()
         )
-
-        findViewById<ImageView>(R.id.merchbtnProfile).setOnClickListener(){
-            handleLogout()
-        }
 
         // Add click listener for transaction button
         btnTransact = findViewById(R.id.merchbtnTransact)
@@ -102,7 +100,17 @@ class MerchantMainScreen : AppCompatActivity() {
         transactionAdapter = MerchTransactionAdapter(transactionList)
         recyclerView.adapter = transactionAdapter
 
-        // Save userName in SharedPreferences if retrieved from intent
+        findViewById<ImageView>(R.id.merchbtnProfile).setOnClickListener {
+            val intent = Intent(this, MerchantProfile::class.java)
+            // Pass user data to UserProfile activity
+            intent.putExtra("USER_NAME", userName)
+            intent.putExtra("USER_EMAIL", userEmail)
+            intent.putExtra("USER_ID", userId)
+            startActivity(intent)
+            // Don't call finish() here to keep MainScreen in the back stack
+        }
+
+        // Save shopName in SharedPreferences if retrieved from intent
         if (shopName != null) {
             sharedPreferences.edit().putString("SHOP_NAME", shopName).apply()
         }
@@ -112,11 +120,12 @@ class MerchantMainScreen : AppCompatActivity() {
         btnViewBalance = findViewById(R.id.merchbtnViewBalance)
         btnReceive = findViewById(R.id.merchbtnRecieve)
         btnWithdraw = findViewById(R.id.merchbtnWithdraw)
+        greetingTextView = findViewById(R.id.merchtextView)
         balanceTextView.visibility = View.GONE
         btnViewBalance.visibility = View.VISIBLE
 
-        // Add this line to set only the first name
-        findViewById<TextView>(R.id.merchtextView).text = "Hi, $shopName"
+        // Set default greeting while fetching from backend
+        greetingTextView.text = "Hi, Shop"
 
         // Set click listener for balance visibility
         btnViewBalance.setOnClickListener {
@@ -143,6 +152,9 @@ class MerchantMainScreen : AppCompatActivity() {
             val intent = Intent(this, MerchantTransactions::class.java)
             startActivity(intent)
         }
+
+        // Fetch merchant details from backend (including shop name)
+        fetchMerchantDetails()
 
         fetchTrans()
     }
@@ -175,16 +187,16 @@ class MerchantMainScreen : AppCompatActivity() {
             } else {
                 btnViewBalance.visibility = View.VISIBLE
                 balanceTextView.visibility = View.GONE
-                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+                Log.e("MerchantMainScreen", "Response not successful: ${response.code()} - ${response.message()}")
             }
         } catch (e: IOException) {
             btnViewBalance.visibility = View.VISIBLE
             balanceTextView.visibility = View.GONE
-            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+            Log.e("MerchantMainScreen", "IOException, you might not have internet connection", e)
         } catch (e: HttpException) {
             btnViewBalance.visibility = View.VISIBLE
             balanceTextView.visibility = View.GONE
-            Log.e("HomeActivity", "HttpException, unexpected response", e)
+            Log.e("MerchantMainScreen", "HttpException, unexpected response", e)
         }
     }
 
@@ -194,7 +206,7 @@ class MerchantMainScreen : AppCompatActivity() {
             if (token != null) {
                 getBalanceHelper("Bearer $token")
             } else {
-                Log.e("HomeActivity", "Failed to get Firebase ID token")
+                Log.e("MerchantMainScreen", "Failed to get Firebase ID token")
             }
         }
     }
@@ -203,7 +215,7 @@ class MerchantMainScreen : AppCompatActivity() {
         return try {
             auth.currentUser?.getIdToken(false)?.await()?.token
         } catch (e: Exception) {
-            Log.e("HomeActivity", "Error getting Firebase ID token", e)
+            Log.e("MerchantMainScreen", "Error getting Firebase ID token", e)
             null
         }
     }
@@ -230,13 +242,13 @@ class MerchantMainScreen : AppCompatActivity() {
                     transactionAdapter.notifyDataSetChanged()
                 }
             } else {
-                Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+                Log.e("MerchantMainScreen", "Response not successful: ${response.code()} - ${response.message()}")
             }
         } catch (e: IOException) {
-            Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+            Log.e("MerchantMainScreen", "IOException, you might not have internet connection", e)
 
         } catch (e: HttpException) {
-            Log.e("HomeActivity", "HttpException, unexpected response", e)
+            Log.e("MerchantMainScreen", "HttpException, unexpected response", e)
 
         }
     }
@@ -245,7 +257,94 @@ class MerchantMainScreen : AppCompatActivity() {
         lifecycleScope.launch {
             getFirebaseIdToken()?.let { token ->
                 fetchTransHelper("Bearer $token")
-            } ?: Log.e("HomeActivity", "Failed to get Firebase ID token")
+            } ?: Log.e("MerchantMainScreen", "Failed to get Firebase ID token")
         }
+    }
+
+    // New method to fetch merchant details from backend
+    private fun fetchMerchantDetails() {
+        lifecycleScope.launch {
+            try {
+                val token = getFirebaseIdToken()
+                if (token != null) {
+                    // You might need to replace this with the appropriate API call for merchant details
+                    // For now, I'm using checkUser API - you might have a different endpoint for merchants
+                    val response = RetrofitInstance.api.checkUser("Bearer $token")
+
+                    if (response.isSuccessful && response.body() != null) {
+                        val userData = response.body()?.user
+
+                        // Update UI with merchant data from backend
+                        userData?.let { user ->
+                            // For merchants, you might have a shopName field in your API response
+                            // If you have a separate merchant API endpoint, use that instead
+
+                            // Assuming the shop name is stored in displayName or a similar field
+                            // You might need to adjust this based on your actual API response structure
+                            user.displayName?.let { displayName ->
+                                if (displayName.isNotEmpty()) {
+                                    // For shops, you might want to use the full shop name
+                                    // or just the first word (like "Fresh Mart" -> "Fresh")
+                                    val shopNameToDisplay = displayName.split(" ").first()
+                                    greetingTextView.text = "Hi, $shopNameToDisplay"
+
+                                    // Save the full shop name
+                                    shopName = displayName
+                                    sharedPreferences.edit().putString("SHOP_NAME", displayName).apply()
+                                }
+                            }
+
+                            // Alternative: If you have a separate field for shop name in your API
+                            // Replace this with the actual field name from your API response
+                            // user.shopName?.let { backendShopName ->
+                            //     if (backendShopName.isNotEmpty()) {
+                            //         val shopNameToDisplay = backendShopName.split(" ").first()
+                            //         greetingTextView.text = "Hi, $shopNameToDisplay"
+                            //         shopName = backendShopName
+                            //         sharedPreferences.edit().putString("SHOP_NAME", backendShopName).apply()
+                            //     }
+                            // }
+                        }
+                    } else {
+                        Log.e("MerchantMainScreen", "Failed to fetch merchant details: ${response.code()}")
+                        // Fallback to using existing shopName
+                        setFallbackGreeting()
+                    }
+                } else {
+                    Log.e("MerchantMainScreen", "Failed to get Firebase ID token")
+                    // Fallback to using existing shopName
+                    setFallbackGreeting()
+                }
+            } catch (e: IOException) {
+                Log.e("MerchantMainScreen", "Network error while fetching merchant details", e)
+                setFallbackGreeting()
+            } catch (e: HttpException) {
+                Log.e("MerchantMainScreen", "HTTP error while fetching merchant details", e)
+                setFallbackGreeting()
+            } catch (e: Exception) {
+                Log.e("MerchantMainScreen", "Unexpected error while fetching merchant details", e)
+                setFallbackGreeting()
+            }
+        }
+    }
+
+    // Fallback method to set greeting from existing sources
+    private fun setFallbackGreeting() {
+        // Try to use the shop name from intent/SharedPreferences
+        val fallbackShopName = shopName
+
+        if (!fallbackShopName.isNullOrEmpty()) {
+            val shopNameToDisplay = fallbackShopName.split(" ").first()
+            greetingTextView.text = "Hi, $shopNameToDisplay"
+        } else {
+            // Last resort - use default
+            greetingTextView.text = "Hi, Shop"
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh merchant data when returning to main screen
+        fetchMerchantDetails()
     }
 }

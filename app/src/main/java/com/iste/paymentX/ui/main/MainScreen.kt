@@ -42,6 +42,7 @@ class MainScreen : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var transactionAdapter: UserTransactionAdapter
     private val transactionList: MutableList<Transaction> = mutableListOf()
+    private lateinit var greetingTextView: TextView
 
     // Store credentials
     private var userName: String? = null
@@ -100,6 +101,7 @@ class MainScreen : AppCompatActivity() {
         btnTopUp = findViewById(R.id.btnTopUp)
         btnWithdraw = findViewById(R.id.btnWithdraw)
         btnTransact = findViewById(R.id.btnTransact)
+        greetingTextView = findViewById(R.id.textView)
         balanceTextView.visibility = View.GONE
         btnViewBalance.visibility = View.VISIBLE
 
@@ -109,9 +111,8 @@ class MainScreen : AppCompatActivity() {
         transactionAdapter = UserTransactionAdapter(transactionList)
         recyclerView.adapter = transactionAdapter
 
-        // Add this line to set only the first name
-        val firstName = userName?.split(" ")?.first() ?: "User"
-        findViewById<TextView>(R.id.textView).text = "Hi, $firstName"
+        // Set default greeting while fetching from backend
+        greetingTextView.text = "Hi, User"
 
         // Set click listener for balance visibility
         btnViewBalance.setOnClickListener {
@@ -149,6 +150,9 @@ class MainScreen : AppCompatActivity() {
             val intent = Intent(this, Transactions::class.java)
             startActivity(intent)
         }
+
+        // Fetch user details from backend (including name)
+        fetchUserDetails()
 
         // Fetch recent transactions
         fetchTransactions()
@@ -242,5 +246,88 @@ class MainScreen : AppCompatActivity() {
         } catch (e: HttpException) {
             Log.e("MainScreen", "HttpException, unexpected response", e)
         }
+    }
+
+    // New method to fetch user details from backend
+    private fun fetchUserDetails() {
+        lifecycleScope.launch {
+            try {
+                val token = getFirebaseIdToken()
+                if (token != null) {
+                    // Fetch user details from the backend API
+                    val response = RetrofitInstance.api.checkUser("Bearer $token")
+
+                    if (response.isSuccessful && response.body() != null) {
+                        val userData = response.body()?.user
+
+                        // Update UI with user data from backend
+                        userData?.let { user ->
+                            // Update the greeting with first name only
+                            user.displayName?.let { displayName ->
+                                if (displayName.isNotEmpty()) {
+                                    val firstName = displayName.split(" ").first()
+                                    greetingTextView.text = "Hi, $firstName"
+
+                                    // Save the full name for profile use
+                                    userName = displayName
+                                    sharedPreferences.edit().putString("USER_NAME", displayName).apply()
+                                }
+                            }
+
+                            // If displayName is not available, try to get it from Firebase Auth
+                            if (user.displayName.isNullOrEmpty()) {
+                                val firebaseUser = auth.currentUser
+                                firebaseUser?.displayName?.let { firebaseName ->
+                                    if (firebaseName.isNotEmpty()) {
+                                        val firstName = firebaseName.split(" ").first()
+                                        greetingTextView.text = "Hi, $firstName"
+
+                                        userName = firebaseName
+                                        sharedPreferences.edit().putString("USER_NAME", firebaseName).apply()
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Log.e("MainScreen", "Failed to fetch user details: ${response.code()}")
+                        // Fallback to using existing userName or Firebase user
+                        setFallbackGreeting()
+                    }
+                } else {
+                    Log.e("MainScreen", "Failed to get Firebase ID token")
+                    // Fallback to using existing userName or Firebase user
+                    setFallbackGreeting()
+                }
+            } catch (e: IOException) {
+                Log.e("MainScreen", "Network error while fetching user details", e)
+                setFallbackGreeting()
+            } catch (e: HttpException) {
+                Log.e("MainScreen", "HTTP error while fetching user details", e)
+                setFallbackGreeting()
+            } catch (e: Exception) {
+                Log.e("MainScreen", "Unexpected error while fetching user details", e)
+                setFallbackGreeting()
+            }
+        }
+    }
+
+    // Fallback method to set greeting from existing sources
+    private fun setFallbackGreeting() {
+        // Try to use the name from intent/SharedPreferences first
+        val fallbackName = userName ?: auth.currentUser?.displayName
+
+        if (!fallbackName.isNullOrEmpty()) {
+            val firstName = fallbackName.split(" ").first()
+            greetingTextView.text = "Hi, $firstName"
+        } else {
+            // Last resort - use default
+            greetingTextView.text = "Hi, User"
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh user data when returning to main screen
+        fetchUserDetails()
     }
 }

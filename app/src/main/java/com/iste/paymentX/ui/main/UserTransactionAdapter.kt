@@ -16,8 +16,7 @@ class UserTransactionAdapter(
 
     class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.transaction_name)
-        val date: TextView = itemView.findViewById(R.id.transaction_date)
-        val time: TextView = itemView.findViewById(R.id.transaction_time)
+        val timestamp: TextView = itemView.findViewById(R.id.transaction_timestamp)
         val amount: TextView = itemView.findViewById(R.id.transaction_amount)
     }
 
@@ -36,10 +35,9 @@ class UserTransactionAdapter(
         // For debugging - print the timestamp to logcat
         android.util.Log.d("TransactionAdapter", "Original timestamp: ${transaction.timestamp}")
 
-        // Format and set date and time
+        // Format timestamp
         val dateTimeFormatted = formatTimestamp(transaction.timestamp)
-        holder.date.text = dateTimeFormatted.first
-        holder.time.text = dateTimeFormatted.second
+        holder.timestamp.text = "${dateTimeFormatted.first} at ${dateTimeFormatted.second}"
 
         // Set amount with currency symbol
         holder.amount.text = "₹${transaction.amount}"
