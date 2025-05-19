@@ -28,6 +28,18 @@
         android:theme="@style/Theme.PaymentX"
         tools:targetApi="31">
         <activity
+            android:name=".ui.auth.UpdatePhoneOtpVerification"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.auth.UpdatePhoneNumber"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.main.EditProfile"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.main.ContactUs"
             android:exported="false"
             android:screenOrientation="portrait" />

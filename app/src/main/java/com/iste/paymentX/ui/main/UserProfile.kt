@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -37,6 +38,7 @@ class UserProfile : AppCompatActivity() {
     private lateinit var emailTextView: TextView
     private lateinit var uidTextView: TextView
     private lateinit var phoneTextView: TextView
+    private lateinit var editButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +52,7 @@ class UserProfile : AppCompatActivity() {
         emailTextView = findViewById(R.id.user_email)
         uidTextView = findViewById(R.id.uid)
         phoneTextView = findViewById(R.id.phno)
+        editButton = findViewById(R.id.edit)
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
@@ -87,6 +90,13 @@ class UserProfile : AppCompatActivity() {
             nameTextView.text = userName
             emailTextView.text = userEmail
             uidTextView.text = userId.take(10)
+        }
+
+        // Set up edit profile button click listener
+        editButton.setOnClickListener {
+            animateButtonClick(it)
+            val intent = Intent(this, EditProfile::class.java)
+            startActivity(intent)
         }
 
         // Set up sign out functionality
@@ -247,5 +257,11 @@ class UserProfile : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e("UserProfile", "Exception during logout: ", e)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh user data when returning from edit profile screen
+        fetchUserDetails()
     }
 }
