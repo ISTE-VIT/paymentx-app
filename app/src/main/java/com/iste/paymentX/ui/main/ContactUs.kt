@@ -2,18 +2,23 @@ package com.iste.paymentX.ui.main
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.cardview.widget.CardView
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseAuth
 import com.iste.paymentX.R
 
 class ContactUs : AppCompatActivity() {
@@ -27,6 +32,27 @@ class ContactUs : AppCompatActivity() {
     private lateinit var messageEditText: EditText
     private lateinit var submitButton: MaterialButton
     private lateinit var userNameDisplay: TextView
+    private lateinit var attachFileButton: CardView
+    private lateinit var attachmentTextView: TextView
+
+    // Firebase
+    private lateinit var auth: FirebaseAuth
+
+    // File attachment
+    private var selectedFileUri: Uri? = null
+
+    // Activity result launcher for file picking
+    private val filePickerLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            selectedFileUri = uri
+            // Display the file name
+            val fileName = getFileNameFromUri(uri)
+            attachmentTextView.text = "File: $fileName"
+            attachmentTextView.visibility = View.VISIBLE
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +61,14 @@ class ContactUs : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
+
         // Initialize UI components
         initViews()
 
-        // Set up user's name if available
-        setupUserName()
+        // Set up user's name from Firebase Auth
+        setUserName()
 
         // Set up click listeners
         setupListeners()
@@ -54,26 +83,30 @@ class ContactUs : AppCompatActivity() {
         messageEditText = findViewById(R.id.message)
         submitButton = findViewById(R.id.submit_button)
         userNameDisplay = findViewById(R.id.name)
+
+        // Find the attach file button by its parent CardView
+        val attachCardView = findViewById<View>(R.id.card_attach_file)
+        attachFileButton = attachCardView as CardView
+
+        // Create TextView for showing attachment name (to be added to layout)
+        attachmentTextView = TextView(this)
+        attachmentTextView.id = View.generateViewId()
+        attachmentTextView.setTextColor(getColor(R.color.dark_green))
+        attachmentTextView.textSize = 16f
+        attachmentTextView.visibility = View.GONE
     }
 
-    private fun setupUserName() {
-        // You would typically get this from SharedPreferences or your user data
-        val userName = getUserName() // Implement this method based on your app's user management
-        if (!userName.isNullOrEmpty()) {
-            userNameDisplay.text = "Hello, $userName!"
+    private fun setUserName() {
+        // Get current user from Firebase
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            // Get the user's display name, or their email prefix if display name is null
+            val displayName = currentUser.displayName?.split(" ")?.first() ?: currentUser.email?.substringBefore('@') ?: "User"
+            userNameDisplay.text = "Hello, $displayName!"
         } else {
-            userNameDisplay.text = "Hello there!"
+            // Fallback if somehow user isn't authenticated
+            userNameDisplay.text = "Hello, User!"
         }
-    }
-
-    private fun getUserName(): String? {
-        // This is a placeholder - implement according to how your app stores user data
-        // Example with SharedPreferences:
-        val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
-        return sharedPreferences.getString("user_name", null)
-
-        // For testing purposes, you can return a hardcoded value:
-        // return "Rudra"
     }
 
     private fun setupListeners() {
@@ -82,12 +115,33 @@ class ContactUs : AppCompatActivity() {
             onBackPressed()
         }
 
+        // Attach file click listener
+        attachFileButton.setOnClickListener {
+            openFilePicker()
+        }
+
         // Submit button click listener
         submitButton.setOnClickListener {
             if (validateInputs()) {
                 submitContactForm()
             }
         }
+    }
+
+    private fun openFilePicker() {
+        // Launch file picker intent
+        filePickerLauncher.launch("*/*") // Accept all file types
+    }
+
+    private fun getFileNameFromUri(uri: Uri): String {
+        val contentResolver = applicationContext.contentResolver
+        val cursor = contentResolver.query(uri, null, null, null, null)
+
+        return cursor?.use {
+            val nameIndex = it.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+            it.moveToFirst()
+            if (nameIndex >= 0) it.getString(nameIndex) else "Unknown file"
+        } ?: "Unknown file"
     }
 
     private fun validateInputs(): Boolean {
@@ -146,13 +200,18 @@ class ContactUs : AppCompatActivity() {
         val subject = subjectEditText.text.toString().trim()
         val message = messageEditText.text.toString().trim()
 
+        // File attachment info (if any)
+        val fileInfo = selectedFileUri?.let {
+            getFileNameFromUri(it)
+        } ?: "No file attached"
+
         // Here you would typically send this data to your server or API
         // For now, we'll just show a success message and clear the form
 
-        // Show success message
+        // Show success message with file info
         Toast.makeText(
             this,
-            "Thank you for your message. We'll get back to you soon!",
+            "Thank you for your message. We'll get back to you soon! ($fileInfo)",
             Toast.LENGTH_LONG
         ).show()
 
@@ -169,5 +228,7 @@ class ContactUs : AppCompatActivity() {
         phoneEditText.text.clear()
         subjectEditText.text.clear()
         messageEditText.text.clear()
+        selectedFileUri = null
+        attachmentTextView.visibility = View.GONE
     }
 }

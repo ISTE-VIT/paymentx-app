@@ -63,7 +63,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:text="₹400"
-            android:textColor="#000000"
+            android:textColor="#FF1100"
             android:textSize="16sp"
             android:textStyle="bold" />
     </RelativeLayout>
