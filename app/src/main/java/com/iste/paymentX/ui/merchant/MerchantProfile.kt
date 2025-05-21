@@ -100,9 +100,8 @@ class MerchantProfile : AppCompatActivity() {
         // Set up edit profile button click listener (functionality to be implemented later)
         editButton.setOnClickListener {
             animateButtonClick(it)
-            // TODO: Navigate to MerchantEditProfile activity when created
-            // val intent = Intent(this, MerchantEditProfile::class.java)
-            // startActivity(intent)
+             val intent = Intent(this, MerchantEditProfile::class.java)
+             startActivity(intent)
         }
 
         // Set up sign out functionality
