@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -104,14 +105,28 @@ class HomeActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.checkBut).setOnClickListener {
-            if (userId != null) {
-                login(email = userEmail, displayName = userName, uid = userId, isMerchant = false)
+            if (userId != null && userEmail != null) {
+                if (userEmail.endsWith("@vitstudent.ac.in")) {
+                    login(email = userEmail, displayName = userName, uid = userId, isMerchant = false)
+                } else {
+                    vibratePhone()
+                    Log.e("HomeActivity", "Unauthorized email domain: $userEmail")
+                    // Optional: Show a toast or dialog to inform the user
+                    Toast.makeText(this, "If you are an user please login with your VIT email", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
+
         findViewById<Button>(R.id.checkMerchant).setOnClickListener {
-            if (userId != null) {
-                login(email = userEmail, displayName = userName, uid = userId, isMerchant = true)
+            if (userId != null && userEmail != null) {
+                if (userEmail.endsWith("@vitstudent.ac.in")) {vibratePhone()
+                    Log.e("HomeActivity", "Unauthorized email domain: $userEmail")
+                    // Optional: Show a toast or dialog to inform the user
+                    Toast.makeText(this, "VIT email can only as user", Toast.LENGTH_SHORT).show()
+                } else {
+                    login(email = userEmail, displayName = userName, uid = userId, isMerchant = true)
+                }
             }
         }
     }

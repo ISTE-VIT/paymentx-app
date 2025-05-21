@@ -27,6 +27,8 @@ import java.io.IOException
 class MerchantOtpVerification : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var backarrow: ImageView
+    private lateinit var btnVerify: Button
+    private var isProcessing = false
 
     // store credientials
     private var userName: String? = null
@@ -67,10 +69,20 @@ class MerchantOtpVerification : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val btnVerify = findViewById<Button>(R.id.merchbtnVerify)
+        btnVerify = findViewById<Button>(R.id.merchbtnVerify)
         btnVerify.setOnClickListener {
+            // Prevent multiple clicks
+            if (isProcessing) {
+                return@setOnClickListener
+            }
+
+            // Set processing flag and update button text
+            setProcessing(true)
+
             if (phoneNumber != null) {
                 attachPhone(phoneNumber)
+            } else {
+                setProcessing(false)
             }
         }
     }
@@ -122,23 +134,33 @@ class MerchantOtpVerification : AppCompatActivity() {
             user?.getIdToken(false)?.await()?.token
         } catch (e: Exception) {
             Log.e("HomeActivity", "Error getting Firebase ID token", e)
+            setProcessing(false)
             null
         }
     }
 
-    private suspend fun attachPhoneHelper(authToken: String,phoneNumber: String) {
+    private suspend fun attachPhoneHelper(authToken: String, phoneNumber: String) {
         try {
             val request = AttachPhoneRequest(phoneNumber)
-            val response = RetrofitInstance.api.attachPhone(authToken,request)
+            val response = RetrofitInstance.api.attachPhone(authToken, request)
             if (response.isSuccessful && response.body() != null) {
                 openCreateTransPINPage()
             } else {
                 Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+                runOnUiThread {
+                    setProcessing(false)
+                }
             }
         } catch (e: IOException) {
             Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+            runOnUiThread {
+                setProcessing(false)
+            }
         } catch (e: HttpException) {
             Log.e("HomeActivity", "HttpException, unexpected response", e)
+            runOnUiThread {
+                setProcessing(false)
+            }
         }
     }
 
@@ -146,10 +168,21 @@ class MerchantOtpVerification : AppCompatActivity() {
         lifecycleScope.launch {
             val token = getFirebaseIdToken()
             if (token != null) {
-                attachPhoneHelper("Bearer $token",phoneNumber)
+                attachPhoneHelper("Bearer $token", phoneNumber)
             } else {
                 Log.e("HomeActivity", "Failed to get Firebase ID token")
+                runOnUiThread {
+                    setProcessing(false)
+                }
             }
+        }
+    }
+
+    private fun setProcessing(processing: Boolean) {
+        isProcessing = processing
+        runOnUiThread {
+            btnVerify.isEnabled = !processing
+            btnVerify.text = if (processing) "Verifying..." else "Verify"
         }
     }
 }

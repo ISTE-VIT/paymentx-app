@@ -31,6 +31,8 @@ class MerchantConfirmPIN : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var backarrow: ImageView
     private lateinit var vibrator: Vibrator
+    private lateinit var btnVerify: Button
+    private var isProcessing = false
 
     // store credientials
     private var userName: String? = null
@@ -105,16 +107,22 @@ class MerchantConfirmPIN : AppCompatActivity() {
             }
         }
 
-        val btnVerify = findViewById<Button>(R.id.merchbtnConfirm)
+        btnVerify = findViewById<Button>(R.id.merchbtnConfirm)
         btnVerify.setOnClickListener {
+            // Prevent multiple clicks
+            if (isProcessing) {
+                return@setOnClickListener
+            }
+
             // Gather input PIN
             val enteredPin = pinInputs.joinToString("") { it.text.toString() }
 
             if (enteredPin.length == 6) {
                 if (enteredPin == transactionPin) {
+                    // Set processing flag and update button text
+                    setProcessing(true)
                     // Redirect to MainScreen
                     createPin(enteredPin)
-                    // Optional: Close this activity
                 } else {
                     // Show error if PINs do not match
                     Toast.makeText(this, "PINs do not match. Try again.", Toast.LENGTH_SHORT).show()
@@ -138,6 +146,7 @@ class MerchantConfirmPIN : AppCompatActivity() {
             user?.getIdToken(false)?.await()?.token
         } catch (e: Exception) {
             Log.e("HomeActivity", "Error getting Firebase ID token", e)
+            setProcessing(false)
             null
         }
     }
@@ -156,11 +165,23 @@ class MerchantConfirmPIN : AppCompatActivity() {
                 finish()
             } else {
                 Log.e("HomeActivity", "Response not successful: ${response.code()} - ${response.message()}")
+                runOnUiThread {
+                    Toast.makeText(this, "Failed to create PIN. Please try again.", Toast.LENGTH_SHORT).show()
+                    setProcessing(false)
+                }
             }
         } catch (e: IOException) {
             Log.e("HomeActivity", "IOException, you might not have internet connection", e)
+            runOnUiThread {
+                Toast.makeText(this, "Network error. Check your connection.", Toast.LENGTH_SHORT).show()
+                setProcessing(false)
+            }
         } catch (e: HttpException) {
             Log.e("HomeActivity", "HttpException, unexpected response", e)
+            runOnUiThread {
+                Toast.makeText(this, "Server error. Please try again later.", Toast.LENGTH_SHORT).show()
+                setProcessing(false)
+            }
         }
     }
 
@@ -171,9 +192,22 @@ class MerchantConfirmPIN : AppCompatActivity() {
                 createPinHelper("Bearer $token",pin)
             } else {
                 Log.e("HomeActivity", "Failed to get Firebase ID token")
+                runOnUiThread {
+                    Toast.makeText(this@MerchantConfirmPIN, "Authentication error. Please try again.", Toast.LENGTH_SHORT).show()
+                    setProcessing(false)
+                }
             }
         }
     }
+
+    private fun setProcessing(processing: Boolean) {
+        isProcessing = processing
+        runOnUiThread {
+            btnVerify.isEnabled = !processing
+            btnVerify.text = if (processing) "Confirming..." else "Confirm"
+        }
+    }
+
     private fun vibratePhone() {
         if (vibrator.hasVibrator()) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
