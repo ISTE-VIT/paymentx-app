@@ -24,6 +24,7 @@ import com.iste.paymentX.R
 import com.iste.paymentX.data.model.RetrofitInstance
 import com.iste.paymentX.data.model.Transaction
 import com.iste.paymentX.ui.auth.GoogleAuthActivity
+import com.iste.paymentX.ui.main.UserProfile
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
@@ -136,11 +137,29 @@ class MerchantTransactions : AppCompatActivity() {
         }
 
         btnProfile.setOnClickListener {
-            handleLogout()
+            navigateToMerchantProfile()
         }
 
         // Transaction button is already selected on this screen
         btnTransact.isSelected = true
+    }
+    private fun navigateToMerchantProfile() {
+        try {
+            val currentUser = auth.currentUser
+
+            val intent = Intent(this, MerchantProfile::class.java)
+
+            // Pass user data to UserProfile activity if available
+            if (currentUser != null) {
+                intent.putExtra("MERCHANT_NAME", currentUser.displayName)
+                intent.putExtra("MERCHANT_EMAIL", currentUser.email)
+            }
+
+            startActivity(intent)
+            // Don't call finish() to keep Transactions in the back stack
+        } catch (e: Exception) {
+            Log.e("Transactions", "Error navigating to MerchantProfile: ", e)
+        }
     }
 
     private fun fetchTransactions() {
@@ -183,16 +202,6 @@ class MerchantTransactions : AppCompatActivity() {
         }
     }
 
-    private fun handleLogout() {
-        try {
-            auth.signOut()
-            val intent = Intent(this, GoogleAuthActivity::class.java)
-            startActivity(intent)
-            finish()
-        } catch (e: Exception) {
-            Log.e("MerchantTransactions", "Exception during logout: ", e)
-        }
-    }
 
     private fun filterTransactions(query: String) {
         val filteredList = if (query.isEmpty()) {
