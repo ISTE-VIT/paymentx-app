@@ -29,13 +29,16 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.merchant.MerchantUpdatePhoneOtpVerification"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.merchant.MerchantUpdatePhoneNumber"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.merchant.MerchantEditProfile"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".ui.auth.UpdatePhoneOtpVerification"
             android:exported="false"
