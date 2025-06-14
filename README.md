@@ -18,7 +18,7 @@
 
 <!-- Quick Overview Section -->
 <p align="center">
-  <img src="https://media-hosting.imagekit.io/d526069000f5461a/Group%2048095469.png?Expires=1838380776&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=BaLWSqym15LyyG88230h5o19EdKHjWm7ASjiKLUATdU9Xd24t7T8PkKNQPb2-CfXS11IuB3XgN2SDgWN87HJ~TgZrq8uRQiG~HWdzixVFDFOmwFIKSgfyp0ZZtggfkqiBDq3wFKLHF2SRz~ihG9eT2C7SKxpl1nj4E1OJv8eg2t60h43r69kF4lLXS-rSDxDpulDSVJB2-T90CSc2MFtjNsq2PlnvJBbsOYcj5UMO-ujAWx-ujqXe2n6eHyqz8vU1uOO~6y~ttdB8wInS9z7XdTqEj0kwLZAODIuXWPQiVUNhekZUfO3tA6n8jIBHaXd4JwtQw8yPCvpJd8yfeB-Bg__" alt="App Screenshots" width="80%"/>
+  <img src="https://i.imghippo.com/files/yqK2449Yg.png" alt="App Screenshots" width="80%"/>
 </p>
 
 ##
