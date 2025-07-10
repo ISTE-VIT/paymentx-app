@@ -9,7 +9,7 @@ object RetrofitInstance {
     }
     private fun createRetrofit(): UserApi {
         return Retrofit.Builder()
-            .baseUrl("https://paymentx-backend.onrender.com/")
+            .baseUrl("https://paymentx-backend.vercel.app/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(UserApi::class.java)

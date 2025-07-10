@@ -57,9 +57,9 @@
 
             <ImageView
                 android:id="@+id/rudra_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/developer_team_icon"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/rudra_icon"
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
